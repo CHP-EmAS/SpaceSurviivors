@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
 
 class GameObject;
 
@@ -11,6 +11,8 @@ public:
 
 	virtual void simulate(sf::Time deltaTime);
 	void applyForce(sf::Vector2f force);
+
+	void debugDraw(sf::RenderTarget& target);
 
 	void setVelocity(sf::Vector2f velocity);
 	void setFriction(float friction);
@@ -27,5 +29,7 @@ protected:
 	sf::Vector2f velocity;
 	float maxSpeed;
 	float friction;
+
+	sf::Vertex velocityLine[2];
 };
 

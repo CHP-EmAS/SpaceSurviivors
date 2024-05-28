@@ -18,7 +18,5 @@ private:
 	sf::Vector2f bulletSpawnPoint;
 	float timeSinceLastShot;
 	float shootInterval;
-
-	sf::Vertex velocityLine[2];
 };
 

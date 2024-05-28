@@ -10,5 +10,8 @@ public:
 
 	void interact(Interaction action, GameObject& interactor) override;
 	void setDirection(sf::Vector2f direction);
+private:
+	int currentHitPoints;
+	int totalHitPoins;
 };
 

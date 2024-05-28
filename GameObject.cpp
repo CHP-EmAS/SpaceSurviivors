@@ -34,8 +34,12 @@ void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	states.transform *= getTransform();
 	target.draw(sprite, states);
 
-	if (Locator::getSceneManager().debugDrawEnabled()) {
+	if (Locator::getSceneManager().debugShowHitboxes()) {
 		target.draw(collider, states);
+	}
+
+	if (controller && Locator::getSceneManager().debugShowVelocity()) {
+		controller->debugDraw(target);
 	}
 }
 

@@ -14,18 +14,23 @@ Asteroid::Asteroid(sf::Vector2f direction, float scale, float speed, float rotat
 	setOrigin(origin);
 	setScale(scale, scale);
 
+	std::cout << scale << std::endl;
+
 	collider = Collider(this, sprite.getTextureRect().getSize().x - 4, sprite.getTextureRect().getSize().y - 4);
 	collider.setOrigin(-2, -2);
+
+	totalHitPoins = 10 * scale;
+	currentHitPoints = totalHitPoins;
 }
 
-void Asteroid::update(sf::Time deltaTime) {
+void Asteroid::update(sf::Time deltaTime) 
+{
+	sf::Color currentColor = sprite.getColor();
+	float tintFactor = float(currentHitPoints) / float(totalHitPoins);
+	sprite.setColor(sf::Color(currentColor.r, 255 * tintFactor, 255 * tintFactor));
 
-	std::vector<GameObject*> collidingObjects = grid->getCollidingObjects(this);
-
-	while (collidingObjects.size() > 0) {
-		GameObject* collidingObject = collidingObjects.back();
-		collidingObject->interact(AsteroidCollision, *this);
-		collidingObjects.pop_back();
+	if (currentHitPoints <= 0) {
+		markForDespawn();
 	}
 
 	GameObject::update(deltaTime);
@@ -37,6 +42,7 @@ void Asteroid::interact(Interaction action, GameObject& interactor)
 	case Interaction::BulletCollision:
 		sf::Vector2f direction = VectorExtension::toUnitVector(interactor.getRotation());
 		controller->applyForce(direction * 50.f);
+		currentHitPoints -= 10;
 		break;
 	}
 }

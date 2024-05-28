@@ -49,22 +49,26 @@ sf::Vector2f PlayerController::getInputVelocity(sf::Time deltaTime)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        movement.y -= acceleration * deltaTime.asSeconds();
+        movement.y -= 1;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        movement.y += acceleration * deltaTime.asSeconds();
+        movement.y += 1;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        movement.x -= acceleration * deltaTime.asSeconds();
+        movement.x -= 1;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        movement.x += acceleration * deltaTime.asSeconds();
+        movement.x += 1;
     }
 
-    return movement;
+    if (movement == sf::Vector2f(0, 0)) {
+        return sf::Vector2f(0, 0);
+    }
+    
+    return VectorExtension::normalize(movement) * acceleration * deltaTime.asSeconds();
 }
 
 void PlayerController::rotateToMouse(sf::Time deltaTime)

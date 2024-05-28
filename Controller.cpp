@@ -8,6 +8,11 @@ Controller::Controller(GameObject* parent)
 
     maxSpeed = 1000.f;
     friction = 1.f;
+
+    velocityLine[0].position = sf::Vector2f(0, 0);
+    velocityLine[1].position = sf::Vector2f(0, 0);
+
+    velocityLine[0].color = sf::Color::Red;
 }
 
 void Controller::simulate(sf::Time deltaTime)
@@ -29,6 +34,14 @@ void Controller::simulate(sf::Time deltaTime)
 void Controller::applyForce(sf::Vector2f force)
 {
 	velocity += force;
+}
+
+void Controller::debugDraw(sf::RenderTarget& target)
+{
+    velocityLine[0].position = parentObject->getPosition();
+    velocityLine[1].position = velocityLine[0].position + getCurrentVelocity();
+
+    target.draw(velocityLine, 2, sf::Lines);
 }
 
 void Controller::setVelocity(sf::Vector2f velocity)

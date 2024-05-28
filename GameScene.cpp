@@ -26,7 +26,10 @@ void GameScene::drawScene(sf::RenderWindow& mainWindow)
 	spatialPartitionGrid.drawAll(mainWindow);
 	bulletPool->drawAll(mainWindow);
 
-	//spatialPartitionGrid.debugDraw(mainWindow);
+	if (Locator::getSceneManager().debugShowSpatialGrid()) {
+		spatialPartitionGrid.debugDraw(mainWindow);
+	}
+	
 }
 
 void GameScene::checkEvents(sf::Event newEvent)

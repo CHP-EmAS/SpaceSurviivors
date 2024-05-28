@@ -4,10 +4,11 @@
 
 EnemySpawnController::EnemySpawnController()
 {
-	enemyAmountTargetValue = 10;
+	enemyAmountTargetValue = 100;
 	currentEnemySpawned = 0;
 
-	spawnIntervall = 0.5;
+	spawnIntervall = 0.3;
+	spawnTimer = 0;
 }
 
 void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, SpatialPartitionGrid& grid, Player& player)
@@ -30,11 +31,11 @@ void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, SpatialParti
 			break;
 		case 2: //TOP
 			spawnX = rand() % WINDOW_SIZE;
-			spawnX = -SpatialPartitionGrid::CELL_SIZE + 1;
+			spawnY = -SpatialPartitionGrid::CELL_SIZE + 1;
 			break;
 		case 3: //BOTTOM
 			spawnX = rand() % WINDOW_SIZE;
-			spawnX = WINDOW_SIZE + SpatialPartitionGrid::CELL_SIZE - 1;
+			spawnY = WINDOW_SIZE + SpatialPartitionGrid::CELL_SIZE - 1;
 			break;
 		}
 

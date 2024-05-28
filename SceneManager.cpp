@@ -39,7 +39,10 @@ SceneManager::SceneManager(void)
 	fpsText.setCharacterSize(15);
 	fpsText.setPosition(2, 0);
 
-	debugDraw = false;
+	showHitboxes = false;
+	showVelocity = false;
+	showSpatialGrid = false;
+	zoomOut = false;
 }
 
 void SceneManager::initScenes()
@@ -170,25 +173,16 @@ void SceneManager::checkWindowEvents()
 			break;
 		case sf::Event::KeyPressed:
 		{
-			//Sceneshot
-			//if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1))
-			//{
-			//	time_t t = time(0);
-			//	struct tm* now = localtime(&t);
-			//
-			//	std::string filename = "Sceneshots/sceneshot ";
-			//
-			//	filename += std::to_string(now->tm_mday) + "_";
-			//	filename += std::to_string(now->tm_mon + 1) + "_";
-			//	filename += std::to_string(now->tm_year + 1900) + " # ";
-			//	filename += std::to_string(now->tm_hour) + "-";
-			//	filename += std::to_string(now->tm_min) + "-";
-			//	filename += std::to_string(now->tm_sec) + ".png";
-			//
-			//	sf::Image sceneshotImage;
-			//	sceneshotImage = gameWindow->capture();
-			//	sceneshotImage.saveToFile(filename);
-			//}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
+				zoomOut = !zoomOut;
+				updateWindowSize();
+			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2)) {
+				showSpatialGrid = !showSpatialGrid;
+			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F3)) {
+				showVelocity = !showVelocity;
+			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F4)) {
+				showHitboxes = !showHitboxes;
+			}
 
 			break;
 		}
@@ -225,7 +219,11 @@ void SceneManager::setWindowMode()
 
 	//gameWindow->setIcon(32, 32, windowIcon.getPixelsPtr());
 	//gameWindow->setVerticalSyncEnabled(true);
-	gameWindow->setMouseCursorGrabbed(true);
+	//gameWindow->setMouseCursorGrabbed(true);
+
+	sf::Cursor cursor;
+	if (cursor.loadFromSystem(sf::Cursor::Cross))
+		gameWindow->setMouseCursor(cursor);
 
 	windowHandle = gameWindow->getSystemHandle();
 
@@ -241,7 +239,12 @@ void SceneManager::updateWindowSize()
 	float posPercentX = ((tempSizeX - tempSizeY) / 2.f) / tempSizeX;
 
 	windowView.setCenter(WINDOW_SIZE / 2, WINDOW_SIZE / 2);
-	windowView.setSize(WINDOW_SIZE + 300, WINDOW_SIZE + 300);
+	if (!zoomOut) {
+		windowView.setSize(WINDOW_SIZE, WINDOW_SIZE);
+	} else {
+		windowView.setSize(WINDOW_SIZE + 300, WINDOW_SIZE + 300);
+	}
+	
 	windowView.setViewport(sf::FloatRect(posPercentX, 0, percentX, 1));
 
 	gameWindow->setView(windowView);
@@ -336,9 +339,19 @@ Scene* SceneManager::getScene(Scene::SceneNames scene)
 	}
 }
 
-bool SceneManager::debugDrawEnabled()
+bool SceneManager::debugShowHitboxes()
 {
-	return debugDraw;
+	return showHitboxes;
+}
+
+bool SceneManager::debugShowVelocity()
+{
+	return showVelocity;
+}
+
+bool SceneManager::debugShowSpatialGrid()
+{
+	return showSpatialGrid;
 }
 
 SceneManager::~SceneManager(void)

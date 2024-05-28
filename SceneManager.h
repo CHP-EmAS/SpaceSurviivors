@@ -34,7 +34,9 @@ public:
 	Scene* getActivScene();
 	Scene* getScene(Scene::SceneNames sceneType);
 
-	bool debugDrawEnabled();
+	bool debugShowHitboxes();
+	bool debugShowVelocity();
+	bool debugShowSpatialGrid();
 
 	~SceneManager(void);
 private:
@@ -44,7 +46,12 @@ private:
 	Scene* allScenes[SCENE_AMOUNT];
 	Scene::SceneNames secureCloseScene;
 
-	bool debugDraw;
+
+	//Debug
+	bool showHitboxes;
+	bool showVelocity;
+	bool showSpatialGrid;
+	bool zoomOut;
 
 	//Window
 	sf::RenderWindow* gameWindow;

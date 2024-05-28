@@ -1,46 +1,9 @@
-﻿  Player.cpp
+﻿  PlayerController.cpp
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\VectorExtension.h(38,23): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
-  (Quelldatei „Player.cpp“ wird kompiliert)
+  (Quelldatei „PlayerController.cpp“ wird kompiliert)
   
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\VectorExtension.h(43,30): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
-  (Quelldatei „Player.cpp“ wird kompiliert)
+  (Quelldatei „PlayerController.cpp“ wird kompiliert)
   
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(12,56): warning C4244: "=": Konvertierung von "T" in "T", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(12,56): warning C4244:         with
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(12,56): warning C4244:         [
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(12,56): warning C4244:             T=int
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(12,56): warning C4244:         ]
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(12,56): warning C4244:         and
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(12,56): warning C4244:         [
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(12,56): warning C4244:             T=float
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(12,56): warning C4244:         ]
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(15,114): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(15,114): warning C4244:         with
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(15,114): warning C4244:         [
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(15,114): warning C4244:             T=float
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(15,114): warning C4244:         ]
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(15,73): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(15,73): warning C4244:         with
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(15,73): warning C4244:         [
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(15,73): warning C4244:             T=float
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(15,73): warning C4244:         ]
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,111): warning C4244: "Argument": Konvertierung von "T" in "T", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,111): warning C4244:         with
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,111): warning C4244:         [
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,111): warning C4244:             T=int
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,111): warning C4244:         ]
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,111): warning C4244:         and
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,111): warning C4244:         [
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,111): warning C4244:             T=float
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,111): warning C4244:         ]
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,74): warning C4244: "Argument": Konvertierung von "T" in "T", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,74): warning C4244:         with
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,74): warning C4244:         [
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,74): warning C4244:             T=int
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,74): warning C4244:         ]
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,74): warning C4244:         and
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,74): warning C4244:         [
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,74): warning C4244:             T=float
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(18,74): warning C4244:         ]
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Player.cpp(23,18): warning C4305: "=": Verkürzung von "double" in "float"
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\PlayerController.cpp(15,13): warning C4305: "=": Verkürzung von "double" in "float"
   SpaceSurvivors.vcxproj -> C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\x64\Debug\SpaceSurvivors.exe
