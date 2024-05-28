@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{699040b4-6b69-4042-9db7-aa66f5ded4a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Defines">
+      <UniqueIdentifier>{5e0f4e31-9d9e-44aa-85ad-5f624c90ff5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Services">
+      <UniqueIdentifier>{967aea0f-9248-4b4a-918f-2f903ca5e726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Services\Graphic">
+      <UniqueIdentifier>{2637cc9d-6767-416f-8e59-be8daf972922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Scenes">
+      <UniqueIdentifier>{49120e1d-6f9d-4105-a132-c4be9f8b5a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Services\Scene">
+      <UniqueIdentifier>{5865e7bb-7fea-4ff7-835e-95f77dc4768e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Game">
+      <UniqueIdentifier>{5c7e0b82-2f0b-41fa-95d8-f7c6d3a57eea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Game\Collision">
+      <UniqueIdentifier>{7eaf2dc5-53a3-40df-b59e-c5d764056e8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Game\Objects">
+      <UniqueIdentifier>{f1c75b91-c94c-422e-8eb7-8311fbc72262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Game\Objects\Player">
+      <UniqueIdentifier>{e6533059-ca67-4f0e-b0c3-e8e90cbd52b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Game\Objects\Enemy">
+      <UniqueIdentifier>{2d973e56-bbfa-462c-8fee-7f485db5a799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Game\Objects\Enemy\Asteroid">
+      <UniqueIdentifier>{8a121a06-bba7-48da-85ee-6b5a909bf08b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Game\Objects\Bullet">
+      <UniqueIdentifier>{ce52920a-4b0d-4357-8202-ae5706c659a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Defines\Observer">
+      <UniqueIdentifier>{ad40803d-be7e-48b0-b0d6-7d0ef1c2b3f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Game\Hud">
+      <UniqueIdentifier>{1bed4848-2384-445e-bb63-151d73e2dafe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Game\Objects\Background">
+      <UniqueIdentifier>{bba21639-c9fe-4742-81bc-a124657d9071}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceSurvivors.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>src\Services\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicLoader.cpp">
+      <Filter>src\Services\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Locator.cpp">
+      <Filter>src\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>src\Game\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>src\Game\Objects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>src\Game\Objects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>src\Game\Objects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Asteroid.cpp">
+      <Filter>src\Game\Objects\Enemy\Asteroid</Filter>
+    </ClCompile>
+    <ClCompile Include="AsteroidController.cpp">
+      <Filter>src\Game\Objects\Enemy\Asteroid</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>src\Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Observable.cpp">
+      <Filter>src\Defines\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>src\Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ParallaxBackground.cpp">
+      <Filter>src\Game\Objects\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="SpatialPartitionGrid.cpp">
+      <Filter>src\Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletPool.cpp">
+      <Filter>src\Game\Objects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawnController.cpp">
+      <Filter>src\Game\Objects\Enemy</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Scene.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>src\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Locator.h">
+      <Filter>src\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicService.h">
+      <Filter>src\Services\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>src\Services\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicLoader.h">
+      <Filter>src\Services\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>src\Game\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>src\Game\Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorExtension.h">
+      <Filter>src\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>src\Game\Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>src\Game\Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Asteroid.h">
+      <Filter>src\Game\Objects\Enemy\Asteroid</Filter>
+    </ClInclude>
+    <ClInclude Include="AsteroidController.h">
+      <Filter>src\Game\Objects\Enemy\Asteroid</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>src\Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Observable.h">
+      <Filter>src\Defines\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>src\Defines\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>src\Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ParallaxBackground.h">
+      <Filter>src\Game\Objects\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="SpatialPartitionGrid.h">
+      <Filter>src\Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletPool.h">
+      <Filter>src\Game\Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawnController.h">
+      <Filter>src\Game\Objects\Enemy</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

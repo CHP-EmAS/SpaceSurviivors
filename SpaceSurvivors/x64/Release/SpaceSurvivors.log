@@ -1,0 +1,8 @@
+﻿  SpaceSurvivors.cpp
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors.cpp(19,15): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
+  Code wird generiert.
+  1 of 186 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Codegenerierung ist abgeschlossen.
+  SpaceSurvivors.vcxproj -> C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\x64\Release\SpaceSurvivors.exe
