@@ -1,9 +1,83 @@
-﻿  PlayerController.cpp
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\VectorExtension.h(38,23): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
-  (Quelldatei „PlayerController.cpp“ wird kompiliert)
+﻿  GameState.cpp
+  HUD.cpp
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\HUD.cpp(11,60): warning C4244: "Argument": Konvertierung von "T" in "float", möglicher Datenverlust
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\HUD.cpp(11,60): warning C4244:         with
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\HUD.cpp(11,60): warning C4244:         [
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\HUD.cpp(11,60): warning C4244:             T=int
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\HUD.cpp(11,60): warning C4244:         ]
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\HUD.cpp(41,18): warning C4267: "Initialisierung": Konvertierung von "size_t" nach "int", Datenverlust möglich
+  SceneManager.cpp
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\ParallaxBackground.h(3,10): warning C4067: Unerwartete Token nach Präprozessordirektive - Zeilenvorschub erwartet.
+  (Quelldatei „SceneManager.cpp“ wird kompiliert)
   
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\VectorExtension.h(43,30): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
-  (Quelldatei „PlayerController.cpp“ wird kompiliert)
-  
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\PlayerController.cpp(15,13): warning C4305: "=": Verkürzung von "double" in "float"
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(235,18): warning C4244: "Initialisierung": Konvertierung von "T" in "float", möglicher Datenverlust
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(235,18): warning C4244:         with
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(235,18): warning C4244:         [
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(235,18): warning C4244:             T=unsigned int
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(235,18): warning C4244:         ]
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(236,18): warning C4244: "Initialisierung": Konvertierung von "T" in "float", möglicher Datenverlust
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(236,18): warning C4244:         with
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(236,18): warning C4244:         [
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(236,18): warning C4244:             T=unsigned int
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(236,18): warning C4244:         ]
+  Code wird generiert...
+sfml-graphics-s-d.lib(Transformable.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Transformable.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(Color.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Color.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(Shape.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Shape.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(Sprite.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Sprite.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(RenderTarget.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(RenderTarget.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(RenderStates.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(RenderStates.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(Transform.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Transform.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(RectangleShape.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(RectangleShape.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(Vertex.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Vertex.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(Text.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Text.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(Image.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Image.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(Texture.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Texture.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(Font.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Font.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(View.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(View.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(RenderWindow.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(RenderWindow.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(VertexArray.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(VertexArray.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(BlendMode.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(BlendMode.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(Shader.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Shader.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(VertexBuffer.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(VertexBuffer.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(GLExtensions.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(GLExtensions.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(GLCheck.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(GLCheck.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(ImageLoader.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(ImageLoader.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(TextureSaver.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(TextureSaver.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(RenderTextureImplFBO.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(RenderTextureImplFBO.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(Glsl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(Glsl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-graphics-s-d.lib(RenderTextureImpl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-graphics-s-d.lib(RenderTextureImpl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(Mouse.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(Mouse.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(Keyboard.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(Keyboard.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(Cursor.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(Cursor.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(VideoMode.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(VideoMode.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(WindowBase.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(WindowBase.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(Window.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(Window.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(Context.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(Context.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(GlResource.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(GlResource.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(InputImpl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(InputImpl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(CursorImpl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(CursorImpl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(VideoModeImpl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(VideoModeImpl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(WindowImpl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(WindowImpl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(GlContext.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(GlContext.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(JoystickManager.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(JoystickManager.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(SensorManager.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(SensorManager.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(WindowImplWin32.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(WindowImplWin32.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(VulkanImplWin32.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(VulkanImplWin32.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(WglContext.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(WglContext.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(Joystick.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(Joystick.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(JoystickImpl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(JoystickImpl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-window-s-d.lib(SensorImpl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-window-s-d.lib(SensorImpl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(Time.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(Time.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(String.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(String.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(Clock.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(Clock.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(Mutex.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(Mutex.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(Lock.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(Lock.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(Err.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(Err.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(Sleep.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(Sleep.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(ThreadLocal.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(ThreadLocal.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(ClockImpl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(ClockImpl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(MutexImpl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(MutexImpl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(SleepImpl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(SleepImpl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
+sfml-system-s-d.lib(ThreadLocalImpl.obj) : warning LNK4099: PDB "" wurde nicht mit "sfml-system-s-d.lib(ThreadLocalImpl.obj)" oder an "" gefunden; Objekt wird verknüpft, als ob keine Debuginformationen vorhanden wären.
   SpaceSurvivors.vcxproj -> C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\x64\Debug\SpaceSurvivors.exe

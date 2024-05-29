@@ -11,7 +11,7 @@ EnemySpawnController::EnemySpawnController()
 	spawnTimer = 0;
 }
 
-void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, SpatialPartitionGrid& grid, Player& player)
+void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& state, SpatialPartitionGrid& grid, Player& player)
 {
 	spawnTimer += deltaTime.asSeconds();
 
@@ -49,20 +49,18 @@ void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, SpatialParti
 	}
 }
 
-void EnemySpawnController::onEvent(const GameObject& object, Observable::Event event)
+void EnemySpawnController::onEvent(const GameObject* object, Observable::Event event)
 {
-	if (object.getType() != GameObject::O_Asteroid) {
+	if (object->getType() != GameObject::O_Asteroid) {
 		return;
 	}
 
 	switch (event) {
 	case Observable::GRID_OBJECT_SPAWNED:
 		currentEnemySpawned++;
-		std::cout << "Enemy spawed" << std::endl;
 		break;
 	case Observable::GRID_OBJECT_DESPAWNED:
 		currentEnemySpawned--;
-		std::cout << "Enemy despawed" << std::endl;
 		break;
 	}
 }

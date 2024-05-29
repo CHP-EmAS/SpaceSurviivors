@@ -15,10 +15,12 @@ public:
 		Player,
 		Asteroid,
 		Bullets,
+		ExplosionAnimation,
 		Background_0,
 		Background_1,
 		Background_2,
-		Background_3
+		Background_3,
+		UI_ScorePanel
 	};
 
 	virtual const sf::Texture& getTexture(Texture texture) const = 0;

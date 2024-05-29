@@ -4,6 +4,7 @@
 
 #include "Collider.h"
 #include "Controller.h"
+#include "GameState.h"
 
 class SpatialPartitionGrid;
 
@@ -16,17 +17,19 @@ public:
 		O_Player,
 		O_Bullet,
 		O_Asteroid,
+		O_Explosion,
 		O_None
 	};
 
 	enum Interaction {
 		BulletCollision,
-		AsteroidCollision
+		AsteroidCollision,
+		PlayerCollision
 	};
 
 	GameObject(ObjectType type);
 
-	virtual void update(sf::Time deltaTime);
+	virtual void update(sf::Time deltaTime, GameState& state);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	virtual void interact(Interaction action, GameObject& interactor);
 

@@ -53,6 +53,9 @@
     <Filter Include="src\Game\Objects\Background">
       <UniqueIdentifier>{bba21639-c9fe-4742-81bc-a124657d9071}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Game\Objects\Explosion">
+      <UniqueIdentifier>{37248495-30fe-4eec-9d64-5b5cd606d8f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameScene.cpp">
@@ -103,14 +106,23 @@
     <ClCompile Include="ParallaxBackground.cpp">
       <Filter>src\Game\Objects\Background</Filter>
     </ClCompile>
-    <ClCompile Include="SpatialPartitionGrid.cpp">
-      <Filter>src\Game\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="BulletPool.cpp">
       <Filter>src\Game\Objects\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="EnemySpawnController.cpp">
       <Filter>src\Game\Objects\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>src\Game\Objects\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="SpatialPartitionGrid.cpp">
+      <Filter>src\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>src\Game\Hud</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>src\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,14 +183,23 @@
     <ClInclude Include="ParallaxBackground.h">
       <Filter>src\Game\Objects\Background</Filter>
     </ClInclude>
-    <ClInclude Include="SpatialPartitionGrid.h">
-      <Filter>src\Game\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="BulletPool.h">
       <Filter>src\Game\Objects\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="EnemySpawnController.h">
       <Filter>src\Game\Objects\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>src\Game\Objects\Explosion</Filter>
+    </ClInclude>
+    <ClInclude Include="SpatialPartitionGrid.h">
+      <Filter>src\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>src\Game\Hud</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>src\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

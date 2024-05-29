@@ -27,7 +27,7 @@ void SpatialPartitionGrid::add(GameObject* object, bool isNewObject)
 
 	//out of bounds spawn
 	if (cell.x < 0 || cell.x >= PARTITION_SIZE || cell.y < 0 || cell.y >= PARTITION_SIZE) {
-		notifyObservers(*object, Event::GRID_OBJECT_OUT_OF_BOUNDS);
+		notifyObservers(object, Event::GRID_OBJECT_OUT_OF_BOUNDS);
 		cemetery.push_back(object);
 		return;
 	}
@@ -41,7 +41,7 @@ void SpatialPartitionGrid::add(GameObject* object, bool isNewObject)
 	}
 
 	if (isNewObject) {
-		notifyObservers(*object, Event::GRID_OBJECT_SPAWNED);
+		notifyObservers(object, Event::GRID_OBJECT_SPAWNED);
 	}
 }
 
@@ -123,13 +123,13 @@ void SpatialPartitionGrid::onObjectPositionUpdated(GameObject* object, sf::Vecto
 	add(object, false);
 }
 
-void SpatialPartitionGrid::updateAll(sf::Time deltaTime)
+void SpatialPartitionGrid::updateAll(sf::Time deltaTime, GameState& state)
 {
 	for (int x = 0; x < PARTITION_SIZE; x++) {
 		for (int y = 0; y < PARTITION_SIZE; y++) {
 			GameObject* object = cells[x][y];
 			while (object != nullptr) {
-				object->update(deltaTime);
+				object->update(deltaTime, state);
 
 				if (object->markedForDespawn) {
 					GameObject* toDelete = object;
@@ -147,7 +147,7 @@ void SpatialPartitionGrid::updateAll(sf::Time deltaTime)
 	while (cemetery.size() > 0) {
 		GameObject* obj = cemetery.back();
 		if (obj->type != GameObject::O_Player) {
-			notifyObservers(*obj, Event::GRID_OBJECT_DESPAWNED);
+			notifyObservers(obj, Event::GRID_OBJECT_DESPAWNED);
 			delete obj;
 		}
 		cemetery.pop_back();

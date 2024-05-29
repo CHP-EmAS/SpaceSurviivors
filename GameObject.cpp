@@ -16,7 +16,7 @@ GameObject::GameObject(ObjectType type) : controller(nullptr), type(type)
 }
 
 
-void GameObject::update(sf::Time deltaTime)
+void GameObject::update(sf::Time deltaTime, GameState& state)
 {
 	sf::Vector2f lastPosition = getPosition();
 

@@ -1,8 +1,7 @@
 #pragma once
 
-#include "GameObject.h"
-
 class Observer;
+class GameObject;
 
 class Observable
 {
@@ -10,7 +9,9 @@ public:
 	enum Event {
 		GRID_OBJECT_SPAWNED,
 		GRID_OBJECT_DESPAWNED,
-		GRID_OBJECT_OUT_OF_BOUNDS
+		GRID_OBJECT_OUT_OF_BOUNDS,
+
+		GAME_STATE_UPDATED
 	};
 
 	void addObserver(Observer* observer);
@@ -19,7 +20,7 @@ public:
 	~Observable();
 
 protected:
-	void notifyObservers(const GameObject& object, Event event);
+	void notifyObservers(const GameObject* object, Event event);
 
 private:
 	struct ObserverNode {

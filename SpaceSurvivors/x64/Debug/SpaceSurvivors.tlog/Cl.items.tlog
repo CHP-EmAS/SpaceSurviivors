@@ -5,7 +5,10 @@ C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\BulletPool.cpp;C:\User
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Collider.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\Collider.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Controller.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\Controller.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\EnemySpawnController.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\EnemySpawnController.obj
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Explosion.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\Explosion.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameObject.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\GameObject.obj
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\GameState.obj
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\HUD.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\HUD.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpatialPartitionGrid.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\SpatialPartitionGrid.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameScene.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\GameScene.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GraphicLoader.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\GraphicLoader.obj

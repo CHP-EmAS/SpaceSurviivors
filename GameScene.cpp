@@ -13,8 +13,8 @@ GameScene::GameScene(void) : Scene(Scene::Game)
 
 void GameScene::updateScene(sf::Time deltaTime)
 {
-	enemySpawner.checkSpawnConditions(deltaTime, spatialPartitionGrid, *player);
-	spatialPartitionGrid.updateAll(deltaTime);
+	enemySpawner.checkSpawnConditions(deltaTime, state, spatialPartitionGrid, *player);
+	spatialPartitionGrid.updateAll(deltaTime, state);
 	bulletPool->updateAll(deltaTime);
 	background.update(*player);
 }
@@ -29,7 +29,8 @@ void GameScene::drawScene(sf::RenderWindow& mainWindow)
 	if (Locator::getSceneManager().debugShowSpatialGrid()) {
 		spatialPartitionGrid.debugDraw(mainWindow);
 	}
-	
+
+	mainWindow.draw(hud);
 }
 
 void GameScene::checkEvents(sf::Event newEvent)
@@ -70,6 +71,11 @@ void GameScene::initScene()
 	player->spawOnGrid(&spatialPartitionGrid, sf::Vector2f(WINDOW_SIZE / 2, WINDOW_SIZE / 2));
 
 	spatialPartitionGrid.addObserver(&enemySpawner);
+
+	hud.setGameState(&state);
+	state.addObserver(&hud);
+
+	state.reset();
 }
 
 GameScene::~GameScene(void)

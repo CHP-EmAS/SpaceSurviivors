@@ -6,29 +6,24 @@ const sf::Texture& GraphicLoader::getTexture(GraphicService::Texture texture) co
 	{
 	case Player:
 		return text_Player;
-		break;
 	case Bullets:
 		return text_Bullets;
-		break;
 	case Asteroid:
 		return text_Asteroid;
-		break;
+	case ExplosionAnimation:
+		return text_ExplosionAnimation;
 	case Background_0:
-		return text_Background_0;
-		break;
+		return text_Background0;
 	case Background_1:
-		return text_Background_1;
-		break;
+		return text_Background1;
 	case Background_2:
-		return text_Background_2;
-		break;
+		return text_Background2;
 	case Background_3:
-		return text_Background_3;
-		break;
-		break;
+		return text_Background3;
+	case UI_ScorePanel:
+		return text_ui_scorePanel;
 	default:
 		return text_Player;
-		break;
 	}
 }
 
@@ -38,13 +33,10 @@ const sf::Font& GraphicLoader::getFont(GraphicService::Font font) const
 	{
 	case Arial:
 		return arial_Font;
-		break;
 	case Pixel:
 		return pixel_Font;
-		break;
 	default:
 		return arial_Font;
-		break;
 	}
 }
 
@@ -70,32 +62,41 @@ void GraphicLoader::loadAllGraphics()
 		text_Asteroid.loadFromImage(img);
 	}
 
+	if (!img.loadFromFile("img/explosion.png")) {
+		loadingFails++;
+	} else {
+		img.createMaskFromColor(sf::Color(255, 192, 255));
+		text_ExplosionAnimation.loadFromImage(img);
+	}
+
 	if (!img.loadFromFile("img/bg0.png")) {
 		loadingFails++;
-	}
-	else {
-		text_Background_0.loadFromImage(img);
+	} else {
+		text_Background0.loadFromImage(img);
 	}
 
 	if (!img.loadFromFile("img/bg1.png")) {
 		loadingFails++;
-	}
-	else {
-		text_Background_1.loadFromImage(img);
+	} else {
+		text_Background1.loadFromImage(img);
 	}
 
 	if (!img.loadFromFile("img/bg2.png")) {
 		loadingFails++;
-	}
-	else {
-		text_Background_2.loadFromImage(img);
+	} else {
+		text_Background2.loadFromImage(img);
 	}
 
 	if (!img.loadFromFile("img/bg3.png")) {
 		loadingFails++;
+	} else {
+		text_Background3.loadFromImage(img);
 	}
-	else {
-		text_Background_3.loadFromImage(img);
+
+	if (!img.loadFromFile("img/ui/scorePanel.png")) {
+		loadingFails++;
+	} else {
+		text_ui_scorePanel.loadFromImage(img);
 	}
 }
 

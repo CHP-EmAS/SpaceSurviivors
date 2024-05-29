@@ -19,7 +19,7 @@ public:
 
 	void onObjectPositionUpdated(GameObject* enemy, sf::Vector2f lastPostion);
 
-	void updateAll(sf::Time deltaTime);
+	void updateAll(sf::Time deltaTime, GameState& state);
 	void drawAll(sf::RenderWindow& window);
 
 	void debugDraw(sf::RenderWindow& window);

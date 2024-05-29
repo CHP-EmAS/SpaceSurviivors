@@ -8,10 +8,10 @@ class EnemySpawnController : public Observer
 {
 public:
 	EnemySpawnController();
-	void checkSpawnConditions(sf::Time deltaTime, SpatialPartitionGrid& grid, Player& player);
+	void checkSpawnConditions(sf::Time deltaTime, GameState& state, SpatialPartitionGrid& grid, Player& player);
 
 private:
-	void onEvent(const GameObject& object, Observable::Event event) override;
+	void onEvent(const GameObject* object, Observable::Event event) override;
 
 	int enemyAmountTargetValue;
 	int currentEnemySpawned;

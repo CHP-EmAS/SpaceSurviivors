@@ -2,11 +2,13 @@
 
 #include "Scene.h"
 
+#include "GameState.h"
 #include "Player.h"
 #include "BulletPool.h"
 #include "SpatialPartitionGrid.h"
 #include "ParallaxBackground.h"
 #include "EnemySpawnController.h"
+#include "HUD.h"
 
 class GameScene : public Scene
 {
@@ -26,6 +28,9 @@ public:
 private:
 	void initScene();
 
+	//State
+	GameState state;
+
 	//Grid
 	SpatialPartitionGrid spatialPartitionGrid;
 
@@ -37,5 +42,8 @@ private:
 
 	//Background
 	ParallaxBackground background;
+
+	//HUD
+	HUD hud;
 };
 
