@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "GameState.h"
+
 class GameObject;
 
 class Controller
@@ -9,7 +11,7 @@ class Controller
 public:
 	Controller(GameObject* parent);
 
-	virtual void simulate(sf::Time deltaTime);
+	virtual void simulate(sf::Time deltaTime, GameState& state);
 	void applyForce(sf::Vector2f force);
 
 	void debugDraw(sf::RenderTarget& target);

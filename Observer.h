@@ -6,5 +6,5 @@ class GameObject;
 
 class Observer {
 public:
-	virtual void onEvent(const GameObject* object, Observable::Event event) = 0;
+	virtual void onEvent(const Observable::Event event, const Observable::EventInfo info) = 0;
 };

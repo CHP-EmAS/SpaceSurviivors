@@ -4,10 +4,10 @@
 
 EnemySpawnController::EnemySpawnController()
 {
-	enemyAmountTargetValue = 100;
+	enemyAmountTargetValue = 10;
 	currentEnemySpawned = 0;
 
-	spawnIntervall = 0.3;
+	spawnIntervall = 0.5;
 	spawnTimer = 0;
 }
 
@@ -49,18 +49,27 @@ void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& s
 	}
 }
 
-void EnemySpawnController::onEvent(const GameObject* object, Observable::Event event)
+void EnemySpawnController::onEvent(const Observable::Event event, const Observable::EventInfo info)
 {
-	if (object->getType() != GameObject::O_Asteroid) {
-		return;
-	}
-
 	switch (event) {
 	case Observable::GRID_OBJECT_SPAWNED:
-		currentEnemySpawned++;
+		if (info.object->getType() == GameObject::O_Asteroid) {
+			currentEnemySpawned++;
+		}
 		break;
 	case Observable::GRID_OBJECT_DESPAWNED:
-		currentEnemySpawned--;
+		if (info.object->getType() == GameObject::O_Asteroid) {
+			currentEnemySpawned--;
+		}
+		break;
+	case Observable::LEVEL_UPDATED:
+		onLevelUp(info.value);
 		break;
 	}
+}
+
+void EnemySpawnController::onLevelUp(int newLevel)
+{
+	enemyAmountTargetValue = std::min((int)std::floor(std::pow(1.5, newLevel)), 1000);
+	spawnIntervall = std::max(0.6 - 0.025 * newLevel, 0.1);
 }

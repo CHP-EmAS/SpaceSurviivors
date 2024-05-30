@@ -20,7 +20,9 @@ public:
 		Background_1,
 		Background_2,
 		Background_3,
-		UI_ScorePanel
+		UI_ShortPanel,
+		UI_LongPanel,
+		UI_BlueBar
 	};
 
 	virtual const sf::Texture& getTexture(Texture texture) const = 0;

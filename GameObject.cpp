@@ -21,7 +21,7 @@ void GameObject::update(sf::Time deltaTime, GameState& state)
 	sf::Vector2f lastPosition = getPosition();
 
 	if (controller) {
-		controller->simulate(deltaTime);
+		controller->simulate(deltaTime, state);
 	}
 
 	if (grid) {

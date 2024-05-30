@@ -15,7 +15,7 @@ Controller::Controller(GameObject* parent)
     velocityLine[0].color = sf::Color::Red;
 }
 
-void Controller::simulate(sf::Time deltaTime)
+void Controller::simulate(sf::Time deltaTime, GameState& state)
 {
     if (velocity != sf::Vector2f(0, 0)) {
         if (std::sqrt(VectorExtension::vectorSquareLength(velocity)) > maxSpeed)

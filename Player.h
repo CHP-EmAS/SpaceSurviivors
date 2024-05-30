@@ -17,7 +17,7 @@ public:
 	bool isInvincible();
 	
 private:
-	void checkCollisions();
+	bool checkCollisions();
 
 	void updateInvincibility(sf::Time deltaTime);
 	void setFlicker(bool flicker);
@@ -25,8 +25,7 @@ private:
 	BulletPool* bulletPool;
 	sf::Vector2f bulletSpawnPoint;
 	float timeSinceLastShot;
-	float shootInterval;
-
+	
 	float invincibleTimer;
 	
 	float flickerTimer;

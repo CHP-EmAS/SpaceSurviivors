@@ -11,7 +11,8 @@ public:
 	void checkSpawnConditions(sf::Time deltaTime, GameState& state, SpatialPartitionGrid& grid, Player& player);
 
 private:
-	void onEvent(const GameObject* object, Observable::Event event) override;
+	void onEvent(const Observable::Event event, const Observable::EventInfo info) override;
+	void onLevelUp(int newLevel);
 
 	int enemyAmountTargetValue;
 	int currentEnemySpawned;

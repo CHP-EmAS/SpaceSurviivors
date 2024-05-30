@@ -11,7 +11,15 @@ public:
 		GRID_OBJECT_DESPAWNED,
 		GRID_OBJECT_OUT_OF_BOUNDS,
 
-		GAME_STATE_UPDATED
+		SCORE_UPDATED,
+		EXPERIENCE_UPDATED,
+		MAX_EXPERIENCE_UPDATED,
+		LEVEL_UPDATED,
+	};
+
+	struct EventInfo {
+		GameObject* object = nullptr;
+		int value = 0;
 	};
 
 	void addObserver(Observer* observer);
@@ -20,7 +28,7 @@ public:
 	~Observable();
 
 protected:
-	void notifyObservers(const GameObject* object, Event event);
+	void notifyObservers(const Event event, const EventInfo info);
 
 private:
 	struct ObserverNode {

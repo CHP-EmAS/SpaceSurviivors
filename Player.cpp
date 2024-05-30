@@ -22,7 +22,6 @@ Player::Player(BulletPool* bulletPool) : GameObject(ObjectType::O_Player)
 	setController(new PlayerController(this));
 
 	timeSinceLastShot = 0.f;
-	shootInterval = 0.1;
 
 	invincibleTimer = 0;
 	flicker = false;
@@ -45,7 +44,7 @@ void Player::update(sf::Time deltaTime, GameState& state)
 
 	timeSinceLastShot += deltaTime.asSeconds();
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && timeSinceLastShot >= shootInterval) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && timeSinceLastShot >= state.getPlayerShootInterval()) {
 		Bullet* newBullet = bulletPool->getNewBullet();
 		
 		sf::Vector2f spawn = getTransform().transformPoint(bulletSpawnPoint);
@@ -59,10 +58,11 @@ void Player::update(sf::Time deltaTime, GameState& state)
 	}
 
 	if (!isInvincible()) {
-		checkCollisions();
+		if (checkCollisions()) {
+			setInvincibility(sf::seconds(state.getPlayerInvinciblyInterval()));
+		}
 	}
 	
-
 	if (isInvincible()) {
 		updateInvincibility(deltaTime);
 	}
@@ -88,14 +88,16 @@ bool Player::isInvincible()
 	return invincibleTimer > 0;
 }
 
-void Player::checkCollisions()
+bool Player::checkCollisions()
 {
+	bool enemyCollision = false;
 	std::vector<GameObject*> collidingObjects = grid->getCollidingObjects(this);
 
 	while (collidingObjects.size() > 0) {
 		GameObject* collidingObject = collidingObjects.back();
 
 		if (collidingObject->getType() == O_Asteroid) {
+			enemyCollision = true;
 			Controller* asteroidController = collidingObject->getController();
 
 			if (asteroidController) {
@@ -106,7 +108,7 @@ void Player::checkCollisions()
 				explodeDirection = VectorExtension::normalize(getPosition() - explodeDirection);
 
 				controller->applyForce(explodeDirection * speed);
-				setInvincibility(sf::seconds(1.5));
+				
 			}
 
 			collidingObject->interact(PlayerCollision, *this);
@@ -114,6 +116,8 @@ void Player::checkCollisions()
 
 		collidingObjects.pop_back();
 	}
+
+	return enemyCollision;
 }
 
 void Player::updateInvincibility(sf::Time deltaTime)

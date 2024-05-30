@@ -20,8 +20,12 @@ const sf::Texture& GraphicLoader::getTexture(GraphicService::Texture texture) co
 		return text_Background2;
 	case Background_3:
 		return text_Background3;
-	case UI_ScorePanel:
-		return text_ui_scorePanel;
+	case UI_ShortPanel:
+		return text_ui_shortPanel;
+	case UI_LongPanel:
+		return text_ui_longPanel;
+	case UI_BlueBar:
+		return text_ui_blueBar;
 	default:
 		return text_Player;
 	}
@@ -93,10 +97,24 @@ void GraphicLoader::loadAllGraphics()
 		text_Background3.loadFromImage(img);
 	}
 
-	if (!img.loadFromFile("img/ui/scorePanel.png")) {
+	if (!img.loadFromFile("img/ui/shortPanel.png")) {
 		loadingFails++;
 	} else {
-		text_ui_scorePanel.loadFromImage(img);
+		text_ui_shortPanel.loadFromImage(img);
+	}
+
+	if (!img.loadFromFile("img/ui/longPanel.png")) {
+		loadingFails++;
+	}
+	else {
+		text_ui_longPanel.loadFromImage(img);
+	}
+
+	if (!img.loadFromFile("img/ui/blueBar.png")) {
+		loadingFails++;
+	}
+	else {
+		text_ui_blueBar.loadFromImage(img);
 	}
 }
 

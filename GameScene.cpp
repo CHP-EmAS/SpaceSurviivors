@@ -72,10 +72,10 @@ void GameScene::initScene()
 
 	spatialPartitionGrid.addObserver(&enemySpawner);
 
-	hud.setGameState(&state);
+	state.addObserver(&enemySpawner);
 	state.addObserver(&hud);
 
-	state.reset();
+	state.setStartValues();
 }
 
 GameScene::~GameScene(void)

@@ -56,6 +56,9 @@
     <Filter Include="src\Game\Objects\Explosion">
       <UniqueIdentifier>{37248495-30fe-4eec-9d64-5b5cd606d8f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\UI">
+      <UniqueIdentifier>{0c565f91-fdfd-4338-a130-ebe85d13932e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameScene.cpp">
@@ -123,6 +126,9 @@
     </ClCompile>
     <ClCompile Include="GameState.cpp">
       <Filter>src\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>src\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,5 +207,11 @@
     <ClInclude Include="GameState.h">
       <Filter>src\Game</Filter>
     </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

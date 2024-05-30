@@ -30,6 +30,7 @@ void Asteroid::update(sf::Time deltaTime, GameState& state)
 
 	if (currentHitPoints <= 0) {
 		state.addScore(100 * getScale().x);
+		state.addExperience(5 * getScale().x);
 		explode();
 	}
 

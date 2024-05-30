@@ -10,16 +10,15 @@
 
 PlayerController::PlayerController(GameObject* parent) : Controller(parent) {
 	velocity = sf::Vector2f(0, 0);
-	acceleration = 2000.f;
-	maxSpeed = 800.f;
+	maxSpeed = 1800.f;
 	friction = 0.01;
 }
 
-void PlayerController::simulate(sf::Time deltaTime)
+void PlayerController::simulate(sf::Time deltaTime, GameState& state)
 {
     sf::Vector2f lastVelocity(velocity);
 
-    velocity += getInputVelocity(deltaTime);
+    velocity += getInputVector() * state.getPlayerAcceleration() * deltaTime.asSeconds();;
 
     //move
     if (velocity != sf::Vector2f(0, 0)) {
@@ -43,7 +42,7 @@ void PlayerController::simulate(sf::Time deltaTime)
     rotateToMouse(deltaTime);
 }
 
-sf::Vector2f PlayerController::getInputVelocity(sf::Time deltaTime)
+sf::Vector2f PlayerController::getInputVector()
 {
     sf::Vector2f movement(0.f, 0.f);
 
@@ -68,7 +67,7 @@ sf::Vector2f PlayerController::getInputVelocity(sf::Time deltaTime)
         return sf::Vector2f(0, 0);
     }
     
-    return VectorExtension::normalize(movement) * acceleration * deltaTime.asSeconds();
+    return VectorExtension::normalize(movement);
 }
 
 void PlayerController::rotateToMouse(sf::Time deltaTime)

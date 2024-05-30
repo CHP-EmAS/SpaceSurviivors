@@ -33,11 +33,11 @@ void Observable::removeObserver(Observer* observer)
 	}
 }
 
-void Observable::notifyObservers(const GameObject* object, Event event)
+void Observable::notifyObservers(const Event event, const EventInfo info)
 {
 	ObserverNode* cursor = head;
 	while (cursor != nullptr) {
-		cursor->observer->onEvent(object, event);
+		cursor->observer->onEvent(event, info);
 		cursor = cursor->next;
 	}
 }

@@ -144,6 +144,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="SpatialPartitionGrid.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GraphicLoader.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="SpatialPartitionGrid.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GraphicLoader.h" />
@@ -182,6 +184,9 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="VectorExtension.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

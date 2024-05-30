@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GameObject" Collapsed="true">
+    <Position X="5.75" Y="5.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="GameObject::ObjectType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GameObject.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="GameObject::Interaction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GameObject.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <InheritanceLine Type="sf::Transformable" FixedFromPoint="true">
+      <Path>
+        <Point X="5.25" Y="4.312" />
+        <Point X="5.25" Y="5.375" />
+        <Point X="6.5" Y="5.375" />
+        <Point X="6.5" Y="5.75" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="sf::Drawable" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="4.312" />
+        <Point X="7" Y="5.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAIAQAEAABIAAAAkARABADAAAKAAEAIEAAA=</HashCode>
+      <FileName>GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Observable" Collapsed="true">
+    <Position X="15.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAIAAAQAAAAAAAAAAAAAAAAAIACAAAAAA=</HashCode>
+      <FileName>Observable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Observer" Collapsed="true">
+    <Position X="12" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Observer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="sf::Transformable" Collapsed="true">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIIAIADgCgGCAAAAQACgDDAAgAAACAAAAAAEAAAA=</HashCode>
+      <FileName>C:\Tools\SFML\include\SFML\Graphics\Transformable.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="sf::Drawable" Collapsed="true">
+    <Position X="6.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Tools\SFML\include\SFML\Graphics\Drawable.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameScene" Collapsed="true">
+    <Position X="12.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAACgAAgAAAIAIgAIABAQAAIAAAAAFAQAAAAAAIIA=</HashCode>
+      <FileName>GameScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene" Collapsed="true">
+    <Position X="12.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAACAAIgACAIAIgAAACAQGQAAAAAAAAQABAAAAIAA=</HashCode>
+      <FileName>Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicLoader" Collapsed="true">
+    <Position X="20" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAEgEAAAAIAAAAAAAAAAAI8AgABAAQAFE=</HashCode>
+      <FileName>GraphicLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicService" Collapsed="true">
+    <Position X="20" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>GraphicService.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Locator" Collapsed="true">
+    <Position X="21" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAIAAAAAAAAAAAAIAAAAAAACABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Locator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpatialPartitionGrid" Collapsed="true">
+    <Position X="16.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAEACAAAAAAAAEAAAAAAACBAAAgAABQAQAEAAGEAA=</HashCode>
+      <FileName>SpatialPartitionGrid.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameState" Collapsed="true">
+    <Position X="14.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJAAABAEABAAAAAUAEIAQAAAAEAACCEAABAIAAsAAQ=</HashCode>
+      <FileName>GameState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller" Collapsed="true">
+    <Position X="9.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAwBAQAIIAAAQAEAQAAAAEAAAQAEAAACEA=</HashCode>
+      <FileName>Controller.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAIAAEAAAAAClAIAgBCAAIAAACAAAAAAAQAEAAA=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerController" Collapsed="true">
+    <Position X="8.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAFAQAAAAAAAAAgAAAAABA=</HashCode>
+      <FileName>PlayerController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Explosion" Collapsed="true">
+    <Position X="5.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAGAAAAQAAAAUAAAAAEAAA=</HashCode>
+      <FileName>Explosion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemySpawnController" Collapsed="true">
+    <Position X="12.75" Y="5.75" Width="1.5" />
+    <InheritanceLine Type="Observer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="13.25" Y="5.062" />
+        <Point X="13.25" Y="5.375" />
+        <Point X="13.25" Y="5.375" />
+        <Point X="13.25" Y="5.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAQAAACAgAAAAAAAIAAAAAAAEAAAAAEgA=</HashCode>
+      <FileName>EnemySpawnController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroid" Collapsed="true">
+    <Position X="2.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAACAAAAAAAAAAAACABAAAAIAAEAAA=</HashCode>
+      <FileName>Asteroid.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AsteroidController" Collapsed="true">
+    <Position X="10.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAABAAAAACAA=</HashCode>
+      <FileName>AsteroidController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bullet" Collapsed="true">
+    <Position X="4" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAABAACAAAAQAAABAAAAIQAAA=</HashCode>
+      <FileName>Bullet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BulletPool" Collapsed="true">
+    <Position X="16.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAACAAAIDAACAAAAAAAAAAAAAAAAABAAAAAAAAgAA=</HashCode>
+      <FileName>BulletPool.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParallaxBackground" Collapsed="true">
+    <Position X="8.25" Y="5.75" Width="2.5" />
+    <InheritanceLine Type="sf::Drawable" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.438" Y="4.312" />
+        <Point X="7.438" Y="6.125" />
+        <Point X="8.25" Y="6.125" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAgAAAAAAQcAAAAAAAAAAAIAAAAAAAAEAAg=</HashCode>
+      <FileName>ParallaxBackground.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HUD" Collapsed="true">
+    <Position X="11" Y="5.75" Width="1.5" />
+    <InheritanceLine Type="sf::Drawable" FixedFromPoint="true">
+      <Path>
+        <Point X="7.875" Y="4.312" />
+        <Point X="7.875" Y="5.375" />
+        <Point X="11.75" Y="5.375" />
+        <Point X="11.75" Y="5.75" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="Observer" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.25" Y="5.062" />
+        <Point X="12.25" Y="5.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAQQAAAAIAAAAAACAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>HUD.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Collider" Collapsed="true">
+    <Position X="4" Y="5.75" Width="1.5" />
+    <InheritanceLine Type="sf::Transformable" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.312" Y="4.312" />
+        <Point X="4.312" Y="5.75" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="sf::Drawable" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.688" Y="4.312" />
+        <Point X="6.688" Y="4.946" />
+        <Point X="5.333" Y="4.946" Type="JumpStart" />
+        <Point X="5.167" Y="4.946" Type="JumpEnd" />
+        <Point X="5" Y="4.946" />
+        <Point X="5" Y="5.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAQCAAAAAAgAAAIAACAAAAAACAAQAAAEAAAAAAA=</HashCode>
+      <FileName>Collider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VectorExtension" Collapsed="true">
+    <Position X="14.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAQAAQAAAACAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>VectorExtension.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneManager" Collapsed="true">
+    <Position X="21.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAEIFQgAAQAEIAwLIoAAhBgJQYAggQFACGAAABIAQ=</HashCode>
+      <FileName>SceneManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

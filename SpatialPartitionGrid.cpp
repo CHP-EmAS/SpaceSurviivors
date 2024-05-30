@@ -27,7 +27,7 @@ void SpatialPartitionGrid::add(GameObject* object, bool isNewObject)
 
 	//out of bounds spawn
 	if (cell.x < 0 || cell.x >= PARTITION_SIZE || cell.y < 0 || cell.y >= PARTITION_SIZE) {
-		notifyObservers(object, Event::GRID_OBJECT_OUT_OF_BOUNDS);
+		notifyObservers(Event::GRID_OBJECT_OUT_OF_BOUNDS, { object });
 		cemetery.push_back(object);
 		return;
 	}
@@ -41,7 +41,7 @@ void SpatialPartitionGrid::add(GameObject* object, bool isNewObject)
 	}
 
 	if (isNewObject) {
-		notifyObservers(object, Event::GRID_OBJECT_SPAWNED);
+		notifyObservers(Event::GRID_OBJECT_SPAWNED, { object });
 	}
 }
 
@@ -147,7 +147,7 @@ void SpatialPartitionGrid::updateAll(sf::Time deltaTime, GameState& state)
 	while (cemetery.size() > 0) {
 		GameObject* obj = cemetery.back();
 		if (obj->type != GameObject::O_Player) {
-			notifyObservers(obj, Event::GRID_OBJECT_DESPAWNED);
+			notifyObservers(Event::GRID_OBJECT_DESPAWNED, { obj });
 			delete obj;
 		}
 		cemetery.pop_back();

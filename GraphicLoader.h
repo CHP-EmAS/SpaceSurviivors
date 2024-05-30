@@ -21,7 +21,9 @@ private:
 	sf::Texture text_Background2;
 	sf::Texture text_Background3;
 
-	sf::Texture text_ui_scorePanel;
+	sf::Texture text_ui_shortPanel;
+	sf::Texture text_ui_longPanel;
+	sf::Texture text_ui_blueBar;
 
 	//Fonts
 	sf::Font arial_Font;

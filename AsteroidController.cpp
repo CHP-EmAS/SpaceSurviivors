@@ -7,7 +7,7 @@ AsteroidController::AsteroidController(GameObject* parent, sf::Vector2f directio
 	this->rotationSpeed = rotationSpeed;
 }
 
-void AsteroidController::simulate(sf::Time deltaTime)
+void AsteroidController::simulate(sf::Time deltaTime, GameState& state)
 {
 	parentObject->move(velocity * deltaTime.asSeconds());
 	parentObject->rotate(rotationSpeed * deltaTime.asSeconds());
