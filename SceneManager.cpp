@@ -11,11 +11,8 @@ SceneManager::SceneManager(void)
 {
 	gameWindow = nullptr;
 
-	windowIcon.loadFromFile("Img/ect/schwert.png");
+	windowIcon.loadFromFile("img/asteroid.png");
 
-	setWindowParameter(WINDOW_SIZE, WINDOW_SIZE, true, false);
-
-	
 	allScenes[Scene::Main_Menue] = nullptr;
 	allScenes[Scene::Game] = nullptr;
 	allScenes[Scene::Pause] = nullptr;
@@ -24,10 +21,6 @@ SceneManager::SceneManager(void)
 	allScenes[Scene::Credits] = nullptr;
 	allScenes[Scene::Gameover] = nullptr;
 
-	secureCloseScene = Scene::None;
-
-	//fading
-	fadeAlpha = 0;
 	fadeRectangle.setSize(sf::Vector2f(WINDOW_SIZE + 2, WINDOW_SIZE + 2));
 	fadeRectangle.setPosition(-1, -1);
 	fadeRectangle.setFillColor(sf::Color::Black);
@@ -39,6 +32,11 @@ SceneManager::SceneManager(void)
 	fpsText.setCharacterSize(15);
 	fpsText.setPosition(2, 0);
 
+	secureCloseScene = Scene::None;
+
+	//fading
+	fadeAlpha = 0;
+	showFPS = false;
 	showHitboxes = false;
 	showVelocity = false;
 	showSpatialGrid = false;
@@ -126,7 +124,9 @@ void SceneManager::drawActivScene()
 		gameWindow->draw(fadeRectangle);
 	}
 
-	gameWindow->draw(fpsText);
+	if (showFPS) {
+		gameWindow->draw(fpsText);
+	}
 
 	gameWindow->display();
 }
@@ -174,13 +174,15 @@ void SceneManager::checkWindowEvents()
 		case sf::Event::KeyPressed:
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
+				showFPS = !showFPS;
+			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2)) {
 				zoomOut = !zoomOut;
 				updateWindowSize();
-			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2)) {
-				showSpatialGrid = !showSpatialGrid;
 			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F3)) {
-				showVelocity = !showVelocity;
+				showSpatialGrid = !showSpatialGrid;
 			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F4)) {
+				showVelocity = !showVelocity;
+			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F5)) {
 				showHitboxes = !showHitboxes;
 			}
 
@@ -195,26 +197,22 @@ void SceneManager::checkWindowEvents()
 	}
 }
 
-void SceneManager::setWindowMode()
+void SceneManager::setWindowMode(bool border, bool fullscreen)
 {
-	if (gameWindow != nullptr)
-		delete gameWindow;
-
-	gameWindow = new sf::RenderWindow;
+	if (gameWindow == nullptr)
+		gameWindow = new sf::RenderWindow;
 
 	if (fullscreen)
 	{
-		gameWindow->create(sf::VideoMode(WINDOW_SIZE, WINDOW_SIZE), GAME_TITLE, sf::Style::Fullscreen);
+		gameWindow->create(sf::VideoMode::getFullscreenModes()[0], GAME_TITLE, sf::Style::Fullscreen);
 	}
 	else if (border)
 	{
-		gameWindow->create(sf::VideoMode(sizeX, sizeY), GAME_TITLE, sf::Style::Default);
-		gameWindow->setSize(sf::Vector2u(sizeX, sizeY));
+		gameWindow->create(sf::VideoMode::getDesktopMode(), GAME_TITLE, sf::Style::Default);
 	}
 	else
 	{
-		gameWindow->create(sf::VideoMode(sizeX, sizeY), GAME_TITLE, sf::Style::None);
-		gameWindow->setSize(sf::Vector2u(sizeX, sizeY));
+		gameWindow->create(sf::VideoMode::getDesktopMode(), GAME_TITLE, sf::Style::None);
 	}
 
 	//gameWindow->setIcon(32, 32, windowIcon.getPixelsPtr());
@@ -224,8 +222,6 @@ void SceneManager::setWindowMode()
 	sf::Cursor cursor;
 	if (cursor.loadFromSystem(sf::Cursor::Cross))
 		gameWindow->setMouseCursor(cursor);
-
-	windowHandle = gameWindow->getSystemHandle();
 
 	updateWindowSize();
 }
@@ -248,16 +244,6 @@ void SceneManager::updateWindowSize()
 	windowView.setViewport(sf::FloatRect(posPercentX, 0, percentX, 1));
 
 	gameWindow->setView(windowView);
-}
-
-void SceneManager::setWindowParameter(int width, int height, bool border, bool fullscreen)
-{
-	this->sizeX = width;
-	this->sizeY = height;
-	this->border = border;
-	this->fullscreen = fullscreen;
-
-	setWindowMode();
 }
 
 void SceneManager::setDisplayFPS(int fps)
@@ -310,11 +296,6 @@ void SceneManager::fadeIn(sf::Color fadeColor)
 sf::RenderWindow& SceneManager::getGameWindow()
 {
 	return *gameWindow;
-}
-
-HWND& SceneManager::getGameWindowHandle()
-{
-	return windowHandle;
 }
 
 Scene* SceneManager::getLastScene()

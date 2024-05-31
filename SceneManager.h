@@ -19,16 +19,14 @@ public:
 	void updateActivScene(sf::Time deltaTime);
 	void checkWindowEvents();
 
-	void setWindowMode();
+	void setWindowMode(bool border, bool fullscreen);
 	void updateWindowSize();
-	void setWindowParameter(int width, int height, bool border, bool fullscreen);
 	void setDisplayFPS(int fps);
 
 	void fadeOut(sf::Color fadeColor = sf::Color::Black);
 	void fadeIn(sf::Color fadeColor = sf::Color::Black);
 
 	sf::RenderWindow& getGameWindow();
-	HWND& getGameWindowHandle();
 
 	Scene* getLastScene();
 	Scene* getActivScene();
@@ -46,8 +44,8 @@ private:
 	Scene* allScenes[SCENE_AMOUNT];
 	Scene::SceneNames secureCloseScene;
 
-
 	//Debug
+	bool showFPS;
 	bool showHitboxes;
 	bool showVelocity;
 	bool showSpatialGrid;
@@ -58,10 +56,6 @@ private:
 	sf::Image windowIcon;
 	sf::View windowView;
 
-	HWND windowHandle;
-
-	int sizeX;
-	int sizeY;
 	bool fullscreen;
 	bool border;
 

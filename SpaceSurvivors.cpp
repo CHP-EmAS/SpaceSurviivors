@@ -32,9 +32,9 @@ int main(int argc, char* argv[])
 	graphicLoader->loadAllFonts();
 	graphicLoader->loadAllGraphics();
 	
-
 	SceneManager* sceneManager = new SceneManager();
 	Locator::provide(sceneManager);
+	sceneManager->setWindowMode(true, true);
 	sceneManager->initScenes();
 	sceneManager->changeScene(Scene::Game, false);
 	
