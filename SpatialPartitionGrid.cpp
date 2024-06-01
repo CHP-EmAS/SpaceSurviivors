@@ -61,7 +61,31 @@ void SpatialPartitionGrid::remove(GameObject* object)
 		cells[currentCell.x][currentCell.y] = object->nextObject;
 	}
 
-	cemetery.push_back(object);
+	if (object->type != GameObject::O_Player) {
+		cemetery.push_back(object);
+	}
+	
+}
+
+void SpatialPartitionGrid::clear()
+{
+	for (int x = 0; x < PARTITION_SIZE; x++) {
+		for (int y = 0; y < PARTITION_SIZE; y++) {
+			GameObject* beginn = cells[x][y];
+
+			while (beginn != nullptr) {
+				GameObject* obj = beginn;
+				beginn = beginn->nextObject;
+				remove(obj);
+			}
+		}
+	}
+
+	while (cemetery.size() > 0) {
+		GameObject* obj = cemetery.back();
+		delete obj;
+		cemetery.pop_back();
+	}
 }
 
 std::vector<GameObject*> SpatialPartitionGrid::getCollidingObjects(GameObject* collider)
@@ -94,6 +118,23 @@ std::vector<GameObject*> SpatialPartitionGrid::getCollidingObjects(GameObject* c
 	}
 
 	return collidingObjects;
+}
+
+std::vector<GameObject*> SpatialPartitionGrid::getAllObjects()
+{
+	std::vector<GameObject*> objects;
+
+	for (int x = 0; x < PARTITION_SIZE; x++) {
+		for (int y = 0; y < PARTITION_SIZE; y++) {
+			GameObject* object = cells[x][y];
+			while (object != nullptr) {
+				objects.push_back(object);
+				object = object->nextObject;
+			}
+		}
+	}
+
+	return objects;
 }
 
 void SpatialPartitionGrid::onObjectPositionUpdated(GameObject* object, sf::Vector2f lastPostion)
@@ -143,13 +184,12 @@ void SpatialPartitionGrid::updateAll(sf::Time deltaTime, GameState& state)
 	}
 
 	//delete all objects that are not part of the grid anymore
-	//deleting player object is handled by GameScene
 	while (cemetery.size() > 0) {
 		GameObject* obj = cemetery.back();
-		if (obj->type != GameObject::O_Player) {
-			notifyObservers(Event::GRID_OBJECT_DESPAWNED, { obj });
-			delete obj;
-		}
+
+		notifyObservers(Event::GRID_OBJECT_DESPAWNED, { obj });
+		delete obj;
+	
 		cemetery.pop_back();
 	}
 }
@@ -195,4 +235,9 @@ sf::Vector2i SpatialPartitionGrid::convertPositionToCell(sf::Vector2f position)
 	int cellY = (int)floorf((position.y + CELL_SIZE) / CELL_SIZE);
 
 	return sf::Vector2i(cellX, cellY);
+}
+
+SpatialPartitionGrid::~SpatialPartitionGrid()
+{
+	clear();
 }

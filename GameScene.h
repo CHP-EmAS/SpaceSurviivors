@@ -26,7 +26,6 @@ public:
 
 	~GameScene(void);
 private:
-	void initScene();
 
 	//State
 	GameState state;
@@ -40,10 +39,9 @@ private:
 
 	EnemySpawnController enemySpawner;
 
-	//Background
-	ParallaxBackground background;
-
 	//HUD
 	HUD hud;
+
+	float gameOverTimer;
 };
 

@@ -6,7 +6,7 @@
 class Player : public GameObject
 {
 public:
-	Player(BulletPool* bulletPool);
+	Player(BulletPool* bulletPool, SpatialPartitionGrid* grid);
 
 	void interact(Interaction action, GameObject& interactor) override;
 
@@ -15,6 +15,8 @@ public:
 
 	void setInvincibility(sf::Time duration);
 	bool isInvincible();
+
+	void playGameOverAnimation(sf::Time deltaTime);
 	
 private:
 	bool checkCollisions();
@@ -27,8 +29,9 @@ private:
 	float timeSinceLastShot;
 	
 	float invincibleTimer;
-	
 	float flickerTimer;
 	bool flicker;
+
+	float gameOverExplosionTimer;
 };
 

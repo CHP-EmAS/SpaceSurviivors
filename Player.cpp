@@ -4,9 +4,12 @@
 #include "VectorExtension.h"
 #include "PlayerController.h"
 
-Player::Player(BulletPool* bulletPool) : GameObject(ObjectType::O_Player)
+#include "Explosion.h"
+
+Player::Player(BulletPool* bulletPool, SpatialPartitionGrid* grid) : GameObject(ObjectType::O_Player)
 {
 	this->bulletPool = bulletPool;
+	this->grid = grid;
 
 	sprite.setTexture(Locator::getGraphicService().getTexture(GraphicService::Player));
 	bulletSpawnPoint.x = sprite.getTextureRect().getSize().x - 5;
@@ -40,33 +43,38 @@ void Player::interact(Interaction action, GameObject& interactor)
 
 void Player::update(sf::Time deltaTime, GameState& state)
 {
+	if (state.isGameOver()) {
+		playGameOverAnimation(deltaTime);
+		return;
+	}
+
 	GameObject::update(deltaTime, state);
 
 	timeSinceLastShot += deltaTime.asSeconds();
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && timeSinceLastShot >= state.getPlayerShootInterval()) {
 		Bullet* newBullet = bulletPool->getNewBullet();
-		
+
 		sf::Vector2f spawn = getTransform().transformPoint(bulletSpawnPoint);
 		newBullet->setOwner(this);
 		newBullet->setPosition(spawn);
 		newBullet->setRotation(getRotation());
-	
+
 		controller->applyForce(VectorExtension::toUnitVector(getRotation() - 180.f) * 50.f);
-		
+
 		timeSinceLastShot = 0;
 	}
-
+	
 	if (!isInvincible()) {
 		if (checkCollisions()) {
 			setInvincibility(sf::seconds(state.getPlayerInvinciblyInterval()));
+			state.decreaseHitPointsBy(1);
 		}
 	}
 	
 	if (isInvincible()) {
 		updateInvincibility(deltaTime);
-	}
-	else if(flicker) {
+	} else if(flicker) {
 		setFlicker(false);
 	}
 	
@@ -86,6 +94,26 @@ void Player::setInvincibility(sf::Time duration)
 bool Player::isInvincible()
 {
 	return invincibleTimer > 0;
+}
+
+void Player::playGameOverAnimation(sf::Time deltaTime)
+{
+	if (flicker) {
+		setFlicker(false);
+	}
+
+	gameOverExplosionTimer -= deltaTime.asSeconds();
+
+	if (gameOverExplosionTimer <= 0.f) {
+		Explosion* newExplosion = new Explosion(getScale().x + (rand() % 160) / 100, sf::Time(sf::seconds(0.8)), sf::Color(255, 150, 150));
+
+		sf::Vector2f offset = sf::Vector2f(rand() % 50 - 25, rand() % 50 - 25);
+		newExplosion->spawOnGrid(grid, getPosition() - offset);
+
+		gameOverExplosionTimer = 0.8;
+
+		sprite.setColor(sprite.getColor() - sf::Color(20,20,20,10));
+	}
 }
 
 bool Player::checkCollisions()
@@ -108,7 +136,6 @@ bool Player::checkCollisions()
 				explodeDirection = VectorExtension::normalize(getPosition() - explodeDirection);
 
 				controller->applyForce(explodeDirection * speed);
-				
 			}
 
 			collidingObject->interact(PlayerCollision, *this);

@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 	
 	SceneManager* sceneManager = new SceneManager();
 	Locator::provide(sceneManager);
-	sceneManager->setWindowMode(true, true);
+	sceneManager->setWindowMode(true, false);
 	sceneManager->initScenes();
 	sceneManager->changeScene(Scene::Game, false);
 	
@@ -75,8 +75,8 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	sceneManager->deleteScenes();
 	delete sceneManager;
+	delete graphicLoader;
 
 	return EXIT_SUCCESS;
 }

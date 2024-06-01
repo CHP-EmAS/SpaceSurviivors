@@ -72,9 +72,7 @@ sf::Vector2f PlayerController::getInputVector()
 
 void PlayerController::rotateToMouse(sf::Time deltaTime)
 {
-    sf::RenderWindow& window = Locator::getSceneManager().getGameWindow();
-    sf::Vector2i mouseWindowPosition = sf::Mouse::getPosition(window);
-    sf::Vector2f mousePosition = window.mapPixelToCoords(mouseWindowPosition);
+    sf::Vector2f mousePosition = Locator::getSceneManager().getMousePosition();
 
     float targetAngle = VectorExtension::getAngle(mousePosition - parentObject->getPosition());
     float deltaAngle = targetAngle - parentObject->getRotation();
@@ -99,10 +97,8 @@ void PlayerController::clipToBoundingBox()
 {
     sf::Vector2f movePosition = parentObject->getPosition() + velocity;
 
-    movePosition.x = std::max(10.f, movePosition.x);
-    movePosition.x = std::min(static_cast<float>(WINDOW_SIZE) - 10, movePosition.x);
-    movePosition.y = std::max(10.f, movePosition.y);
-    movePosition.y = std::min(static_cast<float>(WINDOW_SIZE) - 10, movePosition.y);
+    movePosition.x = std::clamp(movePosition.x, 10.f, static_cast<float>(WINDOW_SIZE) - 10);
+    movePosition.y = std::clamp(movePosition.y, 10.f, static_cast<float>(WINDOW_SIZE) - 10);
 
     velocity = movePosition - parentObject->getPosition();
 }

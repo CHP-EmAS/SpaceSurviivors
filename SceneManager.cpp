@@ -4,13 +4,13 @@
 
 #include "Scene.h"
 #include "GameScene.h"
+#include "GameOverScene.h"
 
 #include "Locator.h"
 
 SceneManager::SceneManager(void)
 {
 	gameWindow = nullptr;
-
 	windowIcon.loadFromFile("img/asteroid.png");
 
 	allScenes[Scene::Main_Menue] = nullptr;
@@ -19,11 +19,9 @@ SceneManager::SceneManager(void)
 	allScenes[Scene::Stats] = nullptr;
 	allScenes[Scene::Options] = nullptr;
 	allScenes[Scene::Credits] = nullptr;
-	allScenes[Scene::Gameover] = nullptr;
+	allScenes[Scene::GameOver] = nullptr;
 
-	fadeRectangle.setSize(sf::Vector2f(WINDOW_SIZE + 2, WINDOW_SIZE + 2));
-	fadeRectangle.setPosition(-1, -1);
-	fadeRectangle.setFillColor(sf::Color::Black);
+	secureCloseScene = Scene::None;
 
 	//fps
 	fpsText.setString("XXX FPS");
@@ -32,10 +30,7 @@ SceneManager::SceneManager(void)
 	fpsText.setCharacterSize(15);
 	fpsText.setPosition(2, 0);
 
-	secureCloseScene = Scene::None;
-
-	//fading
-	fadeAlpha = 0;
+	//debug
 	showFPS = false;
 	showHitboxes = false;
 	showVelocity = false;
@@ -53,7 +48,7 @@ void SceneManager::initScenes()
 	//allScenes[Scene::Stats] = nullptr;
 	//allScenes[Scene::Options] = nullptr;
 	//allScenes[Scene::Credits] = nullptr;
-	//allScenes[Scene::Gameover] = nullptr;
+	allScenes[Scene::GameOver] = new GameOverScene();
 
 	activScene = nullptr;
 }
@@ -81,16 +76,15 @@ void SceneManager::changeScene(Scene::SceneNames newScene, bool closeOldScene)
 
 	if (closeOldScene)
 	{
-		if (activScene != nullptr) doSecureClose(activScene->getSceneName());
+		if (activScene != nullptr) 
+			doSecureClose(activScene->getSceneName());
 	}
 
 	if (newScene != Scene::None)
 	{
 		allScenes[Scene::SceneNames(newScene)]->setLastScene(activScene);
 		activScene = allScenes[Scene::SceneNames(newScene)];
-	}
-	else
-	{
+	} else {
 		activScene = nullptr;
 	}
 
@@ -117,12 +111,9 @@ void SceneManager::drawActivScene()
 {
 	gameWindow->clear();
 
-	activScene->drawScene(*gameWindow);
+	gameWindow->draw(background);
 
-	//draw fade Rectangle
-	if (fadeAlpha > 0) {
-		gameWindow->draw(fadeRectangle);
-	}
+	activScene->drawScene(*gameWindow);
 
 	if (showFPS) {
 		gameWindow->draw(fpsText);
@@ -172,7 +163,6 @@ void SceneManager::checkWindowEvents()
 			gameWindow->close();
 			break;
 		case sf::Event::KeyPressed:
-		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
 				showFPS = !showFPS;
 			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2)) {
@@ -185,14 +175,10 @@ void SceneManager::checkWindowEvents()
 			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F5)) {
 				showHitboxes = !showHitboxes;
 			}
-
 			break;
-		}
 		case sf::Event::Resized:
-		{
 			updateWindowSize();
 			break;
-		}
 		}
 	}
 }
@@ -208,16 +194,14 @@ void SceneManager::setWindowMode(bool border, bool fullscreen)
 	}
 	else if (border)
 	{
-		gameWindow->create(sf::VideoMode::getDesktopMode(), GAME_TITLE, sf::Style::Default);
+		gameWindow->create(sf::VideoMode(WINDOW_SIZE, WINDOW_SIZE), GAME_TITLE, sf::Style::Default);
 	}
 	else
 	{
 		gameWindow->create(sf::VideoMode::getDesktopMode(), GAME_TITLE, sf::Style::None);
 	}
 
-	//gameWindow->setIcon(32, 32, windowIcon.getPixelsPtr());
-	//gameWindow->setVerticalSyncEnabled(true);
-	//gameWindow->setMouseCursorGrabbed(true);
+	gameWindow->setIcon(windowIcon.getSize().x, windowIcon.getSize().y, windowIcon.getPixelsPtr());
 
 	sf::Cursor cursor;
 	if (cursor.loadFromSystem(sf::Cursor::Cross))
@@ -251,51 +235,20 @@ void SceneManager::setDisplayFPS(int fps)
 	fpsText.setString(std::to_string(fps) + " FPS");
 }
 
-void SceneManager::fadeOut(sf::Color fadeColor)
+void SceneManager::setBackgorundReferencePoint(sf::Vector2f point)
 {
-	fadeClock.restart();
-
-	fadeColor.a = 0;
-	fadeRectangle.setFillColor(fadeColor);
-
-	while (fadeAlpha < 255)
-	{
-		if (fadeClock.getElapsedTime().asMilliseconds() > 1)
-		{
-			drawActivScene();
-
-			fadeColor.a = ++fadeAlpha;
-			fadeRectangle.setFillColor(fadeColor);
-
-			fadeClock.restart();
-		}
-	}
-}
-
-void SceneManager::fadeIn(sf::Color fadeColor)
-{
-	fadeClock.restart();
-
-	fadeColor.a = 255;
-	fadeRectangle.setFillColor(fadeColor);
-
-	while (fadeAlpha > 0)
-	{
-		if (fadeClock.getElapsedTime().asMilliseconds() > 1)
-		{
-			drawActivScene();
-
-			fadeColor.a = --fadeAlpha;
-			fadeRectangle.setFillColor(fadeColor);
-
-			fadeClock.restart();
-		}
-	}
+	background.update(point);
 }
 
 sf::RenderWindow& SceneManager::getGameWindow()
 {
 	return *gameWindow;
+}
+
+sf::Vector2f SceneManager::getMousePosition()
+{
+	sf::Vector2i mouseWindowPosition = sf::Mouse::getPosition(*gameWindow);
+	return gameWindow->mapPixelToCoords(mouseWindowPosition);
 }
 
 Scene* SceneManager::getLastScene()
@@ -338,4 +291,5 @@ bool SceneManager::debugShowSpatialGrid()
 SceneManager::~SceneManager(void)
 {
 	deleteScenes();
+	delete gameWindow;
 }

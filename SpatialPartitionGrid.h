@@ -14,8 +14,10 @@ public:
 
 	void add(GameObject* object, bool isNewObject = true);
 	void remove(GameObject* object);
-
+	void clear();
+	
 	std::vector<GameObject*> getCollidingObjects(GameObject* collider);
+	std::vector<GameObject*> getAllObjects();
 
 	void onObjectPositionUpdated(GameObject* enemy, sf::Vector2f lastPostion);
 
@@ -24,6 +26,7 @@ public:
 
 	void debugDraw(sf::RenderWindow& window);
 
+	~SpatialPartitionGrid();
 private:
 	GameObject* cells[PARTITION_SIZE][PARTITION_SIZE];
 	std::vector<GameObject*> cemetery;

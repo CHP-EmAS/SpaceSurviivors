@@ -8,7 +8,10 @@ class EnemySpawnController : public Observer
 {
 public:
 	EnemySpawnController();
-	void checkSpawnConditions(sf::Time deltaTime, GameState& state, SpatialPartitionGrid& grid, Player& player);
+	void checkSpawnConditions(sf::Time deltaTime, GameState& state, Player& player);
+
+	void setSpatialPartitionGrid(SpatialPartitionGrid* grid);
+	void explodeAllEnemys();
 
 private:
 	void onEvent(const Observable::Event event, const Observable::EventInfo info) override;
@@ -19,5 +22,7 @@ private:
 
 	float spawnIntervall;
 	float spawnTimer;
+
+	SpatialPartitionGrid* grid;
 };
 

@@ -50,14 +50,14 @@
     <Filter Include="src\Game\Hud">
       <UniqueIdentifier>{1bed4848-2384-445e-bb63-151d73e2dafe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Game\Objects\Background">
-      <UniqueIdentifier>{bba21639-c9fe-4742-81bc-a124657d9071}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Game\Objects\Explosion">
       <UniqueIdentifier>{37248495-30fe-4eec-9d64-5b5cd606d8f8}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\UI">
       <UniqueIdentifier>{0c565f91-fdfd-4338-a130-ebe85d13932e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Background">
+      <UniqueIdentifier>{bba21639-c9fe-4742-81bc-a124657d9071}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -107,7 +107,7 @@
       <Filter>src\Game\Objects</Filter>
     </ClCompile>
     <ClCompile Include="ParallaxBackground.cpp">
-      <Filter>src\Game\Objects\Background</Filter>
+      <Filter>src\Background</Filter>
     </ClCompile>
     <ClCompile Include="BulletPool.cpp">
       <Filter>src\Game\Objects\Bullet</Filter>
@@ -128,6 +128,12 @@
       <Filter>src\Game</Filter>
     </ClCompile>
     <ClCompile Include="ProgressBar.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
       <Filter>src\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -187,7 +193,7 @@
       <Filter>src\Game\Objects</Filter>
     </ClInclude>
     <ClInclude Include="ParallaxBackground.h">
-      <Filter>src\Game\Objects\Background</Filter>
+      <Filter>src\Background</Filter>
     </ClInclude>
     <ClInclude Include="BulletPool.h">
       <Filter>src\Game\Objects\Bullet</Filter>
@@ -208,6 +214,12 @@
       <Filter>src\Game</Filter>
     </ClInclude>
     <ClInclude Include="ProgressBar.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScene.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
       <Filter>src\UI</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,6 +15,8 @@ public:
 		EXPERIENCE_UPDATED,
 		MAX_EXPERIENCE_UPDATED,
 		LEVEL_UPDATED,
+
+		GAME_OVER
 	};
 
 	struct EventInfo {

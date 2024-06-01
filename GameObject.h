@@ -51,6 +51,7 @@ protected:
 	Controller* controller;
 
 	SpatialPartitionGrid* grid;
+	bool managedByGrid;
 	bool markedForDespawn;
 private:
 	const ObjectType type;

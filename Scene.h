@@ -15,7 +15,7 @@ public:
 		Stats,
 		Options,
 		Credits,
-		Gameover,
+		GameOver,
 		None
 	};
 
@@ -40,8 +40,6 @@ public:
 
 	virtual ~Scene(void);
 protected:
-	virtual void initScene() = 0;
-
 	bool isLoaded;
 	SceneNames sceneName;
 	Scene* sceneBeforThis;

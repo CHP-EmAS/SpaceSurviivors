@@ -26,6 +26,8 @@ const sf::Texture& GraphicLoader::getTexture(GraphicService::Texture texture) co
 		return text_ui_longPanel;
 	case UI_BlueBar:
 		return text_ui_blueBar;
+	case UI_Button:
+		return text_ui_button;
 	default:
 		return text_Player;
 	}
@@ -105,16 +107,20 @@ void GraphicLoader::loadAllGraphics()
 
 	if (!img.loadFromFile("img/ui/longPanel.png")) {
 		loadingFails++;
-	}
-	else {
+	} else {
 		text_ui_longPanel.loadFromImage(img);
 	}
 
 	if (!img.loadFromFile("img/ui/blueBar.png")) {
 		loadingFails++;
-	}
-	else {
+	} else {
 		text_ui_blueBar.loadFromImage(img);
+	}
+
+	if (!img.loadFromFile("img/ui/button.png")) {
+		loadingFails++;
+	} else {
+		text_ui_button.loadFromImage(img);
 	}
 }
 

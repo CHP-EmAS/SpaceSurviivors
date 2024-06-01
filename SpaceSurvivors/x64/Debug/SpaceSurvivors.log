@@ -1,3 +1,4 @@
-﻿  SpaceSurvivors.cpp
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors.cpp(23,15): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
+﻿  GameState.cpp
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp(44,46): warning C4244: "=": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp(46,25): warning C4305: "-=": Verkürzung von "double" in "float"
   SpaceSurvivors.vcxproj -> C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\x64\Debug\SpaceSurvivors.exe

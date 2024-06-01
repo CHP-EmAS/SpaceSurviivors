@@ -1,12 +1,13 @@
 #include "Explosion.h"
 #include "Locator.h"
 
-Explosion::Explosion(float scale, sf::Time duration) : GameObject(ObjectType::O_Explosion)
+Explosion::Explosion(float scale, sf::Time duration, sf::Color tint) : GameObject(ObjectType::O_Explosion)
 {
 	sprite.setTexture(Locator::getGraphicService().getTexture(GraphicService::ExplosionAnimation));
 	sprite.setTextureRect(sf::IntRect(3, 36, 14, 14));
 	sprite.setOrigin(7, 7);
 	sprite.setScale(scale, scale);
+	sprite.setColor(tint);
 
 	collider.setSize(0, 0);
 

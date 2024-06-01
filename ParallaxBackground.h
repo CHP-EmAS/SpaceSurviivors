@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Player.h";
+#include <SFML/Graphics.hpp>
 
 class ParallaxBackground : public sf::Drawable
 {
 public:
 	ParallaxBackground();
 
-	void update(const Player& player);
+	void update(const sf::Vector2f referencePosition);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:

@@ -24,6 +24,7 @@ private:
 	sf::Texture text_ui_shortPanel;
 	sf::Texture text_ui_longPanel;
 	sf::Texture text_ui_blueBar;
+	sf::Texture text_ui_button;
 
 	//Fonts
 	sf::Font arial_Font;

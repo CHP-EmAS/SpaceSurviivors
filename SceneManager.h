@@ -2,6 +2,7 @@
 
 #include "Defines.h"
 
+#include "ParallaxBackground.h"
 #include "Scene.h"
 
 class SceneManager
@@ -23,10 +24,10 @@ public:
 	void updateWindowSize();
 	void setDisplayFPS(int fps);
 
-	void fadeOut(sf::Color fadeColor = sf::Color::Black);
-	void fadeIn(sf::Color fadeColor = sf::Color::Black);
+	void setBackgorundReferencePoint(sf::Vector2f point);
 
 	sf::RenderWindow& getGameWindow();
+	sf::Vector2f getMousePosition();
 
 	Scene* getLastScene();
 	Scene* getActivScene();
@@ -59,10 +60,8 @@ private:
 	bool fullscreen;
 	bool border;
 
-	//fade
-	sf::Clock fadeClock;
-	int fadeAlpha;
-	sf::RectangleShape fadeRectangle;
+	//Background
+	ParallaxBackground background;
 
 	//fps
 	sf::Text fpsText;

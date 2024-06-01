@@ -3,19 +3,32 @@
 
 #include <iostream>
 
+bool GameState::isGameOver()
+{
+	return gameOver;
+}
+
 void GameState::addScore(int score)
 {
 	this->score += score;
 	notifyObservers(SCORE_UPDATED, { NULL, this->score});
 }
 
+void GameState::decreaseHitPointsBy(int damage)
+{
+	hitPoints -= damage;
 
+	if (hitPoints <= 0) {
+		gameOver = true;
+		notifyObservers(GAME_OVER, {});
+	}
+}
 
 void GameState::addExperience(int experienceToAdd)
 {
 	experience += experienceToAdd;
 
-	if (experience >= experienceForLevelUp) {
+	while (experience >= experienceForLevelUp) {
 		experience = experience - experienceForLevelUp;
 		increaseLevel();
 	}
@@ -56,6 +69,8 @@ void GameState::setPlayerInvinciblyInterval(float invinciblyInterval)
 
 void GameState::setStartValues()
 {
+	gameOver = false;
+
 	score = 0;
 	experience = 0;
 	experienceForLevelUp = 10;

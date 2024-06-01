@@ -11,7 +11,29 @@ EnemySpawnController::EnemySpawnController()
 	spawnTimer = 0;
 }
 
-void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& state, SpatialPartitionGrid& grid, Player& player)
+void EnemySpawnController::setSpatialPartitionGrid(SpatialPartitionGrid* grid)
+{
+	this->grid = grid;
+}
+
+void EnemySpawnController::explodeAllEnemys()
+{
+	std::vector<GameObject*> objects = grid->getAllObjects();
+	std::cout << "Explode All!" << std::endl;
+
+	while (objects.size() > 0) {
+		GameObject* object = objects.back();
+
+		if (object->getType() == GameObject::O_Asteroid) {
+			Asteroid* asteroid = dynamic_cast<Asteroid*>(object);
+			asteroid->explode();
+		}
+
+		objects.pop_back();
+	}
+}
+
+void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& state, Player& player)
 {
 	spawnTimer += deltaTime.asSeconds();
 
@@ -43,7 +65,7 @@ void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& s
 		sf::Vector2f direction = player.getPosition() - spawnPoint + sf::Vector2f(rand() % 1000 - 500, rand() % 1000 - 500);
 
 		Asteroid* newAsteroid = new Asteroid(direction, (rand() % 4000 + 1000) / 1000.f, rand() % 300 + 100, rand() % 360);
-		newAsteroid->spawOnGrid(&grid, spawnPoint);
+		newAsteroid->spawOnGrid(grid, spawnPoint);
 
 		spawnTimer = 0;
 	}
@@ -64,6 +86,9 @@ void EnemySpawnController::onEvent(const Observable::Event event, const Observab
 		break;
 	case Observable::LEVEL_UPDATED:
 		onLevelUp(info.value);
+		break;
+	case Observable::GAME_OVER:
+		explodeAllEnemys();
 		break;
 	}
 }

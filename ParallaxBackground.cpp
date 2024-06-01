@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "ParallaxBackground.h"
 #include "Locator.h"
 
@@ -19,14 +21,16 @@ ParallaxBackground::ParallaxBackground()
 	background3.setTexture(&Locator::getGraphicService().getTexture(GraphicService::Background_3));
 }
 
-void ParallaxBackground::update(const Player& player)
+void ParallaxBackground::update(const sf::Vector2f referencePosition)
 {
-	sf::Vector2f playerPostion = player.getPosition();
-	sf::Vector2f relativePlayerPosition = - sf::Vector2f(playerPostion.x / WINDOW_SIZE, playerPostion.y / WINDOW_SIZE);
+	sf::Vector2f relativePosition = sf::Vector2f(referencePosition.x / WINDOW_SIZE, referencePosition.y / WINDOW_SIZE);
 
-	background1.setPosition(relativePlayerPosition * maxOffset1);
-	background2.setPosition(relativePlayerPosition * maxOffset2);
-	background3.setPosition(relativePlayerPosition * maxOffset3);
+	relativePosition.x = std::clamp(relativePosition.x, 0.f, 1.f);
+	relativePosition.y = std::clamp(relativePosition.y, 0.f, 1.f);
+
+	background1.setPosition(relativePosition * -maxOffset1);
+	background2.setPosition(relativePosition * -maxOffset2);
+	background3.setPosition(relativePosition * -maxOffset3);
 }
 
 void ParallaxBackground::draw(sf::RenderTarget& target, sf::RenderStates states) const

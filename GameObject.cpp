@@ -7,6 +7,7 @@ GameObject::GameObject(ObjectType type) : controller(nullptr), type(type)
 {
 	setPosition(sf::Vector2f(0,0));
 	markedForDespawn = false;
+	managedByGrid = false;
 
 	controller = nullptr;
 
@@ -24,7 +25,7 @@ void GameObject::update(sf::Time deltaTime, GameState& state)
 		controller->simulate(deltaTime, state);
 	}
 
-	if (grid) {
+	if (grid && managedByGrid) {
 		grid->onObjectPositionUpdated(this, lastPosition);
 	}
 }
@@ -52,9 +53,10 @@ void GameObject::spawOnGrid(SpatialPartitionGrid* grid, sf::Vector2f position)
 {
 	markedForDespawn = false;
 	setPosition(position);
-	this->grid = grid;
 
+	this->grid = grid;
 	grid->add(this);
+	managedByGrid = true;
 }
 
 void GameObject::markForDespawn()

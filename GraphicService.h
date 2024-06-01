@@ -22,7 +22,8 @@ public:
 		Background_3,
 		UI_ShortPanel,
 		UI_LongPanel,
-		UI_BlueBar
+		UI_BlueBar,
+		UI_Button
 	};
 
 	virtual const sf::Texture& getTexture(Texture texture) const = 0;
