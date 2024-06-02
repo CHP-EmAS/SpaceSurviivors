@@ -3,8 +3,10 @@
 #include <string>
 
 #include "Scene.h"
-#include "GameScene.h"
-#include "GameOverScene.h"
+#include "Game.h"
+#include "GameOver.h"
+#include "Pause.h"
+#include "LevelUp.h"
 
 #include "Locator.h"
 
@@ -16,9 +18,7 @@ SceneManager::SceneManager(void)
 	allScenes[Scene::Main_Menue] = nullptr;
 	allScenes[Scene::Game] = nullptr;
 	allScenes[Scene::Pause] = nullptr;
-	allScenes[Scene::Stats] = nullptr;
-	allScenes[Scene::Options] = nullptr;
-	allScenes[Scene::Credits] = nullptr;
+	allScenes[Scene::Level_UP] = nullptr;
 	allScenes[Scene::GameOver] = nullptr;
 
 	secureCloseScene = Scene::None;
@@ -44,10 +44,8 @@ void SceneManager::initScenes()
 
 	//allScenes[Scene::Main_Menue] = 
 	allScenes[Scene::Game] = new GameScene();
-	//allScenes[Scene::Pause] = nullptr;
-	//allScenes[Scene::Stats] = nullptr;
-	//allScenes[Scene::Options] = nullptr;
-	//allScenes[Scene::Credits] = nullptr;
+	allScenes[Scene::Pause] = new PauseScene();
+	allScenes[Scene::Level_UP] = new LevelUpScene();
 	allScenes[Scene::GameOver] = new GameOverScene();
 
 	activScene = nullptr;

@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Scene.h"
-#include "Button.h"
+#include "DropShadowText.h"
 
-class GameOverScene : public Scene
+class PauseScene : public Scene
 {
 public:
-	GameOverScene();
+	PauseScene();
 
 	void updateScene(sf::Time deltaTime) override;
 	void drawScene(sf::RenderWindow& mainWindow) override;
@@ -15,16 +15,9 @@ public:
 	void restartScene() override;
 	void closeScene() override;
 
-	void setScore(int score);
-
 private:
 
-	sf::Text gameoverText;
-	sf::Text scoreText;
-	sf::Text infoText;
-
-	Button newGameButton;
-
-	int score;
+	DropShadowText pauseText;
+	DropShadowText infoText;
 };
 

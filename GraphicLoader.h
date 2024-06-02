@@ -21,10 +21,11 @@ private:
 	sf::Texture text_Background2;
 	sf::Texture text_Background3;
 
-	sf::Texture text_ui_shortPanel;
-	sf::Texture text_ui_longPanel;
+	sf::Texture text_ui_frame;
 	sf::Texture text_ui_blueBar;
-	sf::Texture text_ui_button;
+	sf::Texture text_ui_redBar;
+	sf::Texture text_ui_yellowBar;
+	
 
 	//Fonts
 	sf::Font arial_Font;

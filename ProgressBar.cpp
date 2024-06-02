@@ -3,7 +3,8 @@
 
 ProgressBar::ProgressBar()
 {
-	frame.setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_LongPanel));
+	setLength(100);
+	progress = 0;
 	
 	barBeginn.setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_BlueBar));
 	barMiddle.setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_BlueBar));
@@ -24,15 +25,30 @@ void ProgressBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();
 
-	target.draw(barBeginn, states);
-	target.draw(barMiddle, states);
-	target.draw(barEnd, states);
+	if (progress > 0.f) {
+		target.draw(barBeginn, states);
+		target.draw(barMiddle, states);
+		target.draw(barEnd, states);
+	}
 
 	target.draw(frame, states);
 }
 
+void ProgressBar::setTexture(const sf::Texture& barTexture)
+{
+	barBeginn.setTexture(barTexture);
+	barMiddle.setTexture(barTexture);
+	barEnd.setTexture(barTexture);
+}
+
+void ProgressBar::setLength(float length)
+{
+	frame.setSize(sf::Vector2f(length, 30));
+}
+
 void ProgressBar::setProgress(float progress)
 {
-	barMiddle.setScale(240 * progress, 1);
+	this->progress = progress;
+	barMiddle.setScale((frame.getSize().x - 14) * progress, 1);
 	barEnd.setPosition(barMiddle.getGlobalBounds().left + barMiddle.getGlobalBounds().width, 2);
 }

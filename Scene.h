@@ -12,10 +12,8 @@ public:
 		Main_Menue,
 		Game,
 		Pause,
-		Stats,
-		Options,
-		Credits,
 		GameOver,
+		Level_UP,
 		None
 	};
 

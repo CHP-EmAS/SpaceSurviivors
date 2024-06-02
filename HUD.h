@@ -4,6 +4,8 @@
 #include "Observer.h"
 #include "GameState.h"
 #include "ProgressBar.h"
+#include "Frame.h"
+#include "DropShadowText.h"
 
 class HUD : public sf::Drawable, public Observer
 {
@@ -15,18 +17,24 @@ public:
 	void updateScore(int score);
 	void updateLevel(int level);
 	void updateExperienceBar(int experience, int maxExperience);
+	void updateHealthBar(int health, int maxHealth);
 
 private:
 	void onEvent(const Observable::Event event, const Observable::EventInfo info) override;
 
-	sf::Sprite scoreFrame;
-	sf::Text scoreText;
+	Frame scoreFrame;
+	DropShadowText scoreText;
 
-	sf::Sprite healthFrame;
-
+	ProgressBar healthProgressBar;
+	DropShadowText healthText;
+	
 	ProgressBar experienceProgressBar;
+	DropShadowText levelText;
+
+	int displayedHealth;
+	int displayedMaxHealth;
+
 	int displayedExperience;
-	int displayedMaxExperience;
-	sf::Text levelText;
+	int displayedMaxExperience;	
 };
 

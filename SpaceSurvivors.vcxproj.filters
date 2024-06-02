@@ -61,7 +61,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameScene.cpp">
+    <ClCompile Include="Game.cpp">
       <Filter>src\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
@@ -130,10 +130,25 @@
     <ClCompile Include="ProgressBar.cpp">
       <Filter>src\UI</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverScene.cpp">
+    <ClCompile Include="GameOver.cpp">
       <Filter>src\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Pause.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelUp.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="DropShadowText.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Upgrade.cpp">
       <Filter>src\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -144,7 +159,7 @@
     <ClInclude Include="Defines.h">
       <Filter>src\Defines</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene.h">
+    <ClInclude Include="Game.h">
       <Filter>src\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Locator.h">
@@ -216,10 +231,25 @@
     <ClInclude Include="ProgressBar.h">
       <Filter>src\UI</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverScene.h">
+    <ClInclude Include="GameOver.h">
       <Filter>src\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Pause.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelUp.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="DropShadowText.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Upgrade.h">
       <Filter>src\UI</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,14 +20,14 @@ const sf::Texture& GraphicLoader::getTexture(GraphicService::Texture texture) co
 		return text_Background2;
 	case Background_3:
 		return text_Background3;
-	case UI_ShortPanel:
-		return text_ui_shortPanel;
-	case UI_LongPanel:
-		return text_ui_longPanel;
+	case UI_Frame:
+		return text_ui_frame;;
 	case UI_BlueBar:
 		return text_ui_blueBar;
-	case UI_Button:
-		return text_ui_button;
+	case UI_RedBar:
+		return text_ui_redBar;
+	case UI_YellowBar:
+		return text_ui_yellowBar;
 	default:
 		return text_Player;
 	}
@@ -99,16 +99,11 @@ void GraphicLoader::loadAllGraphics()
 		text_Background3.loadFromImage(img);
 	}
 
-	if (!img.loadFromFile("img/ui/shortPanel.png")) {
+	if (!img.loadFromFile("img/ui/frame.png")) {
 		loadingFails++;
-	} else {
-		text_ui_shortPanel.loadFromImage(img);
 	}
-
-	if (!img.loadFromFile("img/ui/longPanel.png")) {
-		loadingFails++;
-	} else {
-		text_ui_longPanel.loadFromImage(img);
+	else {
+		text_ui_frame.loadFromImage(img);
 	}
 
 	if (!img.loadFromFile("img/ui/blueBar.png")) {
@@ -117,20 +112,29 @@ void GraphicLoader::loadAllGraphics()
 		text_ui_blueBar.loadFromImage(img);
 	}
 
-	if (!img.loadFromFile("img/ui/button.png")) {
+	if (!img.loadFromFile("img/ui/yellowBar.png")) {
 		loadingFails++;
-	} else {
-		text_ui_button.loadFromImage(img);
 	}
+	else {
+		text_ui_yellowBar.loadFromImage(img);
+	}
+
+	if (!img.loadFromFile("img/ui/redBar.png")) {
+		loadingFails++;
+	}
+	else {
+		text_ui_redBar.loadFromImage(img);
+	}
+
 }
 
 void GraphicLoader::loadAllFonts()
 {
-	if (!arial_Font.loadFromFile("fonts\\arial.ttf")) {
+	if (!arial_Font.loadFromFile("fonts/arial.ttf")) {
 		loadingFails++;
 	}
 
-	if (!pixel_Font.loadFromFile("fonts\\pixel.otf"))
+	if (!pixel_Font.loadFromFile("fonts/pixel.otf"))
 	{
 		loadingFails++;
 	}

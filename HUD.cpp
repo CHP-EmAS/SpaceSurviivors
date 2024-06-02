@@ -7,32 +7,39 @@
 
 HUD::HUD()
 {
-	scoreFrame.setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_ShortPanel));
-	scoreFrame.setOrigin(scoreFrame.getTextureRect().getSize().x, 0);
+	scoreFrame.setSize(sf::Vector2f(127,30));
+	scoreFrame.setOrigin(scoreFrame.getSize().x, 0);
 	scoreFrame.setPosition(WINDOW_SIZE - 20, 20);
 	scoreFrame.setScale(1.5, 1.5);
 
-	healthFrame.setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_ShortPanel));
-	healthFrame.setPosition(20, 20);
-	healthFrame.setScale(1.5, 1.5);
+	healthProgressBar.setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_RedBar));
+	healthProgressBar.setLength(127);
+	healthProgressBar.setPosition(20, 20);
+	healthProgressBar.setScale(1.5, 1.5);
 
+	experienceProgressBar.setLength(254);
 	experienceProgressBar.setOrigin(127, 0);
 	experienceProgressBar.setPosition(WINDOW_SIZE / 2, 20);
 	experienceProgressBar.setScale(1.5, 1.5);
 
-	scoreText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
-	scoreText.setFillColor(sf::Color::White);
-	scoreText.setPosition(WINDOW_SIZE - 40, 26);
-	scoreText.setCharacterSize(26);
-	scoreText.setString("XXXXXXXX");
-	scoreText.setOrigin(scoreText.getLocalBounds().width, 0);
+	sf::Text text = sf::Text("XXXXXXXX", Locator::getGraphicService().getFont(GraphicService::Pixel), 26);
+	text.setFillColor(sf::Color::White);
 
-	levelText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
-	levelText.setFillColor(sf::Color::White);
+	scoreText.setText(text);
+	scoreText.setPosition(WINDOW_SIZE - 40, 26);
+	scoreText.setOrigin(text.getLocalBounds().width, 0);
+	scoreText.setShadowOffset(2);
+
+	text.setString("Level X");
+	levelText.setText(text);
 	levelText.setPosition(WINDOW_SIZE / 2, 26);
-	levelText.setCharacterSize(26);
-	levelText.setString("Level X");
-	levelText.setOrigin(scoreText.getLocalBounds().width / 2, 0);
+	levelText.setOrigin(text.getLocalBounds().width / 2, 0);
+	levelText.setShadowOffset(2);
+
+	text.setString("X/X HP");
+	healthText.setText(text);
+	healthText.setPosition(55, 26);
+	healthText.setShadowOffset(2);
 }
 
 void HUD::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -40,8 +47,9 @@ void HUD::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(scoreFrame);
 	target.draw(scoreText);
 
-	target.draw(healthFrame);
-
+	target.draw(healthProgressBar);
+	target.draw(healthText);
+	
 	target.draw(experienceProgressBar);
 	target.draw(levelText);
 }
@@ -60,7 +68,8 @@ void HUD::updateScore(int score)
 
 void HUD::updateLevel(int level)
 {
-	levelText.setString("Level " + std::to_string(level));
+	std::string text = "Level " + std::to_string(level);
+	levelText.setString(text);
 }
 
 void HUD::updateExperienceBar(int experience, int maxExperience)
@@ -73,7 +82,22 @@ void HUD::updateExperienceBar(int experience, int maxExperience)
 	} else {
 		experienceProgressBar.setProgress(0);
 	}
-	
+}
+
+void HUD::updateHealthBar(int health, int maxHealth)
+{
+	displayedHealth = health;
+	displayedMaxHealth = maxHealth;
+
+	if (maxHealth > 0) {
+		healthProgressBar.setProgress(float(health) / float(maxHealth));
+	}
+	else {
+		healthProgressBar.setProgress(0);
+	}
+
+	std::string text = std::to_string(health) + "/" + std::to_string(maxHealth) + " HP";
+	healthText.setString(text);
 }
 
 void HUD::onEvent(const Observable::Event event, const Observable::EventInfo info)
@@ -90,6 +114,12 @@ void HUD::onEvent(const Observable::Event event, const Observable::EventInfo inf
 		break;
 	case Observable::LEVEL_UPDATED:
 		updateLevel(info.value);
+		break;
+	case Observable::HEALTH_UPDATED:
+		updateHealthBar(info.value, displayedMaxHealth);
+		break;
+	case Observable::MAX_HEALTH_UPDATED:
+		updateHealthBar(displayedHealth, info.value);
 		break;
 	}
 }

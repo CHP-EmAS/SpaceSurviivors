@@ -1,22 +1,22 @@
-#include "GameOverScene.h"
+#include "GameOver.h"
 #include "Locator.h"
 
-GameOverScene::GameOverScene() : Scene(Scene::GameOver)
+GameOverScene::GameOverScene() : Scene(GameOver)
 {
-	gameoverText.setString("Game Over");
-	gameoverText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
-	gameoverText.setCharacterSize(55);
-	gameoverText.setLineSpacing(2);
-	gameoverText.setFillColor(sf::Color::Red);
-	gameoverText.setOrigin(gameoverText.getGlobalBounds().width / 2, 0);
+	sf::Text text = sf::Text("Game Over", Locator::getGraphicService().getFont(GraphicService::Pixel), 55);
+	text.setLineSpacing(2);
+	text.setFillColor(sf::Color::Red);
+	gameoverText.setText(text);
+	gameoverText.setOrigin(text.getLocalBounds().width / 2, 0);
 	gameoverText.setPosition(WINDOW_SIZE / 2, 200);
+	gameoverText.setShadowOffset(5);
 
 	setScore(0);
-	scoreText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
-	scoreText.setCharacterSize(24);
-	scoreText.setFillColor(sf::Color::White);
-	scoreText.setOrigin(scoreText.getGlobalBounds().width / 2, 0);
+	text = sf::Text("Score: XXXXXXXX", Locator::getGraphicService().getFont(GraphicService::Pixel), 24);
+	scoreText.setText(text);
+	scoreText.setOrigin(text.getLocalBounds().width / 2, 0);
 	scoreText.setPosition(WINDOW_SIZE / 2, 270);
+	scoreText.setShadowOffset(3);
 
 	newGameButton.setPosition(500, 500);
 	newGameButton.setScale(1.5, 1.5);
@@ -32,20 +32,7 @@ void GameOverScene::updateScene(sf::Time deltaTime)
 
 void GameOverScene::drawScene(sf::RenderWindow& mainWindow)
 {
-	gameoverText.setPosition(WINDOW_SIZE / 2 + 3, 203);
-	gameoverText.setFillColor(sf::Color::Black);
 	mainWindow.draw(gameoverText);
-
-	gameoverText.setPosition(WINDOW_SIZE / 2, 200);
-	gameoverText.setFillColor(sf::Color::Red);
-	mainWindow.draw(gameoverText);
-
-	scoreText.setPosition(WINDOW_SIZE / 2 + 3, 283);
-	scoreText.setFillColor(sf::Color::Black);
-	mainWindow.draw(scoreText);
-
-	scoreText.setPosition(WINDOW_SIZE / 2, 280);
-	scoreText.setFillColor(sf::Color::White);
 	mainWindow.draw(scoreText);
 
 	mainWindow.draw(newGameButton);

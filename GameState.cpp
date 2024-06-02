@@ -1,7 +1,10 @@
+#include <iostream>
+
 #include "GameState.h"
 #include "GameObject.h"
 
-#include <iostream>
+#include "LevelUp.h"
+#include "Locator.h"
 
 bool GameState::isGameOver()
 {
@@ -14,14 +17,25 @@ void GameState::addScore(int score)
 	notifyObservers(SCORE_UPDATED, { NULL, this->score});
 }
 
-void GameState::decreaseHitPointsBy(int damage)
+void GameState::decreaseHealthBy(int damage)
 {
-	hitPoints -= damage;
+	health -= damage;
 
-	if (hitPoints <= 0) {
+	notifyObservers(HEALTH_UPDATED, {NULL, this->health });
+
+	if (health <= 0) {
 		gameOver = true;
 		notifyObservers(GAME_OVER, {});
 	}
+}
+
+void GameState::increaseMaxHealth()
+{
+	maxHealth++;
+	health++;
+
+	notifyObservers(MAX_HEALTH_UPDATED, { NULL, this->maxHealth });
+	notifyObservers(HEALTH_UPDATED, { NULL, this->health });
 }
 
 void GameState::addExperience(int experienceToAdd)
@@ -39,16 +53,17 @@ void GameState::addExperience(int experienceToAdd)
 void GameState::increaseLevel()
 {
 	level++;
-	std::cout << "Level Up! " << level << std::endl;
-
+	
 	experienceForLevelUp = experienceForLevelUp * 1.5;
-	playerAcceleration += 200;
-	playerShootInterval -= 0.05;
 
-	std::cout << "Next Level by: " << experienceForLevelUp << std::endl;
+	//playerAcceleration += 200;
+	//playerShootInterval -= 0.05;
 
 	notifyObservers(LEVEL_UPDATED, { NULL, level });
 	notifyObservers(MAX_EXPERIENCE_UPDATED, { NULL, experienceForLevelUp });
+
+	static_cast<LevelUpScene*>(Locator::getSceneManager().getScene(Scene::Level_UP))->rollUpgrades(*this);
+	Locator::getSceneManager().changeScene(Scene::Level_UP, false);
 }
 
 void GameState::setPlayerAcceleration(float acceleration)
@@ -67,6 +82,11 @@ void GameState::setPlayerInvinciblyInterval(float invinciblyInterval)
 	playerInvinciblyInterval = invinciblyInterval;
 }
 
+void GameState::increaseLuckBy(int luck)
+{
+	this->luck += luck;
+}
+
 void GameState::setStartValues()
 {
 	gameOver = false;
@@ -75,11 +95,17 @@ void GameState::setStartValues()
 	experience = 0;
 	experienceForLevelUp = 10;
 	level = 1;
+	health = 3;
+	maxHealth = 3;
+
+	luck = 16;
 
 	notifyObservers(SCORE_UPDATED, { NULL, score });
 	notifyObservers(EXPERIENCE_UPDATED, { NULL, experience });
 	notifyObservers(MAX_EXPERIENCE_UPDATED, { NULL, experienceForLevelUp });
 	notifyObservers(LEVEL_UPDATED, { NULL, level });
+	notifyObservers(MAX_HEALTH_UPDATED, { NULL, maxHealth });
+	notifyObservers(HEALTH_UPDATED, { NULL, health });
 
 	playerAcceleration = 1500;
 	playerShootInterval = 0.5;

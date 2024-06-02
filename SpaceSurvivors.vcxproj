@@ -144,15 +144,19 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="DropShadowText.cpp" />
     <ClCompile Include="EnemySpawnController.cpp" />
     <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameOverScene.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="LevelUp.cpp" />
+    <ClCompile Include="Pause.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="SpatialPartitionGrid.cpp" />
-    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GraphicLoader.cpp" />
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="Observable.cpp" />
@@ -162,6 +166,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SpaceSurvivors.cpp" />
+    <ClCompile Include="Upgrade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asteroid.h" />
@@ -172,15 +177,19 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="DropShadowText.h" />
     <ClInclude Include="EnemySpawnController.h" />
     <ClInclude Include="Explosion.h" />
+    <ClInclude Include="Frame.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameOverScene.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="LevelUp.h" />
+    <ClInclude Include="Pause.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="SpatialPartitionGrid.h" />
-    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="GraphicLoader.h" />
     <ClInclude Include="GraphicService.h" />
     <ClInclude Include="Locator.h" />
@@ -191,6 +200,7 @@
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Upgrade.h" />
     <ClInclude Include="VectorExtension.h" />
   </ItemGroup>
   <ItemGroup>

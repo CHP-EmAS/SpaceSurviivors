@@ -1,11 +1,11 @@
-#include "GameScene.h"
+#include "Game.h"
 
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Locator.h"
 
 #include "Asteroid.h"
-#include "GameOverScene.h"
+#include "GameOver.h"
 
 GameScene::GameScene(void) : Scene(Scene::Game)
 {
@@ -51,7 +51,17 @@ void GameScene::drawScene(sf::RenderWindow& mainWindow)
 
 void GameScene::checkEvents(sf::Event newEvent)
 {
-	
+	switch (newEvent.type)
+	{
+	case sf::Event::KeyPressed:
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+			Locator::getSceneManager().changeScene(Scene::Pause, false);
+		}
+		break;
+	case sf::Event::LostFocus:
+		Locator::getSceneManager().changeScene(Scene::Pause, false);
+		break;
+	}
 }
 
 void GameScene::loadScene()
@@ -99,10 +109,4 @@ void GameScene::closeScene()
 GameScene::~GameScene(void)
 {
 	closeScene();
-
-	delete bulletPool;
-	bulletPool = nullptr;
-
-	delete player;
-	player = nullptr;
 }

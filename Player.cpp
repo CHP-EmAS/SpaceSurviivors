@@ -68,7 +68,7 @@ void Player::update(sf::Time deltaTime, GameState& state)
 	if (!isInvincible()) {
 		if (checkCollisions()) {
 			setInvincibility(sf::seconds(state.getPlayerInvinciblyInterval()));
-			state.decreaseHitPointsBy(1);
+			state.decreaseHealthBy(1);
 		}
 	}
 	

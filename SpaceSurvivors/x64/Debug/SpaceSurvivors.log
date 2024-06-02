@@ -1,4 +1,9 @@
-﻿  GameState.cpp
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp(44,46): warning C4244: "=": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp(46,25): warning C4305: "-=": Verkürzung von "double" in "float"
+﻿  Upgrade.cpp
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Upgrade.cpp(9,30): warning C4305: "Argument": Verkürzung von "double" in "T"
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Upgrade.cpp(9,30): warning C4305:         with
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Upgrade.cpp(9,30): warning C4305:         [
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Upgrade.cpp(9,30): warning C4305:             T=float
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Upgrade.cpp(9,30): warning C4305:         ]
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Upgrade.cpp(10,32): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Upgrade.cpp(13,30): warning C4305: "Argument": Verkürzung von "double" in "float"
   SpaceSurvivors.vcxproj -> C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\x64\Debug\SpaceSurvivors.exe
