@@ -52,11 +52,12 @@ void Player::update(sf::Time deltaTime, GameState& state)
 
 	timeSinceLastShot += deltaTime.asSeconds();
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && timeSinceLastShot >= state.getPlayerShootInterval()) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && timeSinceLastShot >= (1.f / state.getPlayerShotsPerSecond())) {
 		Bullet* newBullet = bulletPool->getNewBullet();
 
 		sf::Vector2f spawn = getTransform().transformPoint(bulletSpawnPoint);
 		newBullet->setOwner(this);
+		newBullet->setDamage(state.getPlayerDamage());
 		newBullet->setPosition(spawn);
 		newBullet->setRotation(getRotation());
 

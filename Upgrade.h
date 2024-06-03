@@ -13,9 +13,10 @@ public:
 		LEGENDARY
 	};
 
-	enum UpgradeParameter {
+	enum Parameter {
 		PlayerSpeed,
 		PlayerShotsPerSeconds,
+		PlayerDamage,
 		ScoreMultiplier,
 		Heal,
 		MaxHealth,
@@ -23,8 +24,8 @@ public:
 		Luck
 	};
 
-	struct UpgradeInfo {
-		UpgradeParameter parameter;
+	struct Info {
+		Parameter parameter;
 
 		std::string parameterName;
 		int charSize;
@@ -43,14 +44,18 @@ public:
 	bool isSelected();
 
 	void setRarity(Rarity rarity);
-	void setInfo(UpgradeInfo info);
+	void setInfo(Info info, float currentValue);
 	
+	float getRarityValue();
+	Info getInfo();
 private:
+	std::string convertFixedValue(float value);
+
 	Button button;
 	DropShadowText headerText;
 	DropShadowText infoText;
 
 	Rarity rarity;
-	UpgradeInfo info;
+	Info info;
 };
 

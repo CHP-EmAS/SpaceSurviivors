@@ -11,10 +11,16 @@ bool GameState::isGameOver()
 	return gameOver;
 }
 
-void GameState::addScore(int score)
+void GameState::increaseScoreBy(int score)
 {
-	this->score += score;
+	this->score += score * scoreMultiplier;
 	notifyObservers(SCORE_UPDATED, { NULL, this->score});
+}
+
+void GameState::increaseScoreMultiplierBy(float multiplier)
+{
+	scoreMultiplier += multiplier;
+	std::cout << "SM += " << multiplier;
 }
 
 void GameState::decreaseHealthBy(int damage)
@@ -29,35 +35,43 @@ void GameState::decreaseHealthBy(int damage)
 	}
 }
 
-void GameState::increaseMaxHealth()
+void GameState::increaseHealthBy(int heal)
 {
-	maxHealth++;
-	health++;
+	health += heal;
+	notifyObservers(HEALTH_UPDATED, { NULL, this->health });
+}
+
+void GameState::increaseMaxHealthBy(int health)
+{
+	maxHealth += health;
+	this->health += health;
 
 	notifyObservers(MAX_HEALTH_UPDATED, { NULL, this->maxHealth });
 	notifyObservers(HEALTH_UPDATED, { NULL, this->health });
 }
 
-void GameState::addExperience(int experienceToAdd)
+void GameState::increaseExperienceBy(int experienceToAdd)
 {
-	experience += experienceToAdd;
+	experience += experienceToAdd * experienceMultiplier;
 
 	while (experience >= experienceForLevelUp) {
 		experience = experience - experienceForLevelUp;
-		increaseLevel();
+		increaseLevelByOne();
 	}
 
 	notifyObservers(EXPERIENCE_UPDATED, { NULL, this->experience });
 }
 
-void GameState::increaseLevel()
+void GameState::increaseExperienceMultiplierBy(float multiplier)
+{
+	experienceMultiplier += multiplier;
+}
+
+void GameState::increaseLevelByOne()
 {
 	level++;
 	
 	experienceForLevelUp = experienceForLevelUp * 1.5;
-
-	//playerAcceleration += 200;
-	//playerShootInterval -= 0.05;
 
 	notifyObservers(LEVEL_UPDATED, { NULL, level });
 	notifyObservers(MAX_EXPERIENCE_UPDATED, { NULL, experienceForLevelUp });
@@ -66,20 +80,19 @@ void GameState::increaseLevel()
 	Locator::getSceneManager().changeScene(Scene::Level_UP, false);
 }
 
-void GameState::setPlayerAcceleration(float acceleration)
+void GameState::increasePlayerAccelerationBy(float acceleration)
 {
-	playerAcceleration = acceleration;
+	playerAcceleration += acceleration;
 }
 
-void GameState::setPlayerShootInterval(float shootInterval)
+void GameState::increasePlayerShotsPerSecondBy(float shotsPerSecond)
 {
-	playerShootInterval = shootInterval;
+	playerShotsPerSecond += shotsPerSecond;
 }
 
-
-void GameState::setPlayerInvinciblyInterval(float invinciblyInterval)
+void GameState::increasePlayerDamageBy(float damage)
 {
-	playerInvinciblyInterval = invinciblyInterval;
+	playerDamage += damage;
 }
 
 void GameState::increaseLuckBy(int luck)
@@ -92,13 +105,22 @@ void GameState::setStartValues()
 	gameOver = false;
 
 	score = 0;
-	experience = 0;
-	experienceForLevelUp = 10;
-	level = 1;
+	scoreMultiplier = 1;
+
 	health = 3;
 	maxHealth = 3;
 
-	luck = 16;
+	experience = 0;
+	experienceForLevelUp = 25;
+	experienceMultiplier = 1;
+	level = 1;
+
+	luck = 0;
+
+	playerAcceleration = 1500;
+	playerShotsPerSecond = 2;
+	playerInvinciblyInterval = 1.5;
+	playerDamage = 10;
 
 	notifyObservers(SCORE_UPDATED, { NULL, score });
 	notifyObservers(EXPERIENCE_UPDATED, { NULL, experience });
@@ -106,8 +128,4 @@ void GameState::setStartValues()
 	notifyObservers(LEVEL_UPDATED, { NULL, level });
 	notifyObservers(MAX_HEALTH_UPDATED, { NULL, maxHealth });
 	notifyObservers(HEALTH_UPDATED, { NULL, health });
-
-	playerAcceleration = 1500;
-	playerShootInterval = 0.5;
-	playerInvinciblyInterval = 1.5;
 }

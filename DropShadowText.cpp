@@ -28,6 +28,11 @@ void DropShadowText::setText(const sf::Text& style)
 	shadow.setPosition(offset, offset);
 }
 
+void DropShadowText::setColor(const sf::Color color)
+{
+	text.setFillColor(color);
+}
+
 void DropShadowText::setString(std::string string)
 {
 	text.setString(string);
@@ -43,4 +48,9 @@ void DropShadowText::setShadowOffset(float offset)
 const sf::Text& DropShadowText::getText()
 {
 	return text;
+}
+
+sf::Color DropShadowText::getColor()
+{
+	return text.getFillColor();
 }

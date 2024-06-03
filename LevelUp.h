@@ -21,22 +21,24 @@ public:
 
 private:
 	Upgrade::Rarity rollRarity(int probabilities[4]);
-	Upgrade::UpgradeInfo rollParameter(Upgrade::Rarity rarity);
+	Upgrade::Info rollParameter(Upgrade::Rarity rarity);
+	float getCurrentValue(Upgrade::Parameter parameter, GameState& state);
+	void applyValueToState(Upgrade::Parameter parameter, float value, GameState& state);
 
 	void InitUpgradeParameters();
 
 	Upgrade upgrade[3];
 
-	std::vector<Upgrade::UpgradeInfo> commonUpgrades;
-	std::vector<Upgrade::UpgradeInfo> rareUpgrades;
-	std::vector<Upgrade::UpgradeInfo> epicUpgrades;
-	std::vector<Upgrade::UpgradeInfo> legendaryUpgrades;
+	std::vector<Upgrade::Info> commonUpgrades;
+	std::vector<Upgrade::Info> rareUpgrades;
+	std::vector<Upgrade::Info> epicUpgrades;
+	std::vector<Upgrade::Info> legendaryUpgrades;
 
 	DropShadowText levelUpText;
 	DropShadowText infoText;
 
 	bool mouseDown;
 
-	GameState* debugState;
+	GameState* gameState;
 };
 

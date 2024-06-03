@@ -8,9 +8,9 @@ Upgrade::Upgrade()
 {
 	button.setSize(sf::Vector2f(166.66, 200));
 	headerText.setPosition(166.66 / 2.f, 30);
-	headerText.setShadowOffset(2);
+	headerText.setShadowOffset(3);
 
-	infoText.setPosition(166.66 / 2.f, 70);
+	infoText.setPosition(166.66 / 2.f, 180);
 	infoText.setShadowOffset(2);
 }
 
@@ -25,6 +25,14 @@ void Upgrade::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void Upgrade::update()
 {
 	button.update(getTransform());
+
+	if (!button.isHovered()) {
+		headerText.setShadowOffset(3);
+		infoText.setShadowOffset(2);
+	} else {
+		headerText.setShadowOffset(1);
+		infoText.setShadowOffset(1);
+	}
 }
 
 bool Upgrade::isSelected()
@@ -39,53 +47,75 @@ void Upgrade::setRarity(Rarity rarity)
 	switch (rarity) {
 	case COMMON:
 		button.setColor(sf::Color::Cyan);
+		headerText.setColor(sf::Color::Cyan);
 		break;
 	case RARE:
 		button.setColor(sf::Color::Yellow);
+		headerText.setColor(sf::Color::Green);
 		break;
 	case EPIC:
 		button.setColor(sf::Color::Magenta);
+		headerText.setColor(sf::Color(220, 0, 255));
 		break;
 	case LEGENDARY:
 		button.setColor(sf::Color::Red);
+		headerText.setColor(sf::Color(255, 200, 0));
 		break;
 	}
 }
 
-void Upgrade::setInfo(UpgradeInfo info)
+void Upgrade::setInfo(Info info, float current)
 {
 	this->info = info;
 
+	//Header
 	sf::Text text = sf::Text(info.parameterName, Locator::getGraphicService().getFont(GraphicService::Pixel), info.charSize);
+	text.setFillColor(headerText.getColor());
 	headerText.setText(text);
 	headerText.setOrigin(text.getLocalBounds().width / 2.f, text.getLocalBounds().height / 2.f);
 
-	std::stringstream stream;
-	stream << std::fixed << std::setprecision(1);
-
-	switch (rarity) {
-	case COMMON:
-		stream << info.commonValue;
-		break;
-	case RARE:
-		stream << info.rareValue;
-		break;
-	case EPIC:
-		stream << info.epicValue;
-		break;
-	case LEGENDARY:
-		stream << info.legendaryValue;
-		break;
-	}
-
-	std::string infoStr = stream.str();
-	if (infoStr[0] != '-') {
-		infoStr = "+ " + infoStr;
-	}
-
-	text = sf::Text(infoStr, Locator::getGraphicService().getFont(GraphicService::Pixel), 18);
+	//Value to Add
+	std::string upgradeValueStr = convertFixedValue(getRarityValue());
+	text = sf::Text("+ " + upgradeValueStr, Locator::getGraphicService().getFont(GraphicService::Pixel), 20);
 	button.setText(text);
 
-	//infoText.setText(text);
-	//infoText.setOrigin(text.getLocalBounds().width / 2, 0);
+	//Current
+	std::string currentValueStr = convertFixedValue(current);
+	text = sf::Text("Current: " + currentValueStr, Locator::getGraphicService().getFont(GraphicService::Pixel), 12);
+	infoText.setText(text);
+	infoText.setOrigin(text.getLocalBounds().width / 2.f, text.getLocalBounds().height);
+}
+
+float Upgrade::getRarityValue()
+{
+	switch (rarity) {
+	case COMMON:
+		return info.commonValue;
+	case RARE:
+		return info.rareValue;
+	case EPIC:
+		return info.epicValue;
+	case LEGENDARY:
+		return info.legendaryValue;
+	}
+}
+
+Upgrade::Info Upgrade::getInfo()
+{
+	return info;
+}
+
+std::string Upgrade::convertFixedValue(float value)
+{
+	std::stringstream sstream;
+	sstream << std::fixed;
+
+	if (value == (int)value) {
+		sstream << std::setprecision(0);
+	} else {
+		sstream << std::setprecision(1);
+	}
+
+	sstream << value;
+	return sstream.str();
 }

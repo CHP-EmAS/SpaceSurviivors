@@ -4,6 +4,7 @@
 #include "VectorExtension.h"
 #include "SpatialPartitionGrid.h"
 #include "Explosion.h"
+#include "Bullet.h"
 
 Asteroid::Asteroid(sf::Vector2f direction, float scale, float speed, float rotationSpeed) : GameObject(ObjectType::O_Asteroid)
 {
@@ -29,8 +30,8 @@ void Asteroid::update(sf::Time deltaTime, GameState& state)
 	sprite.setColor(sf::Color(currentColor.r, 255 * tintFactor, 255 * tintFactor));
 
 	if (currentHitPoints <= 0) {
-		state.addScore(100 * getScale().x);
-		state.addExperience(5 * getScale().x);
+		state.increaseScoreBy(100 * getScale().x);
+		state.increaseExperienceBy(5 * getScale().x);
 		explode();
 	}
 
@@ -43,7 +44,7 @@ void Asteroid::interact(Interaction action, GameObject& interactor)
 	case Interaction::BulletCollision: {
 		sf::Vector2f direction = VectorExtension::toUnitVector(interactor.getRotation());
 		controller->applyForce(direction * 50.f);
-		currentHitPoints -= 10;
+		currentHitPoints -= static_cast<Bullet*>(&interactor)->getDamage();
 		break;
 	}
 	case Interaction::PlayerCollision: {

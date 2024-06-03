@@ -15,7 +15,14 @@ Bullet::Bullet() : GameObject(ObjectType::O_Bullet)
 	collider = Collider(this, sprite.getTextureRect().getSize().x, sprite.getTextureRect().getSize().y);
 
 	isActive = false;
-	speed = 1000.f;
+	speed = 1200.f;
+}
+
+void Bullet::setDamage(int damage)
+{
+	if (damage > 0) {
+		this->damage = damage;
+	}
 }
 
 void Bullet::setOwner(GameObject* owner)

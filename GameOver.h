@@ -19,6 +19,8 @@ public:
 	void setScore(int score);
 
 private:
+	void checkForHighscore(int score);
+	std::string convertScore(int score);
 
 	DropShadowText gameoverText;
 	DropShadowText scoreText;
@@ -26,6 +28,8 @@ private:
 
 	Button newGameButton;
 
+	std::string highscoreName;
+	int highscore;
 	int score;
 };
 
