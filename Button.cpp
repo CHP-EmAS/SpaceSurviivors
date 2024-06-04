@@ -4,7 +4,7 @@
 Button::Button()
 {
 	mouseOver = true;
-	color = sf::Color::White;
+	color = sf::Color(180, 220, 250);
 }
 
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const

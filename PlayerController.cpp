@@ -39,7 +39,7 @@ void PlayerController::simulate(sf::Time deltaTime, GameState& state)
         parentObject->move(velocity * deltaTime.asSeconds());
     }
        
-    rotateToMouse(deltaTime);
+    rotateToMouse(deltaTime, state);
 }
 
 sf::Vector2f PlayerController::getInputVector()
@@ -70,7 +70,7 @@ sf::Vector2f PlayerController::getInputVector()
     return VectorExtension::normalize(movement);
 }
 
-void PlayerController::rotateToMouse(sf::Time deltaTime)
+void PlayerController::rotateToMouse(sf::Time deltaTime, GameState& state)
 {
     sf::Vector2f mousePosition = Locator::getSceneManager().getMousePosition();
 
@@ -80,7 +80,7 @@ void PlayerController::rotateToMouse(sf::Time deltaTime)
     if (deltaAngle > 180.f) deltaAngle -= 360.f;
     if (deltaAngle < -180.f) deltaAngle += 360.f;
 
-    float maxRotation = 240 * deltaTime.asSeconds();
+    float maxRotation = 240 * (state.getPlayerAcceleration() / 1500.f) * deltaTime.asSeconds();
 
     if (std::abs(deltaAngle) < maxRotation) {
         parentObject->setRotation(targetAngle);

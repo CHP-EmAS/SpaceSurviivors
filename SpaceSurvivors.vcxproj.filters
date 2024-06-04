@@ -151,6 +151,12 @@
     <ClCompile Include="Upgrade.cpp">
       <Filter>src\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Highscore.cpp">
+      <Filter>src\Defines</Filter>
+    </ClCompile>
+    <ClCompile Include="TextInput.cpp">
+      <Filter>src\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -250,6 +256,12 @@
       <Filter>src\UI</Filter>
     </ClInclude>
     <ClInclude Include="Upgrade.h">
+      <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Highscore.h">
+      <Filter>src\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="TextInput.h">
       <Filter>src\UI</Filter>
     </ClInclude>
   </ItemGroup>

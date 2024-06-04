@@ -9,7 +9,7 @@ public:
 private:
     sf::Vector2f getInputVector();
     
-    void rotateToMouse(sf::Time elapsedTime);
+    void rotateToMouse(sf::Time elapsedTime, GameState& state);
     void clipToBoundingBox();
 };
 

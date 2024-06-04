@@ -4,7 +4,7 @@
 #include "Upgrade.h"
 #include "Locator.h"
 
-Upgrade::Upgrade()
+Upgrade::Upgrade() : rarity(COMMON)
 {
 	button.setSize(sf::Vector2f(166.66, 200));
 	headerText.setPosition(166.66 / 2.f, 30);
@@ -46,19 +46,19 @@ void Upgrade::setRarity(Rarity rarity)
 
 	switch (rarity) {
 	case COMMON:
-		button.setColor(sf::Color::Cyan);
-		headerText.setColor(sf::Color::Cyan);
+		button.setColor(sf::Color::Green);
+		headerText.setColor(sf::Color::Green);
 		break;
 	case RARE:
-		button.setColor(sf::Color::Yellow);
-		headerText.setColor(sf::Color::Green);
+		button.setColor(sf::Color::Cyan);
+		headerText.setColor(sf::Color::Cyan);
 		break;
 	case EPIC:
 		button.setColor(sf::Color::Magenta);
 		headerText.setColor(sf::Color(220, 0, 255));
 		break;
 	case LEGENDARY:
-		button.setColor(sf::Color::Red);
+		button.setColor(sf::Color(255, 200, 0));
 		headerText.setColor(sf::Color(255, 200, 0));
 		break;
 	}
@@ -86,7 +86,7 @@ void Upgrade::setInfo(Info info, float current)
 	infoText.setOrigin(text.getLocalBounds().width / 2.f, text.getLocalBounds().height);
 }
 
-float Upgrade::getRarityValue()
+float Upgrade::getRarityValue() const
 {
 	switch (rarity) {
 	case COMMON:
@@ -97,15 +97,17 @@ float Upgrade::getRarityValue()
 		return info.epicValue;
 	case LEGENDARY:
 		return info.legendaryValue;
+	default:
+		return 0.f;
 	}
 }
 
-Upgrade::Info Upgrade::getInfo()
+Upgrade::Info Upgrade::getInfo() const
 {
 	return info;
 }
 
-std::string Upgrade::convertFixedValue(float value)
+std::string Upgrade::convertFixedValue(float value) const
 {
 	std::stringstream sstream;
 	sstream << std::fixed;

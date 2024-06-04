@@ -151,6 +151,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="Highscore.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="LevelUp.cpp" />
     <ClCompile Include="Pause.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SpaceSurvivors.cpp" />
+    <ClCompile Include="TextInput.cpp" />
     <ClCompile Include="Upgrade.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +186,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="Highscore.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="LevelUp.h" />
     <ClInclude Include="Pause.h" />
@@ -200,6 +203,7 @@
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="TextInput.h" />
     <ClInclude Include="Upgrade.h" />
     <ClInclude Include="VectorExtension.h" />
   </ItemGroup>

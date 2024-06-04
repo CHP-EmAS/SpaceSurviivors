@@ -161,6 +161,7 @@ void SceneManager::checkWindowEvents()
 			gameWindow->close();
 			break;
 		case sf::Event::KeyPressed:
+#if _DEBUG
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
 				showFPS = !showFPS;
 			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2)) {
@@ -172,6 +173,10 @@ void SceneManager::checkWindowEvents()
 				showVelocity = !showVelocity;
 			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F5)) {
 				showHitboxes = !showHitboxes;
+			} else 
+#endif	
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F12)) {
+				setWindowMode(true, !fullscreen);
 			}
 			break;
 		case sf::Event::Resized:
@@ -183,6 +188,9 @@ void SceneManager::checkWindowEvents()
 
 void SceneManager::setWindowMode(bool border, bool fullscreen)
 {
+	this->fullscreen = fullscreen;
+	this->border = border;
+
 	if (gameWindow == nullptr)
 		gameWindow = new sf::RenderWindow;
 

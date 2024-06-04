@@ -28,6 +28,8 @@ public:
 
 	~SpatialPartitionGrid();
 private:
+	void addToCemetery(GameObject* object);
+
 	GameObject* cells[PARTITION_SIZE][PARTITION_SIZE];
 	std::vector<GameObject*> cemetery;
 

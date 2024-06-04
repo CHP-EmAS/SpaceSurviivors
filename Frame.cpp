@@ -22,6 +22,8 @@ Frame::Frame()
 	edges[2].setTextureRect(sf::IntRect(6, 7, 1, 6));
 	edges[3].setTextureRect(sf::IntRect(0, 6, 6, 1));
 
+	setColor(sf::Color(180, 220, 250));
+
 	setSize(sf::Vector2f(13, 13));
 }
 

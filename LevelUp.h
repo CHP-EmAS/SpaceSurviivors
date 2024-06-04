@@ -20,7 +20,7 @@ public:
 	void rollUpgrades(GameState& state);
 
 private:
-	Upgrade::Rarity rollRarity(int probabilities[4]);
+	Upgrade::Rarity rollRarity(const std::array<int, 4>& probabilities);
 	Upgrade::Info rollParameter(Upgrade::Rarity rarity);
 	float getCurrentValue(Upgrade::Parameter parameter, GameState& state);
 	void applyValueToState(Upgrade::Parameter parameter, float value, GameState& state);

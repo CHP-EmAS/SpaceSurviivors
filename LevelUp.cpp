@@ -1,14 +1,20 @@
 #include "LevelUp.h"
-
 #include "Locator.h"
+#include <array>
+
+const int NUM_UPGRADES = 3;
+const std::array<int, 4> DEFAULT_PROBABILITIES = { 80, 15, 5, 0 };
 
 LevelUpScene::LevelUpScene() : Scene(Level_UP)
 {
-	for (int i = 0; i < 3; i++) {
-		upgrade[i].setScale(1.5, 1.5);
-		upgrade[i].setPosition((250 * i) + (62.5 * (i + 1)), 400);
+	// Initialize upgrade positions and scales
+	for (int i = 0; i < NUM_UPGRADES; ++i) {
+		upgrade[i].setScale(1.5f, 1.5f);
+		upgrade[i].setPosition((250 * i) + (62.5f * (i + 1)), 400);
 	}
 
+
+	// Initialize level up text
 	sf::Text text = sf::Text("Level Up!", Locator::getGraphicService().getFont(GraphicService::Pixel), 55);
 	text.setLineSpacing(2);
 	text.setFillColor(sf::Color(255,223,0));
@@ -17,32 +23,32 @@ LevelUpScene::LevelUpScene() : Scene(Level_UP)
 	levelUpText.setPosition(WINDOW_SIZE / 2, 200);
 	levelUpText.setShadowOffset(5);
 
+	// Initialize info text
 	text = sf::Text("Choose one of the upgrades", Locator::getGraphicService().getFont(GraphicService::Pixel), 24);
 	infoText.setText(text);
 	infoText.setOrigin(text.getLocalBounds().width / 2, 0);
 	infoText.setPosition(WINDOW_SIZE / 2, 280);
 	infoText.setShadowOffset(3);
 
-	mouseDown = false;
-
 	InitUpgradeParameters();
 }
 
 void LevelUpScene::updateScene(sf::Time deltaTime)
 {
-	for (int i = 0; i < 3; i++) {
-		upgrade[i].update();
+	for (auto& upg : upgrade) {
+		upg.update();
 	}
 }
 
 void LevelUpScene::drawScene(sf::RenderWindow& mainWindow)
 {
+	// Draw previous scene as background
 	Locator::getSceneManager().getLastScene()->drawScene(mainWindow);
 
-	for (int i = 0; i < 3; i++) {
-		mainWindow.draw(upgrade[i]);
+	// Draw upgrades and texts
+	for (const auto& upg : upgrade) {
+		mainWindow.draw(upg);
 	}
-
 	mainWindow.draw(levelUpText);
 	mainWindow.draw(infoText);
 }
@@ -51,11 +57,13 @@ void LevelUpScene::checkEvents(sf::Event newEvent)
 {
 	switch (newEvent.type)
 	{
+#if _DEBUG
 	case sf::Event::KeyPressed:
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
 			rollUpgrades(*gameState);
 		}
 		break;
+#endif
 	case sf::Event::MouseButtonPressed:
 		mouseDown = true;
 		break;
@@ -65,21 +73,11 @@ void LevelUpScene::checkEvents(sf::Event newEvent)
 			break;
 		}
 
-		if (upgrade[0].isSelected()) {
-			if (gameState) {
-				applyValueToState(upgrade[0].getInfo().parameter, upgrade[0].getRarityValue(), *gameState);
+		for (int i = 0; i < NUM_UPGRADES; ++i) {
+			if (upgrade[i].isSelected() && gameState) {
+				applyValueToState(upgrade[i].getInfo().parameter, upgrade[i].getRarityValue(), *gameState);
+				Locator::getSceneManager().changeScene(Scene::Game);
 			}
-			Locator::getSceneManager().changeScene(Scene::Game);
-		} else if (upgrade[1].isSelected()) {
-			if (gameState) {
-				applyValueToState(upgrade[1].getInfo().parameter, upgrade[1].getRarityValue(), *gameState);
-			}
-			Locator::getSceneManager().changeScene(Scene::Game);
-		} else if (upgrade[2].isSelected()) {
-			if (gameState) {
-				applyValueToState(upgrade[2].getInfo().parameter, upgrade[2].getRarityValue(), *gameState);
-			}
-			Locator::getSceneManager().changeScene(Scene::Game);
 		}
 
 		mouseDown = false;
@@ -88,56 +86,46 @@ void LevelUpScene::checkEvents(sf::Event newEvent)
 	}
 }
 
-void LevelUpScene::loadScene()
-{
-}
-
-void LevelUpScene::restartScene()
-{
-
-}
-
-void LevelUpScene::closeScene()
-{
-}
+void LevelUpScene::loadScene(){}
+void LevelUpScene::restartScene(){}
+void LevelUpScene::closeScene(){}
 
 void LevelUpScene::rollUpgrades(GameState& state)
 {
 	gameState = &state;
 
-	int probabilities[4] = { 80, 15, 5, 0 };
+	std::array<int ,4> probabilities = DEFAULT_PROBABILITIES;
 
 	int luck = std::min(16, state.getLuck());
-	if (luck > 0) {
-		probabilities[0] = probabilities[0] - luck * 5;
-		probabilities[1] = probabilities[1] + luck * 2;
-		probabilities[2] = probabilities[2] + luck * 2;
-		probabilities[3] = probabilities[3] + luck;
-	}
+    if (luck > 0) {
+        probabilities[0] -= luck * 5;
+        probabilities[1] += luck * 2;
+        probabilities[2] += luck * 2;
+        probabilities[3] += luck;
+    }
 
-	for (int i = 0; i < 3; i++) {
+	for(auto & upg : upgrade) {
 		Upgrade::Rarity rarity = rollRarity(probabilities);
 		Upgrade::Info info = rollParameter(rarity);
 
 		float current = getCurrentValue(info.parameter, state);
 
-		upgrade[i].setRarity(rarity);
-		upgrade[i].setInfo(info, current);
+		upg.setRarity(rarity);
+		upg.setInfo(info, current);
 	}
 }
 
-Upgrade::Rarity LevelUpScene::rollRarity(int probabilities[4])
+Upgrade::Rarity LevelUpScene::rollRarity(const std::array<int, 4>& probabilities)
 {
 	int total = 0;
-
-	for (int i = 0; i < 4; i++) {
-		total += probabilities[i];
+	for (int prob : probabilities) {
+		total += prob;
 	}
 
 	int roll = rand() % total;
 
 	int sum = 0;
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < probabilities.size(); ++i) {
 		sum += probabilities[i];
 		if (roll < sum) {
 			return Upgrade::Rarity(i);
@@ -150,23 +138,21 @@ Upgrade::Rarity LevelUpScene::rollRarity(int probabilities[4])
 Upgrade::Info LevelUpScene::rollParameter(Upgrade::Rarity rarity)
 {
 	int index;
-
-	switch(rarity) {
+	switch (rarity) {
 	case Upgrade::COMMON:
-		index = rand() % (int)commonUpgrades.size();
+		index = rand() % commonUpgrades.size();
 		return commonUpgrades[index];
 	case Upgrade::RARE:
-		index = rand() % (int)rareUpgrades.size();
+		index = rand() % rareUpgrades.size();
 		return rareUpgrades[index];
-		break;
 	case Upgrade::EPIC:
-		index = rand() % (int)epicUpgrades.size();
+		index = rand() % epicUpgrades.size();
 		return epicUpgrades[index];
-		break;
 	case Upgrade::LEGENDARY:
-		index = rand() % (int)legendaryUpgrades.size();
+		index = rand() % legendaryUpgrades.size();
 		return legendaryUpgrades[index];
-		break;
+	default:
+		return commonUpgrades[0];
 	}
 }
 
@@ -190,7 +176,7 @@ float LevelUpScene::getCurrentValue(Upgrade::Parameter parameter, GameState& sta
 	case Upgrade::Luck:
 		return state.getLuck();
 	default:
-		return -1;
+		return -1.0f;
 	}
 }
 
@@ -220,6 +206,8 @@ void LevelUpScene::applyValueToState(Upgrade::Parameter parameter, float value, 
 		break;
 	case Upgrade::Luck:
 		state.increaseLuckBy(value);
+		break;
+	default:
 		break;
 	}
 }

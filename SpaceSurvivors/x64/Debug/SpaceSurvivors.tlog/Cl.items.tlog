@@ -12,6 +12,7 @@ C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Frame.cpp;C:\Users\Cle
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameObject.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\GameObject.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameOver.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\GameOver.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\GameState.obj
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Highscore.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\Highscore.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\HUD.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\HUD.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\LevelUp.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Pause.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\Pause.obj
@@ -27,4 +28,5 @@ C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\PlayerController.cpp;C
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Scene.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\Scene.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\SceneManager.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\SpaceSurvivors.obj
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\TextInput.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\TextInput.obj
 C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\Upgrade.cpp;C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SpaceSurvivors\x64\Debug\Upgrade.obj

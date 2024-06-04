@@ -46,10 +46,10 @@ public:
 	void setRarity(Rarity rarity);
 	void setInfo(Info info, float currentValue);
 	
-	float getRarityValue();
-	Info getInfo();
+	float getRarityValue() const;
+	Info getInfo() const;
 private:
-	std::string convertFixedValue(float value);
+	std::string convertFixedValue(float value) const;
 
 	Button button;
 	DropShadowText headerText;

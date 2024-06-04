@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 	Locator::provide(sceneManager);
 	sceneManager->setWindowMode(true, false);
 	sceneManager->initScenes();
-	sceneManager->changeScene(Scene::Game, false);
+	sceneManager->changeScene(Scene::GameOver, false);
 	
 
 	sf::Clock drawClock;

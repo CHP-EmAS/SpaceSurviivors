@@ -28,7 +28,7 @@ void SpatialPartitionGrid::add(GameObject* object, bool isNewObject)
 	//out of bounds spawn
 	if (cell.x < 0 || cell.x >= PARTITION_SIZE || cell.y < 0 || cell.y >= PARTITION_SIZE) {
 		notifyObservers(Event::GRID_OBJECT_OUT_OF_BOUNDS, { object });
-		cemetery.push_back(object);
+		addToCemetery(object);
 		return;
 	}
 
@@ -62,7 +62,7 @@ void SpatialPartitionGrid::remove(GameObject* object)
 	}
 
 	if (object->type != GameObject::O_Player) {
-		cemetery.push_back(object);
+		addToCemetery(object);
 	}
 	
 }
@@ -240,4 +240,16 @@ sf::Vector2i SpatialPartitionGrid::convertPositionToCell(sf::Vector2f position)
 SpatialPartitionGrid::~SpatialPartitionGrid()
 {
 	clear();
+}
+
+void SpatialPartitionGrid::addToCemetery(GameObject* object)
+{
+	for (GameObject* obj : cemetery) {
+		if (obj == object) {
+			std::cout << "duplicate found!" << std::endl;
+			return;
+		}
+	}
+
+	cemetery.push_back(object);
 }

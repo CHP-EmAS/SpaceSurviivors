@@ -19,8 +19,8 @@ Player::Player(BulletPool* bulletPool, SpatialPartitionGrid* grid) : GameObject(
 	setOrigin(origin);
 	setScale(1.5, 1.5);
 	
-	collider = Collider(this, sf::Vector2f(sprite.getTextureRect().getSize().x - 5, sprite.getTextureRect().getSize().y - 15));
-	collider.setOrigin(0, -7.5);
+	collider = Collider(this, sf::Vector2f(sprite.getTextureRect().getSize().x - 15, sprite.getTextureRect().getSize().y - 20));
+	collider.setOrigin(-7.5, -10);
 
 	setController(new PlayerController(this));
 
