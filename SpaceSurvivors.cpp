@@ -7,38 +7,27 @@
 #include "Locator.h"
 #include "SceneManager.h"
 #include "GraphicLoader.h"
+#include "SoundManager.h"
 
 int main(int argc, char* argv[])
 {
-    bool debug = true;
-
-    if (argc > 1)
-    {
-        if (std::string(argv[1]) == "-d")
-        {
-            debug = true;
-        }
-    }
-
     srand(time(NULL));
-
-    if (!debug) //Konsolen-Fenster verstecken falls Debugmode aus
-    {
-        ShowWindow(GetConsoleWindow(), SW_HIDE);
-    }
 
 	GraphicLoader* graphicLoader = new GraphicLoader();
 	Locator::provide(graphicLoader);
 	graphicLoader->loadAllFonts();
 	graphicLoader->loadAllGraphics();
 	
+	SoundManager* soundManager = new SoundManager();
+	Locator::provide(soundManager);
+	soundManager->changeBackgroundMusic("music/space.mp3");
+
 	SceneManager* sceneManager = new SceneManager();
 	Locator::provide(sceneManager);
 	sceneManager->setWindowMode(true, false);
 	sceneManager->initScenes();
 	sceneManager->changeScene(Scene::GameOver, false);
 	
-
 	sf::Clock drawClock;
 	sf::Clock updateClock;
 	sf::Clock fpsClock;
@@ -77,6 +66,7 @@ int main(int argc, char* argv[])
 
 	delete sceneManager;
 	delete graphicLoader;
+	delete soundManager;
 
 	return EXIT_SUCCESS;
 }

@@ -95,6 +95,11 @@ void EnemySpawnController::onEvent(const Observable::Event event, const Observab
 
 void EnemySpawnController::onLevelUp(int newLevel)
 {
+	if (newLevel > 25) {
+		enemyAmountTargetValue = 2000;
+		spawnIntervall = 0.075;
+	}
+
 	enemyAmountTargetValue = std::min((int)std::floor(std::pow(1.5, newLevel)), 1000);
-	spawnIntervall = std::max(0.6 - 0.025 * newLevel, 0.1);
+	spawnIntervall = std::max(0.6 - 0.025 * newLevel, 0.075);
 }

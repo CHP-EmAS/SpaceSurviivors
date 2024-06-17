@@ -59,6 +59,9 @@
     <Filter Include="src\Background">
       <UniqueIdentifier>{bba21639-c9fe-4742-81bc-a124657d9071}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Services\Sound">
+      <UniqueIdentifier>{97363ade-2cfe-41f4-abc7-fa548a215e28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -156,6 +159,9 @@
     </ClCompile>
     <ClCompile Include="TextInput.cpp">
       <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>src\Services\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,6 +269,9 @@
     </ClInclude>
     <ClInclude Include="TextInput.h">
       <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>src\Services\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

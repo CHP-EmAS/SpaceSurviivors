@@ -158,6 +158,7 @@
     <ClCompile Include="LevelUp.cpp" />
     <ClCompile Include="Pause.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SpatialPartitionGrid.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GraphicLoader.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="LevelUp.h" />
     <ClInclude Include="Pause.h" />
     <ClInclude Include="ProgressBar.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpatialPartitionGrid.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GraphicLoader.h" />

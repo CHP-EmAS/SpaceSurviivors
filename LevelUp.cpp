@@ -72,6 +72,11 @@ void LevelUpScene::checkEvents(sf::Event newEvent)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
 			rollUpgrades(*gameState);
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add)) {
+			gameState->increaseLuckBy(1);
+			rollUpgrades(*gameState);
+		}
 		break;
 #endif
 	case sf::Event::MouseButtonPressed:
@@ -106,13 +111,34 @@ void LevelUpScene::rollUpgrades(GameState& state)
 
 	std::array<int ,4> probabilities = DEFAULT_PROBABILITIES;
 
-	int luck = std::min(16, state.getLuck());
-    if (luck > 0) {
+	int luck = state.getLuck();
+
+    if (luck > 0 && luck <= 16) {
         probabilities[0] -= luck * 5;
         probabilities[1] += luck * 2;
         probabilities[2] += luck * 2;
         probabilities[3] += luck;
-    }
+	} else if (luck > 16 && luck <= 31) {
+		int base = luck - 16;
+
+		probabilities[0] = 0;
+		probabilities[1] += 32 - base * 3;
+		probabilities[2] += 32 + base * 2;
+		probabilities[3] += luck; 
+	} else if (luck > 31 && luck <= 65) {
+		int base = luck - 31;
+
+		probabilities[0] = 0;
+		probabilities[1] = 0;
+		probabilities[2] += 63 - base * 2;
+		probabilities[3] += 32 + base * 2;
+	}
+	else if (luck > 65) {
+		probabilities[0] = 0;
+		probabilities[1] = 0;
+		probabilities[2] = 0;
+		probabilities[3] = 100;
+	}
 
 	updateRarityInfoStrings(probabilities);
 
