@@ -30,7 +30,7 @@ private:
 	void setInfoText(std::string string, int fontSize, sf::Color color);
 	void setHighscoresText();
 
-	DropShadowText gameoverText;
+	DropShadowText headlineText;
 	DropShadowText scoreText;
 	DropShadowText infoText;
 

@@ -3,17 +3,18 @@
 
 PauseScene::PauseScene() : Scene(Pause)
 {
-	sf::Text text = sf::Text("Pause", Locator::getGraphicService().getFont(GraphicService::Pixel), 55);
-	text.setLineSpacing(2);
-	text.setFillColor(sf::Color::Yellow);
-	pauseText.setText(text);
-	pauseText.setOrigin(text.getLocalBounds().width / 2, 0);
+	pauseText.setString("Pause");
+	pauseText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	pauseText.setFontSize(55);
+	pauseText.setColor(sf::Color::Yellow);
+	pauseText.setOrigin(pauseText.getLocalBounds().width / 2, 0);
 	pauseText.setPosition(WINDOW_SIZE / 2, 400);
 	pauseText.setShadowOffset(5);
 
-	text = sf::Text("Press SPACE to continue", Locator::getGraphicService().getFont(GraphicService::Pixel), 30);
-	infoText.setText(text);
-	infoText.setOrigin(text.getLocalBounds().width / 2, 0);
+	infoText.setString("Press SPACE to continue");
+	infoText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	infoText.setFontSize(30);
+	infoText.setOrigin(infoText.getLocalBounds().width / 2, 0);
 	infoText.setPosition(WINDOW_SIZE / 2, 500);
 	infoText.setShadowOffset(3);
 }

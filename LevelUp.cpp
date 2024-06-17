@@ -13,22 +13,24 @@ LevelUpScene::LevelUpScene() : Scene(Level_UP)
 		upgrade[i].setPosition((250 * i) + (62.5f * (i + 1)), 400);
 	}
 
-
 	// Initialize level up text
-	sf::Text text = sf::Text("Level Up!", Locator::getGraphicService().getFont(GraphicService::Pixel), 55);
-	text.setLineSpacing(2);
-	text.setFillColor(sf::Color(255,223,0));
-	levelUpText.setText(text);
-	levelUpText.setOrigin(text.getLocalBounds().width / 2, 0);
+	levelUpText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	levelUpText.setFontSize(55);
+	levelUpText.setString("Level Up!");
+	levelUpText.setColor(sf::Color(255, 223, 0));
+	levelUpText.setOrigin(levelUpText.getLocalBounds().width / 2, 0);
 	levelUpText.setPosition(WINDOW_SIZE / 2, 200);
 	levelUpText.setShadowOffset(5);
 
 	// Initialize info text
-	text = sf::Text("Choose one of the upgrades", Locator::getGraphicService().getFont(GraphicService::Pixel), 24);
-	infoText.setText(text);
-	infoText.setOrigin(text.getLocalBounds().width / 2, 0);
+	infoText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	infoText.setFontSize(24);
+	infoText.setString("Choose one of the upgrades");
+	infoText.setOrigin(infoText.getLocalBounds().width / 2, 0);
 	infoText.setPosition(WINDOW_SIZE / 2, 280);
 	infoText.setShadowOffset(3);
+
+	rarityFrame.setPosition(500, 885);
 
 	InitUpgradeParameters();
 }
@@ -49,8 +51,16 @@ void LevelUpScene::drawScene(sf::RenderWindow& mainWindow)
 	for (const auto& upg : upgrade) {
 		mainWindow.draw(upg);
 	}
+
 	mainWindow.draw(levelUpText);
 	mainWindow.draw(infoText);
+
+	mainWindow.draw(rarityFrame);
+
+	for (int i = 0; i < 4; ++i) {
+		mainWindow.draw(rarityInfoText[i]);
+		mainWindow.draw(rarityPercentInfoText[i]);
+	}
 }
 
 void LevelUpScene::checkEvents(sf::Event newEvent)
@@ -104,14 +114,19 @@ void LevelUpScene::rollUpgrades(GameState& state)
         probabilities[3] += luck;
     }
 
+	updateRarityInfoStrings(probabilities);
+
+	std::set<Upgrade::Parameter> usedParameters;
 	for(auto & upg : upgrade) {
 		Upgrade::Rarity rarity = rollRarity(probabilities);
-		Upgrade::Info info = rollParameter(rarity);
+		Upgrade::Info info = rollParameter(rarity, usedParameters);
 
 		float current = getCurrentValue(info.parameter, state);
 
 		upg.setRarity(rarity);
 		upg.setInfo(info, current);
+
+		usedParameters.insert(info.parameter);
 	}
 }
 
@@ -135,25 +150,45 @@ Upgrade::Rarity LevelUpScene::rollRarity(const std::array<int, 4>& probabilities
 	return Upgrade::COMMON;
 }
 
-Upgrade::Info LevelUpScene::rollParameter(Upgrade::Rarity rarity)
+Upgrade::Info LevelUpScene::rollParameter(Upgrade::Rarity rarity, const std::set<Upgrade::Parameter>& usedParameters)
 {
-	int index;
+	std::vector<Upgrade::Info> availableUpgrades;
+
 	switch (rarity) {
 	case Upgrade::COMMON:
-		index = rand() % commonUpgrades.size();
-		return commonUpgrades[index];
+		availableUpgrades = filterUpgrades(commonUpgrades, usedParameters);
+		break;
 	case Upgrade::RARE:
-		index = rand() % rareUpgrades.size();
-		return rareUpgrades[index];
+		availableUpgrades = filterUpgrades(rareUpgrades, usedParameters);
+		break;
 	case Upgrade::EPIC:
-		index = rand() % epicUpgrades.size();
-		return epicUpgrades[index];
+		availableUpgrades = filterUpgrades(epicUpgrades, usedParameters);
+		break;
 	case Upgrade::LEGENDARY:
-		index = rand() % legendaryUpgrades.size();
-		return legendaryUpgrades[index];
+		availableUpgrades = filterUpgrades(legendaryUpgrades, usedParameters);
+		break;
 	default:
-		return commonUpgrades[0];
+		availableUpgrades = filterUpgrades(commonUpgrades, usedParameters);
+		break;
 	}
+
+	int index = rand() % availableUpgrades.size();
+	return availableUpgrades[index];
+}
+
+std::vector<Upgrade::Info> LevelUpScene::filterUpgrades(const std::vector<Upgrade::Info>& upgrades, const std::set<Upgrade::Parameter>& usedParameters)
+{
+	std::vector<Upgrade::Info> filteredUpgrades;
+	for (const auto& upgrade : upgrades) {
+		if (usedParameters.find(upgrade.parameter) == usedParameters.end()) {
+			if (upgrade.parameter == Upgrade::Heal && this->gameState->isFullHealth()) {
+				continue;
+			}
+
+			filteredUpgrades.push_back(upgrade);
+		}
+	}
+	return filteredUpgrades;
 }
 
 float LevelUpScene::getCurrentValue(Upgrade::Parameter parameter, GameState& state)
@@ -296,5 +331,60 @@ void LevelUpScene::InitUpgradeParameters()
 		if (upgradeInfo[i].legendaryValue != 0) {
 			legendaryUpgrades.push_back(upgradeInfo[i]);
 		}
+	}
+
+	rarityInfoText[0].setString("Common");
+	rarityInfoText[1].setString("Rare");
+	rarityInfoText[2].setString("Epic");
+	rarityInfoText[3].setString("Legendary");
+
+	for (int i = 0; i < 4; ++i) {
+		rarityInfoText[i].setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+		rarityInfoText[i].setFontSize(32);
+		rarityInfoText[i].setOrigin(rarityInfoText[i].getLocalBounds().getSize().x / 2.f, 0);
+		rarityPercentInfoText[i].setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+		rarityPercentInfoText[i].setFontSize(20);
+		
+	}
+
+	rarityInfoText[0].setColor(sf::Color::Green);
+	rarityInfoText[1].setColor(sf::Color::Cyan);
+	rarityInfoText[2].setColor(sf::Color(220, 0, 255));
+	rarityInfoText[3].setColor(sf::Color(255, 200, 0));
+}
+
+void LevelUpScene::updateRarityInfoStrings(const std::array<int, 4>& probabilities)
+{
+	if (probabilities[3] == 0) {
+		rarityInfoText[0].setPosition(sf::Vector2f(300, 850));
+		rarityInfoText[1].setPosition(sf::Vector2f(510, 850));
+		rarityInfoText[2].setPosition(sf::Vector2f(720, 850));
+		rarityInfoText[3].setPosition(sf::Vector2f(1500, 850));
+
+		rarityPercentInfoText[0].setPosition(sf::Vector2f(300, 890));
+		rarityPercentInfoText[1].setPosition(sf::Vector2f(510, 890));
+		rarityPercentInfoText[2].setPosition(sf::Vector2f(720, 890));
+		rarityPercentInfoText[3].setPosition(sf::Vector2f(1500, 890));
+
+		rarityFrame.setSize(sf::Vector2f(600, 75));
+	} else {
+		rarityInfoText[0].setPosition(sf::Vector2f(165, 850));
+		rarityInfoText[1].setPosition(sf::Vector2f(380, 850));
+		rarityInfoText[2].setPosition(sf::Vector2f(550, 850));
+		rarityInfoText[3].setPosition(sf::Vector2f(800, 850));
+
+		rarityPercentInfoText[0].setPosition(sf::Vector2f(165, 890));
+		rarityPercentInfoText[1].setPosition(sf::Vector2f(380, 890));
+		rarityPercentInfoText[2].setPosition(sf::Vector2f(550, 890));
+		rarityPercentInfoText[3].setPosition(sf::Vector2f(800, 890));
+
+		rarityFrame.setSize(sf::Vector2f(875,75));
+	}
+
+	rarityFrame.setOrigin(rarityFrame.getSize() / 2.f);
+
+	for (int i = 0; i < 4; i++) {
+		rarityPercentInfoText[i].setString(std::to_string(probabilities[i]) + "%");
+		rarityPercentInfoText[i].setOrigin(rarityPercentInfoText[i].getLocalBounds().getSize().x / 2.f, 0);
 	}
 }

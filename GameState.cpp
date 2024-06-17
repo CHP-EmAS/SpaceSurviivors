@@ -20,7 +20,6 @@ void GameState::increaseScoreBy(int score)
 void GameState::increaseScoreMultiplierBy(float multiplier)
 {
 	scoreMultiplier += multiplier;
-	std::cout << "SM += " << multiplier;
 }
 
 void GameState::decreaseHealthBy(int damage)
@@ -37,7 +36,12 @@ void GameState::decreaseHealthBy(int damage)
 
 void GameState::increaseHealthBy(int heal)
 {
-	health += heal;
+	if ((health + heal) < maxHealth) {
+		health += heal;
+	} else {
+		health = maxHealth;
+	}
+
 	notifyObservers(HEALTH_UPDATED, { NULL, this->health });
 }
 
@@ -71,7 +75,7 @@ void GameState::increaseLevelByOne()
 {
 	level++;
 	
-	experienceForLevelUp = experienceForLevelUp * 1.5;
+	experienceForLevelUp = 7 * level * level;
 
 	notifyObservers(LEVEL_UPDATED, { NULL, level });
 	notifyObservers(MAX_EXPERIENCE_UPDATED, { NULL, experienceForLevelUp });
@@ -111,14 +115,14 @@ void GameState::setStartValues()
 	maxHealth = 3;
 
 	experience = 0;
-	experienceForLevelUp = 25;
+	experienceForLevelUp = 20;
 	experienceMultiplier = 1;
 	level = 1;
 
 	luck = 0;
 
 	playerAcceleration = 1500;
-	playerShotsPerSecond = 2;
+	playerShotsPerSecond = 3;
 	playerInvinciblyInterval = 1.5;
 	playerDamage = 10;
 

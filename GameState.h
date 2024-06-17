@@ -12,6 +12,7 @@ public:
 
 	inline int getHealth() const { return health; }
 	inline int getMaxHealth() const { return maxHealth; }
+	inline bool isFullHealth() const { return health == maxHealth; }
 
 	inline int getLuck() { return luck; };
 

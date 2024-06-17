@@ -9,8 +9,11 @@ Upgrade::Upgrade() : rarity(COMMON)
 	button.setSize(sf::Vector2f(166.66, 200));
 	headerText.setPosition(166.66 / 2.f, 30);
 	headerText.setShadowOffset(3);
+	headerText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
 
 	infoText.setPosition(166.66 / 2.f, 180);
+	infoText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	infoText.setFontSize(12);
 	infoText.setShadowOffset(2);
 }
 
@@ -69,21 +72,18 @@ void Upgrade::setInfo(Info info, float current)
 	this->info = info;
 
 	//Header
-	sf::Text text = sf::Text(info.parameterName, Locator::getGraphicService().getFont(GraphicService::Pixel), info.charSize);
-	text.setFillColor(headerText.getColor());
-	headerText.setText(text);
-	headerText.setOrigin(text.getLocalBounds().width / 2.f, text.getLocalBounds().height / 2.f);
+	headerText.setString(info.parameterName);
+	headerText.setFontSize(info.charSize);
+	headerText.setOrigin(headerText.getLocalBounds().width / 2.f, headerText.getLocalBounds().height / 2.f);
 
 	//Value to Add
 	std::string upgradeValueStr = convertFixedValue(getRarityValue());
-	text = sf::Text("+ " + upgradeValueStr, Locator::getGraphicService().getFont(GraphicService::Pixel), 20);
-	button.setText(text);
+	button.setText(sf::Text("+ " + upgradeValueStr, Locator::getGraphicService().getFont(GraphicService::Pixel), 20));
 
 	//Current
 	std::string currentValueStr = convertFixedValue(current);
-	text = sf::Text("Current: " + currentValueStr, Locator::getGraphicService().getFont(GraphicService::Pixel), 12);
-	infoText.setText(text);
-	infoText.setOrigin(text.getLocalBounds().width / 2.f, text.getLocalBounds().height);
+	infoText.setString("Current: " + currentValueStr);
+	infoText.setOrigin(infoText.getLocalBounds().width / 2.f, infoText.getLocalBounds().height);
 }
 
 float Upgrade::getRarityValue() const

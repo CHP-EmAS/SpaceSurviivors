@@ -1,27 +1,5 @@
-﻿  LevelUp.cpp
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(167,31): warning C4244: "return": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(171,25): warning C4244: "return": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(173,28): warning C4244: "return": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(177,23): warning C4244: "return": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(199,26): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(202,29): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(208,24): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(231,29): warning C4305: "=": Verkürzung von "double" in "float"
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(246,31): warning C4305: "=": Verkürzung von "double" in "float"
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(247,29): warning C4305: "=": Verkürzung von "double" in "float"
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(270,31): warning C4305: "=": Verkürzung von "double" in "float"
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(272,29): warning C4305: "=": Verkürzung von "double" in "float"
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\LevelUp.cpp(273,34): warning C4305: "=": Verkürzung von "double" in "float"
-  SceneManager.cpp
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(221,18): warning C4244: "Initialisierung": Konvertierung von "T" in "float", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(221,18): warning C4244:         with
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(221,18): warning C4244:         [
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(221,18): warning C4244:             T=unsigned int
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(221,18): warning C4244:         ]
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(222,18): warning C4244: "Initialisierung": Konvertierung von "T" in "float", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(222,18): warning C4244:         with
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(222,18): warning C4244:         [
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(222,18): warning C4244:             T=unsigned int
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\SceneManager.cpp(222,18): warning C4244:         ]
-  Code wird generiert...
+﻿  GameState.cpp
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp(16,23): warning C4244: "+=": Konvertierung von "float" in "int", möglicher Datenverlust
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp(59,32): warning C4244: "+=": Konvertierung von "float" in "int", möglicher Datenverlust
+C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp(99,18): warning C4244: "+=": Konvertierung von "float" in "int", möglicher Datenverlust
   SpaceSurvivors.vcxproj -> C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\x64\Debug\SpaceSurvivors.exe

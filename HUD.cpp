@@ -22,22 +22,23 @@ HUD::HUD()
 	experienceProgressBar.setPosition(WINDOW_SIZE / 2, 20);
 	experienceProgressBar.setScale(1.5, 1.5);
 
-	sf::Text text = sf::Text("XXXXXXXX", Locator::getGraphicService().getFont(GraphicService::Pixel), 26);
-	text.setFillColor(sf::Color::White);
-
-	scoreText.setText(text);
+	scoreText.setString("XXXXXXXX");
+	scoreText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	scoreText.setFontSize(26);
 	scoreText.setPosition(WINDOW_SIZE - 40, 26);
-	scoreText.setOrigin(text.getLocalBounds().width, 0);
+	scoreText.setOrigin(scoreText.getLocalBounds().width, 0);
 	scoreText.setShadowOffset(2);
 
-	text.setString("Level X");
-	levelText.setText(text);
+	levelText.setString("Level X");
+	levelText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	levelText.setFontSize(26);
 	levelText.setPosition(WINDOW_SIZE / 2, 26);
-	levelText.setOrigin(text.getLocalBounds().width / 2, 0);
+	levelText.setOrigin(levelText.getLocalBounds().width / 2, 0);
 	levelText.setShadowOffset(2);
 
-	text.setString("X/X HP");
-	healthText.setText(text);
+	healthText.setString("X/X HP");
+	healthText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	healthText.setFontSize(26);
 	healthText.setPosition(55, 26);
 	healthText.setShadowOffset(2);
 }

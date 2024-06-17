@@ -3,17 +3,19 @@
 
 GameOverScene::GameOverScene() : Scene(GameOver)
 {
-	gameoverText.setPosition(WINDOW_SIZE / 2, 200);
-	gameoverText.setShadowOffset(5);
+	headlineText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	headlineText.setFontSize(60);
+	headlineText.setPosition(WINDOW_SIZE / 2, 200);
+	headlineText.setShadowOffset(5);
 
+	infoText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
 	infoText.setShadowOffset(3);
 
-	setScore(0);
-	sf::Text text = sf::Text("Your Score: XXXXXXXX", Locator::getGraphicService().getFont(GraphicService::Pixel), 30);
-	scoreText.setText(text);
-	scoreText.setOrigin(text.getLocalBounds().width / 2, 0);
+	scoreText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	scoreText.setFontSize(30);
 	scoreText.setPosition(WINDOW_SIZE / 2, 300);
 	scoreText.setShadowOffset(4);
+	setScore(0);
 
 	continueButton.setPosition(500, 750);
 	continueButton.setScale(1.5, 1.5);
@@ -30,6 +32,8 @@ GameOverScene::GameOverScene() : Scene(GameOver)
 	highscoreFrame.setPosition(500, 500);
 	highscoreFrame.setColor(sf::Color(255, 200, 0));
 
+	highscoreText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	highscoreText.setFontSize(24);
 	highscoreText.setPosition(WINDOW_SIZE / 2, 460);
 
 	switchState(false);
@@ -42,7 +46,7 @@ void GameOverScene::updateScene(sf::Time deltaTime)
 
 void GameOverScene::drawScene(sf::RenderWindow& mainWindow)
 {
-	mainWindow.draw(gameoverText);
+	mainWindow.draw(headlineText);
 	mainWindow.draw(scoreText);
 	
 	mainWindow.draw(continueButton);
@@ -106,6 +110,7 @@ void GameOverScene::setScore(int score)
 	this->score = score;
 
 	scoreText.setString("Your Score: " + convertScore(score));
+	scoreText.setOrigin(scoreText.getLocalBounds().width / 2, 0);
 
 	switchState(highscore.isUnderTopThree(score));
 }
@@ -161,20 +166,17 @@ std::string GameOverScene::convertName(std::string name)
 
 void GameOverScene::setHeadlineText(std::string string, sf::Color color)
 {
-	sf::Text headline = sf::Text(string, Locator::getGraphicService().getFont(GraphicService::Pixel), 60);
-	headline.setLineSpacing(2);
-	headline.setFillColor(color);
-	gameoverText.setText(headline);
-	gameoverText.setOrigin(headline.getLocalBounds().width / 2, 0);
+	headlineText.setString(string);
+	headlineText.setColor(color);
+	headlineText.setOrigin(headlineText.getLocalBounds().width / 2, 0);
 }
 
 void GameOverScene::setInfoText(std::string string, int fontSize, sf::Color color)
 {
-	sf::Text info = sf::Text(string, Locator::getGraphicService().getFont(GraphicService::Pixel), fontSize);
-	info.setFillColor(color);
-
-	infoText.setText(info);
-	infoText.setOrigin(info.getLocalBounds().width / 2, 0);
+	infoText.setColor(color);
+	infoText.setFontSize(fontSize);
+	infoText.setString(string);
+	infoText.setOrigin(infoText.getLocalBounds().width / 2, 0);
 }
 
 void GameOverScene::setHighscoresText()
@@ -190,7 +192,6 @@ void GameOverScene::setHighscoresText()
 		strList += "\n\n";
 	}
 
-	sf::Text highscores = sf::Text(strList, Locator::getGraphicService().getFont(GraphicService::Pixel), 24);
-	highscoreText.setText(highscores);
-	highscoreText.setOrigin(highscores.getLocalBounds().width / 2, 0);
+	highscoreText.setString(strList);
+	highscoreText.setOrigin(highscoreText.getLocalBounds().width / 2, 0);
 }
