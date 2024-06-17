@@ -132,8 +132,7 @@ void LevelUpScene::rollUpgrades(GameState& state)
 		probabilities[1] = 0;
 		probabilities[2] += 63 - base * 2;
 		probabilities[3] += 32 + base * 2;
-	}
-	else if (luck > 65) {
+	} else if (luck > 65) {
 		probabilities[0] = 0;
 		probabilities[1] = 0;
 		probabilities[2] = 0;
