@@ -1,5 +1,0 @@
-﻿  GameState.cpp
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp(16,23): warning C4244: "+=": Konvertierung von "float" in "int", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp(59,32): warning C4244: "+=": Konvertierung von "float" in "int", möglicher Datenverlust
-C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\GameState.cpp(99,18): warning C4244: "+=": Konvertierung von "float" in "int", möglicher Datenverlust
-  SpaceSurvivors.vcxproj -> C:\Users\Clemens\Documents\Development\HAW\SpaceSurvivors\x64\Debug\SpaceSurvivors.exe
