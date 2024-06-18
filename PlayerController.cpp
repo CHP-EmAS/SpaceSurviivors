@@ -20,7 +20,6 @@ void PlayerController::simulate(sf::Time deltaTime, GameState& state)
 
     velocity += getInputVector() * state.getPlayerAcceleration() * deltaTime.asSeconds();;
 
-    //move
     if (velocity != sf::Vector2f(0, 0)) {
         if (std::sqrt(VectorExtension::vectorSquareLength(velocity)) > maxSpeed)
         {

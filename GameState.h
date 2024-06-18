@@ -26,7 +26,9 @@ public:
 	inline float getPlayerInvinciblyInterval() { return playerInvinciblyInterval; }
 	inline int getPlayerDamage() { return playerDamage; }
 
-	
+	inline float getPiercingBulletChance() { return piercingBulletChance; }
+
+
 	void increaseScoreBy(int score);
 	void increaseScoreMultiplierBy(float multiplier);
 
@@ -43,6 +45,7 @@ public:
 	void increasePlayerDamageBy(float damage);
 
 	void increaseLuckBy(int luck);
+	void increasePiercingBulletChanceBy(float chance);
 
 	void setStartValues();
 private: 
@@ -65,5 +68,7 @@ private:
 	float playerShotsPerSecond;
 	float playerInvinciblyInterval;
 	int playerDamage;
+
+	float piercingBulletChance;
 };
 

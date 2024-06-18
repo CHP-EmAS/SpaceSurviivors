@@ -106,6 +106,11 @@ void GameScene::closeScene()
 	setLoaded(false);
 }
 
+GameState& GameScene::getState()
+{
+	return state;
+}
+
 GameScene::~GameScene(void)
 {
 	closeScene();

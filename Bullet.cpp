@@ -7,7 +7,7 @@ Bullet::Bullet() : GameObject(ObjectType::O_Bullet)
 	this->next = nullptr;
 	
 	sprite.setTexture(Locator::getGraphicService().getTexture(GraphicService::Bullets));
-	sprite.setTextureRect(sf::IntRect(64,0,20,10));
+	sprite.setTextureRect(sf::IntRect(64, 0, 20, 10));
 
 	sf::Vector2f origin = sf::Vector2f(sprite.getTextureRect().getSize().x / 2, sprite.getTextureRect().getSize().y / 2);
 	setOrigin(origin);
@@ -15,7 +15,9 @@ Bullet::Bullet() : GameObject(ObjectType::O_Bullet)
 	collider = Collider(this, sprite.getTextureRect().getSize().x, sprite.getTextureRect().getSize().y);
 
 	isActive = false;
+	shotBy = nullptr;
 	speed = 1200.f;
+	damage = 0;
 }
 
 void Bullet::setDamage(int damage)

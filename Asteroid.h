@@ -12,7 +12,10 @@ public:
 
 	void explode();
 private:
-	int currentHitPoints;
-	int totalHitPoins;
+	float currentHitPoints;
+	float totalHitPoins;
+
+	float scoreReward;
+	float experienceReward;
 };
 

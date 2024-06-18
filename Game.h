@@ -24,6 +24,8 @@ public:
 	void restartScene();
 	void closeScene();
 
+	GameState& getState();
+
 	~GameScene(void);
 private:
 

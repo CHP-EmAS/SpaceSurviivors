@@ -11,6 +11,7 @@ public:
 
 	void setDamage(int damage);
 	void setOwner(GameObject* owner);
+
 	bool bulletUpdate(sf::Time deltaTime);
 
 	int getDamage() { return damage; };

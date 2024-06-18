@@ -104,6 +104,15 @@ void GameState::increaseLuckBy(int luck)
 	this->luck += luck;
 }
 
+void GameState::increasePiercingBulletChanceBy(float chance)
+{
+	piercingBulletChance += chance;
+
+	if (piercingBulletChance > 100.f) {
+		piercingBulletChance = 100.f;
+	}
+}
+
 void GameState::setStartValues()
 {
 	gameOver = false;
@@ -125,6 +134,8 @@ void GameState::setStartValues()
 	playerShotsPerSecond = 3;
 	playerInvinciblyInterval = 1.5;
 	playerDamage = 10;
+
+	piercingBulletChance = 0;
 
 	notifyObservers(SCORE_UPDATED, { NULL, score });
 	notifyObservers(EXPERIENCE_UPDATED, { NULL, experience });

@@ -5,6 +5,7 @@
 #include "SpatialPartitionGrid.h"
 #include "Explosion.h"
 #include "Bullet.h"
+#include "Game.h"
 
 Asteroid::Asteroid(sf::Vector2f direction, float scale, float speed, float rotationSpeed) : GameObject(ObjectType::O_Asteroid)
 {
@@ -19,8 +20,12 @@ Asteroid::Asteroid(sf::Vector2f direction, float scale, float speed, float rotat
 	collider = Collider(this, sprite.getTextureRect().getSize().x - 4, sprite.getTextureRect().getSize().y - 4);
 	collider.setOrigin(-2, -2);
 
-	totalHitPoins = 10 * scale;
+	totalHitPoins = 10.f * scale;
 	currentHitPoints = totalHitPoins;
+	scoreReward = 100.f * scale;
+	experienceReward = 5.f * scale;
+
+	std::cout << "MAX: " << experienceReward << std::endl;
 }
 
 void Asteroid::update(sf::Time deltaTime, GameState& state)
@@ -30,8 +35,8 @@ void Asteroid::update(sf::Time deltaTime, GameState& state)
 	sprite.setColor(sf::Color(currentColor.r, 255 * tintFactor, 255 * tintFactor));
 
 	if (currentHitPoints <= 0) {
-		state.increaseScoreBy(100 * getScale().x);
-		state.increaseExperienceBy(5 * getScale().x);
+		state.increaseScoreBy(round(scoreReward * 0.6f));
+		state.increaseExperienceBy(round(experienceReward * 0.6f));
 		explode();
 	}
 
@@ -44,7 +49,20 @@ void Asteroid::interact(Interaction action, GameObject& interactor)
 	case Interaction::BulletCollision: {
 		sf::Vector2f direction = VectorExtension::toUnitVector(interactor.getRotation());
 		controller->applyForce(direction * 50.f);
-		currentHitPoints -= static_cast<Bullet*>(&interactor)->getDamage();
+
+		float damage = static_cast<Bullet*>(&interactor)->getDamage();
+		float damageRatio = damage / totalHitPoins;
+
+		if (damage > currentHitPoints) {
+			damageRatio = currentHitPoints / totalHitPoins;
+		}
+
+		GameState& state = static_cast<GameScene*>(Locator::getSceneManager().getScene(Scene::Game))->getState();
+		state.increaseScoreBy(round(scoreReward * damageRatio * 0.4f));
+		state.increaseExperienceBy(round(experienceReward * damageRatio * 0.4f));
+
+		currentHitPoints -= damage;
+
 		break;
 	}
 	case Interaction::PlayerCollision: {
