@@ -24,8 +24,6 @@ Asteroid::Asteroid(sf::Vector2f direction, float scale, float speed, float rotat
 	currentHitPoints = totalHitPoins;
 	scoreReward = 100.f * scale;
 	experienceReward = 5.f * scale;
-
-	std::cout << "MAX: " << experienceReward << std::endl;
 }
 
 void Asteroid::update(sf::Time deltaTime, GameState& state)

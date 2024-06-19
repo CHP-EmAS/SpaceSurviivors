@@ -1,11 +1,15 @@
 #pragma once
 
+#include "SFML/System.hpp"
+
 #include "Observable.h"
 
 class GameState : public Observable
 {
 public:
 	bool isGameOver();
+
+	inline sf::Time getGameTime() { return gameTime; };
 
 	inline int getScore() const { return score; }
 	inline float getScoreMultiplier() const { return scoreMultiplier; }
@@ -26,8 +30,8 @@ public:
 	inline float getPlayerInvinciblyInterval() { return playerInvinciblyInterval; }
 	inline int getPlayerDamage() { return playerDamage; }
 
-	inline float getPiercingBulletChance() { return piercingBulletChance; }
 
+	void updateGameTime(sf::Time deltaTime);
 
 	void increaseScoreBy(int score);
 	void increaseScoreMultiplierBy(float multiplier);
@@ -45,7 +49,6 @@ public:
 	void increasePlayerDamageBy(float damage);
 
 	void increaseLuckBy(int luck);
-	void increasePiercingBulletChanceBy(float chance);
 
 	void setStartValues();
 private: 
@@ -69,6 +72,7 @@ private:
 	float playerInvinciblyInterval;
 	int playerDamage;
 
-	float piercingBulletChance;
+
+	sf::Time gameTime;
 };
 

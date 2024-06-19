@@ -4,11 +4,7 @@
 
 EnemySpawnController::EnemySpawnController()
 {
-	enemyAmountTargetValue = 10;
-	currentEnemySpawned = 0;
-
-	spawnIntervall = 0.5;
-	spawnTimer = 0;
+	reset();
 }
 
 void EnemySpawnController::setSpatialPartitionGrid(SpatialPartitionGrid* grid)
@@ -18,9 +14,12 @@ void EnemySpawnController::setSpatialPartitionGrid(SpatialPartitionGrid* grid)
 
 void EnemySpawnController::explodeAllEnemys()
 {
-	std::vector<GameObject*> objects = grid->getAllObjects();
-	std::cout << "Explode All!" << std::endl;
+	if (grid == nullptr) {
+		return;
+	}
 
+	std::vector<GameObject*> objects = grid->getAllObjects();
+	
 	while (objects.size() > 0) {
 		GameObject* object = objects.back();
 
@@ -33,9 +32,29 @@ void EnemySpawnController::explodeAllEnemys()
 	}
 }
 
+void EnemySpawnController::reset()
+{
+	enemyAmountTargetValue = 1;
+	currentEnemySpawned = 0;
+
+	spawnIntervall = 0.6;
+
+	spawnTimer = 0;
+	updateTimer = 0;
+
+	if (grid != nullptr) {
+		grid->clear();
+	}
+}
+
 void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& state, Player& player)
 {
+	if (grid == nullptr) {
+		return;
+	}
+		
 	spawnTimer += deltaTime.asSeconds();
+	updateTimer += deltaTime.asSeconds();
 
 	if (currentEnemySpawned < enemyAmountTargetValue && spawnTimer > spawnIntervall) {
 		int dir = rand() % 4;
@@ -69,6 +88,18 @@ void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& s
 
 		spawnTimer = 0;
 	}
+
+	if (updateTimer > 5.f) {
+		float gameSeconds = state.getGameTime().asSeconds();
+		float difficutlyRatio = std::min(gameSeconds / 600.f, 1.f);
+
+		enemyAmountTargetValue = std::max(1, int(100.f * difficutlyRatio));
+		spawnIntervall = std::max(0.075f, float(0.6 - 0.525 * difficutlyRatio));
+
+		std::cout << difficutlyRatio << " -> " << enemyAmountTargetValue << " : " << spawnIntervall << std::endl;
+
+		updateTimer = 0;
+	}
 }
 
 void EnemySpawnController::onEvent(const Observable::Event event, const Observable::EventInfo info)
@@ -84,22 +115,8 @@ void EnemySpawnController::onEvent(const Observable::Event event, const Observab
 			currentEnemySpawned--;
 		}
 		break;
-	case Observable::LEVEL_UPDATED:
-		onLevelUp(info.value);
-		break;
 	case Observable::GAME_OVER:
 		explodeAllEnemys();
 		break;
 	}
-}
-
-void EnemySpawnController::onLevelUp(int newLevel)
-{
-	if (newLevel > 25) {
-		enemyAmountTargetValue = 2000;
-		spawnIntervall = 0.075;
-	}
-
-	enemyAmountTargetValue = std::min((int)std::floor(std::pow(1.5, newLevel)), 1000);
-	spawnIntervall = std::max(0.6 - 0.025 * newLevel, 0.075);
 }

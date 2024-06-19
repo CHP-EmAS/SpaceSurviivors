@@ -14,6 +14,8 @@ GameScene::GameScene(void) : Scene(Scene::Game)
 
 void GameScene::updateScene(sf::Time deltaTime)
 {
+	state.updateGameTime(deltaTime);
+
 	player->update(deltaTime, state);
 
 	if (!state.isGameOver()) {
@@ -67,7 +69,9 @@ void GameScene::checkEvents(sf::Event newEvent)
 void GameScene::loadScene()
 {
 	bulletPool = new BulletPool(&spatialPartitionGrid);
+
 	enemySpawner.setSpatialPartitionGrid(&spatialPartitionGrid);
+	enemySpawner.reset();
 
 	spatialPartitionGrid.addObserver(&enemySpawner);
 

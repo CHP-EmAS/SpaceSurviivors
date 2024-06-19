@@ -13,15 +13,18 @@ public:
 	void setSpatialPartitionGrid(SpatialPartitionGrid* grid);
 	void explodeAllEnemys();
 
+	void reset();
+
 private:
 	void onEvent(const Observable::Event event, const Observable::EventInfo info) override;
-	void onLevelUp(int newLevel);
 
 	int enemyAmountTargetValue;
 	int currentEnemySpawned;
 
 	float spawnIntervall;
 	float spawnTimer;
+
+	float updateTimer;
 
 	SpatialPartitionGrid* grid;
 };

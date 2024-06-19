@@ -11,6 +11,11 @@ bool GameState::isGameOver()
 	return gameOver;
 }
 
+void GameState::updateGameTime(sf::Time deltaTime)
+{
+	gameTime += deltaTime;
+}
+
 void GameState::increaseScoreBy(int score)
 {
 	this->score += score * scoreMultiplier;
@@ -104,18 +109,10 @@ void GameState::increaseLuckBy(int luck)
 	this->luck += luck;
 }
 
-void GameState::increasePiercingBulletChanceBy(float chance)
-{
-	piercingBulletChance += chance;
-
-	if (piercingBulletChance > 100.f) {
-		piercingBulletChance = 100.f;
-	}
-}
-
 void GameState::setStartValues()
 {
 	gameOver = false;
+	gameTime = sf::Time::Zero;
 
 	score = 0;
 	scoreMultiplier = 1;
@@ -126,16 +123,14 @@ void GameState::setStartValues()
 	experience = 0;
 	experienceForLevelUp = 20;
 	experienceMultiplier = 1;
-	level = 1;
 
+	level = 1;
 	luck = 0;
 
 	playerAcceleration = 1500;
 	playerShotsPerSecond = 3;
 	playerInvinciblyInterval = 1.5;
 	playerDamage = 10;
-
-	piercingBulletChance = 0;
 
 	notifyObservers(SCORE_UPDATED, { NULL, score });
 	notifyObservers(EXPERIENCE_UPDATED, { NULL, experience });
