@@ -1,5 +1,7 @@
 #include "SoundManager.h"
 
+#include "MainTheme.h"
+
 SoundManager::SoundManager() {
 	masterVolume = 50;
 	effektVolume = 100;
@@ -18,10 +20,9 @@ bool SoundManager::loadAllSounds()
 	return !loadingFails;
 }
 
-void SoundManager::changeBackgroundMusic(std::string musicPath)
+void SoundManager::changeBackgroundMusic()
 {
-	if (!backgroundMusic.openFromFile(musicPath))
-	{
+	if (!backgroundMusic.openFromMemory(emb_mainTheme_music, sizeof(emb_mainTheme_music))) {
 		return;
 	}
 

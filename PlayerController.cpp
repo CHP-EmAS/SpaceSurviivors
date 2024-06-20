@@ -71,9 +71,9 @@ sf::Vector2f PlayerController::getInputVector()
 
 void PlayerController::rotateToMouse(sf::Time deltaTime, GameState& state)
 {
-    sf::Vector2f mousePosition = Locator::getSceneManager().getMousePosition();
+    sf::Vector2f rotateToPosition = Locator::getSceneManager().getMousePosition();
 
-    float targetAngle = VectorExtension::getAngle(mousePosition - parentObject->getPosition());
+    float targetAngle = VectorExtension::getAngle(rotateToPosition - parentObject->getPosition());
     float deltaAngle = targetAngle - parentObject->getRotation();
 
     if (deltaAngle > 180.f) deltaAngle -= 360.f;

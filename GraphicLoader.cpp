@@ -26,8 +26,6 @@ const sf::Texture& GraphicLoader::getTexture(GraphicService::Texture texture) co
 		return text_ui_blueBar;
 	case UI_RedBar:
 		return text_ui_redBar;
-	case UI_YellowBar:
-		return text_ui_yellowBar;
 	default:
 		return text_Player;
 	}

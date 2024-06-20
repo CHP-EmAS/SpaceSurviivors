@@ -6,21 +6,21 @@
 
 #include "Locator.h"
 #include "SceneManager.h"
-#include "GraphicLoader.h"
+#include "EmbeddedGraphicLoader.h"
 #include "SoundManager.h"
 
-int main(int argc, char* argv[])
+int WinMain()
 {
     srand(time(NULL));
 
-	GraphicLoader* graphicLoader = new GraphicLoader();
+	EmbeddedGraphicLoader* graphicLoader = new EmbeddedGraphicLoader();
 	Locator::provide(graphicLoader);
-	graphicLoader->loadAllFonts();
-	graphicLoader->loadAllGraphics();
+	//graphicLoader->loadAllFonts();
+	//graphicLoader->loadAllGraphics();
 	
 	SoundManager* soundManager = new SoundManager();
 	Locator::provide(soundManager);
-	soundManager->changeBackgroundMusic("music/space.mp3");
+	soundManager->changeBackgroundMusic();
 
 	SceneManager* sceneManager = new SceneManager();
 	Locator::provide(sceneManager);

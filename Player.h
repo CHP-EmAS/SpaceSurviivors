@@ -24,6 +24,8 @@ private:
 	void updateInvincibility(sf::Time deltaTime);
 	void setFlicker(bool flicker);
 
+	void shootBullet(int bulletDamage);
+
 	BulletPool* bulletPool;
 	sf::Vector2f bulletSpawnPoint;
 	float timeSinceLastShot;

@@ -22,7 +22,7 @@ public:
 
 	bool loadAllSounds();
 
-	void changeBackgroundMusic(std::string musicPath);
+	void changeBackgroundMusic();
 	void setBackgroundMusicStatus(sf::Music::Status status);
 
 	SoundObject* playSound(SoundName effekt, bool loop = false, bool parallel = true);

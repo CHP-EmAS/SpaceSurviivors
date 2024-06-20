@@ -182,6 +182,27 @@ void SceneManager::checkWindowEvents()
 		case sf::Event::Resized:
 			updateWindowSize();
 			break;
+		case sf::Event::JoystickConnected: {
+			std::cout << "Connected" << std::endl;
+
+			unsigned int buttonCount = sf::Joystick::getButtonCount(0);
+
+			// check if joystick number 0 has a Z axis
+			bool hasZ = sf::Joystick::hasAxis(0, sf::Joystick::Z);
+
+			std::cout << buttonCount << " -> " << hasZ  << std::endl;
+			break;
+		}
+		case sf::Event::JoystickDisconnected:
+			std::cout << "Disconnected" << std::endl;
+			break;
+		case sf::Event::JoystickMoved:
+			if(events.joystickMove.position > 20 || events.joystickMove.position < -20)
+				std::cout << events.joystickMove.joystickId << ": " << events.joystickMove.axis << " -> " << events.joystickMove.position << std::endl;
+			break;
+		case sf::Event::JoystickButtonPressed:
+			std::cout << events.joystickButton.joystickId << ": " << events.joystickButton.button << std::endl;
+			break;
 		}
 	}
 }

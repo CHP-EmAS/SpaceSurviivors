@@ -22,8 +22,7 @@ public:
 		Background_3,
 		UI_Frame,
 		UI_BlueBar,
-		UI_RedBar,
-		UI_YellowBar,
+		UI_RedBar
 	};
 
 	virtual const sf::Texture& getTexture(Texture texture) const = 0;

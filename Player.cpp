@@ -51,18 +51,8 @@ void Player::update(sf::Time deltaTime, GameState& state)
 	GameObject::update(deltaTime, state);
 
 	timeSinceLastShot += deltaTime.asSeconds();
-
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && timeSinceLastShot >= (1.f / state.getPlayerShotsPerSecond())) {
-		Bullet* newBullet = bulletPool->getNewBullet();
-
-		sf::Vector2f spawn = getTransform().transformPoint(bulletSpawnPoint);
-		newBullet->setOwner(this);
-		newBullet->setDamage(state.getPlayerDamage());
-		newBullet->setPosition(spawn);
-		newBullet->setRotation(getRotation());
-
-		controller->applyForce(VectorExtension::toUnitVector(getRotation() - 180.f) * 50.f);
-
+		shootBullet(state.getPlayerDamage());
 		timeSinceLastShot = 0;
 	}
 	
@@ -168,4 +158,17 @@ void Player::setFlicker(bool flicker)
 	} else {
 		sprite.setColor(sf::Color::White);
 	}
+}
+
+void Player::shootBullet(int bulletDamage)
+{
+	Bullet* newBullet = bulletPool->getNewBullet();
+
+	sf::Vector2f spawn = getTransform().transformPoint(bulletSpawnPoint);
+	newBullet->setOwner(this);
+	newBullet->setDamage(bulletDamage);
+	newBullet->setPosition(spawn);
+	newBullet->setRotation(getRotation());
+
+	controller->applyForce(VectorExtension::toUnitVector(getRotation() - 180.f) * 50.f);
 }
