@@ -2,7 +2,7 @@
 
 #include "SFML/Graphics.hpp"
 
-#define SCENE_AMOUNT 7
+#define SCENE_AMOUNT 5
 
 class Scene
 {
@@ -14,6 +14,7 @@ public:
 		Pause,
 		GameOver,
 		Level_UP,
+		Stats,
 		None
 	};
 

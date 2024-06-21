@@ -53,7 +53,7 @@ void SceneManager::initScenes()
 
 void SceneManager::deleteScenes()
 {
-	for (int i_scene = 0; i_scene < SCENE_AMOUNT; i_scene++)
+	for (int i_scene = 0; i_scene < Scene::None; i_scene++)
 	{
 		if (allScenes[Scene::SceneNames(i_scene)] != nullptr)
 		{
@@ -67,7 +67,7 @@ void SceneManager::deleteScenes()
 void SceneManager::changeScene(Scene::SceneNames newScene, bool closeOldScene)
 {
 
-	if (!(int(newScene) >= 0 && int(newScene) <= SCENE_AMOUNT))
+	if (!(int(newScene) >= 0 && int(newScene) <= Scene::None))
 	{
 		return;
 	}
@@ -97,7 +97,7 @@ void SceneManager::changeScene(Scene::SceneNames newScene, bool closeOldScene)
 
 void SceneManager::doSecureClose(Scene::SceneNames scene)
 {
-	if (!(int(scene) >= 0 && int(scene) < SCENE_AMOUNT))
+	if (!(int(scene) >= 0 && int(scene) < Scene::None))
 	{
 		return;
 	}
@@ -123,23 +123,23 @@ void SceneManager::drawActivScene()
 void SceneManager::updateActivScene(sf::Time deltaTime)
 {
 	//Sicheres löschen
-	if (secureCloseScene != Scene::SceneNames::None)
+	if (secureCloseScene != Scene::None)
 	{
 		if (secureCloseScene != activScene->getSceneName())
 		{
 			if (getScene(secureCloseScene)->isSceneLoaded())
 			{
 				getScene(secureCloseScene)->closeScene();
-				secureCloseScene = Scene::SceneNames::None;
+				secureCloseScene = Scene::None;
 			}
 			else
 			{
-				secureCloseScene = Scene::SceneNames::None;
+				secureCloseScene = Scene::None;
 			}
 		}
 		else
 		{
-			secureCloseScene = Scene::SceneNames::None;
+			secureCloseScene = Scene::None;
 		}
 	}
 
@@ -290,7 +290,7 @@ Scene* SceneManager::getActivScene()
 
 Scene* SceneManager::getScene(Scene::SceneNames scene)
 {
-	if (int(scene) >= 0 && int(scene) < SCENE_AMOUNT)
+	if (int(scene) >= 0 && int(scene) < (int)Scene::None)
 	{
 		return allScenes[scene];
 	}

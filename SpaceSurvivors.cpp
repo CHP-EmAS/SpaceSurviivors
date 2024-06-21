@@ -9,7 +9,7 @@
 #include "EmbeddedGraphicLoader.h"
 #include "SoundManager.h"
 
-int WinMain()
+int mainLoop()
 {
     srand(time(NULL));
 
@@ -70,4 +70,14 @@ int WinMain()
 
 	return EXIT_SUCCESS;
 }
+
+#ifndef NDEBUG
+int main() {
+	return mainLoop();
+}
+#else
+int WinMain() {
+	return mainLoop();
+}
+#endif
 

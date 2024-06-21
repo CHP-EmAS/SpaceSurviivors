@@ -42,7 +42,7 @@ private:
 	//Scenes
 	Scene* activScene;
 
-	Scene* allScenes[SCENE_AMOUNT];
+	Scene* allScenes[Scene::None];
 	Scene::SceneNames secureCloseScene;
 
 	//Debug

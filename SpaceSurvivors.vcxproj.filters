@@ -65,6 +65,9 @@
     <Filter Include="src\Services\Graphic\Embedded">
       <UniqueIdentifier>{a0160329-a293-492a-9853-eadc37ac143d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\UI\Basic">
+      <UniqueIdentifier>{940f1d4d-09c1-4c15-ae45-1a04a0d5936f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -139,20 +142,11 @@
     <ClCompile Include="GameOver.cpp">
       <Filter>src\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>src\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Pause.cpp">
       <Filter>src\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Frame.cpp">
-      <Filter>src\UI</Filter>
-    </ClCompile>
     <ClCompile Include="LevelUp.cpp">
       <Filter>src\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="DropShadowText.cpp">
-      <Filter>src\UI</Filter>
     </ClCompile>
     <ClCompile Include="Upgrade.cpp">
       <Filter>src\UI</Filter>
@@ -168,6 +162,21 @@
     </ClCompile>
     <ClCompile Include="EmbeddedGraphicLoader.cpp">
       <Filter>src\Services\Graphic\Embedded</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStats.cpp">
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>src\UI\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="DropShadowText.cpp">
+      <Filter>src\UI\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>src\UI\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreBoard.cpp">
+      <Filter>src\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -252,20 +261,11 @@
     <ClInclude Include="GameOver.h">
       <Filter>src\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>src\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Pause.h">
       <Filter>src\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Frame.h">
-      <Filter>src\UI</Filter>
-    </ClInclude>
     <ClInclude Include="LevelUp.h">
       <Filter>src\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="DropShadowText.h">
-      <Filter>src\UI</Filter>
     </ClInclude>
     <ClInclude Include="Upgrade.h">
       <Filter>src\UI</Filter>
@@ -323,6 +323,21 @@
     </ClInclude>
     <ClInclude Include="MainTheme.h">
       <Filter>src\Services\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStats.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>src\UI\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="DropShadowText.h">
+      <Filter>src\UI\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>src\UI\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreBoard.h">
+      <Filter>src\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

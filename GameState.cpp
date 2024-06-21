@@ -139,3 +139,5 @@ void GameState::setStartValues()
 	notifyObservers(MAX_HEALTH_UPDATED, { NULL, maxHealth });
 	notifyObservers(HEALTH_UPDATED, { NULL, health });
 }
+
+
