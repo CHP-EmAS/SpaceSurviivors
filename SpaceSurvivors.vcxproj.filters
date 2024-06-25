@@ -68,6 +68,9 @@
     <Filter Include="src\UI\Basic">
       <UniqueIdentifier>{940f1d4d-09c1-4c15-ae45-1a04a0d5936f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Services\Highscore">
+      <UniqueIdentifier>{f6ee1f1f-069a-4517-9d6a-0a04e0a839c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -151,9 +154,6 @@
     <ClCompile Include="Upgrade.cpp">
       <Filter>src\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Highscore.cpp">
-      <Filter>src\Defines</Filter>
-    </ClCompile>
     <ClCompile Include="TextInput.cpp">
       <Filter>src\UI</Filter>
     </ClCompile>
@@ -177,6 +177,12 @@
     </ClCompile>
     <ClCompile Include="ScoreBoard.cpp">
       <Filter>src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="HighscoreService.h">
+      <Filter>src\Services\Highscore</Filter>
+    </ClCompile>
+    <ClCompile Include="LocalFileHighscore.cpp">
+      <Filter>src\Services\Highscore</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -270,9 +276,6 @@
     <ClInclude Include="Upgrade.h">
       <Filter>src\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Highscore.h">
-      <Filter>src\Defines</Filter>
-    </ClInclude>
     <ClInclude Include="TextInput.h">
       <Filter>src\UI</Filter>
     </ClInclude>
@@ -338,6 +341,9 @@
     </ClInclude>
     <ClInclude Include="ScoreBoard.h">
       <Filter>src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalFileHighscore.h">
+      <Filter>src\Services\Highscore</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

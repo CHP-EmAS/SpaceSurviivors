@@ -7,27 +7,29 @@
 #include "Locator.h"
 #include "SceneManager.h"
 #include "EmbeddedGraphicLoader.h"
+#include "LocalFileHighscore.h"
 #include "SoundManager.h"
 
-int mainLoop()
+static int mainLoop()
 {
     srand(time(NULL));
 
 	EmbeddedGraphicLoader* graphicLoader = new EmbeddedGraphicLoader();
 	Locator::provide(graphicLoader);
-	//graphicLoader->loadAllFonts();
-	//graphicLoader->loadAllGraphics();
 	
 	SoundManager* soundManager = new SoundManager();
 	Locator::provide(soundManager);
 	soundManager->changeBackgroundMusic();
+
+	LocalFileHighscore* highscoreService = new LocalFileHighscore();
+	Locator::provide(highscoreService);
 
 	SceneManager* sceneManager = new SceneManager();
 	Locator::provide(sceneManager);
 	sceneManager->setWindowMode(true, false);
 	sceneManager->initScenes();
 	sceneManager->changeScene(Scene::GameOver, false);
-	
+
 	sf::Clock drawClock;
 	sf::Clock updateClock;
 	sf::Clock fpsClock;

@@ -288,8 +288,8 @@ void LevelUpScene::InitUpgradeParameters()
 	upgradeInfo[1].parameterName = "Shots per\n Second ";
 	upgradeInfo[1].charSize = 18;
 	upgradeInfo[1].commonValue = 0.5;
-	upgradeInfo[1].rareValue = 1.1;
-	upgradeInfo[1].epicValue = 2;
+	upgradeInfo[1].rareValue = 1.2;
+	upgradeInfo[1].epicValue = 2.5;
 	upgradeInfo[1].legendaryValue = 5;
 
 	upgradeInfo[2].parameter = Upgrade::PlayerDamage;
@@ -306,7 +306,7 @@ void LevelUpScene::InitUpgradeParameters()
 	upgradeInfo[3].commonValue = 0.1;
 	upgradeInfo[3].rareValue = 0.2;
 	upgradeInfo[3].epicValue = 0.5;
-	upgradeInfo[3].legendaryValue = 2;
+	upgradeInfo[3].legendaryValue = 1.5;
 
 	upgradeInfo[4].parameter = Upgrade::Heal;
 	upgradeInfo[4].parameterName = "Heal";
@@ -335,10 +335,10 @@ void LevelUpScene::InitUpgradeParameters()
 	upgradeInfo[7].parameter = Upgrade::Luck;
 	upgradeInfo[7].parameterName = "Luck";
 	upgradeInfo[7].charSize = 20;
-	upgradeInfo[7].commonValue = 1;
-	upgradeInfo[7].rareValue = 2;
-	upgradeInfo[7].epicValue = 3;
-	upgradeInfo[7].legendaryValue = 7;
+	upgradeInfo[7].commonValue = 0;
+	upgradeInfo[7].rareValue = 1;
+	upgradeInfo[7].epicValue = 2;
+	upgradeInfo[7].legendaryValue = 5;
 
 	for (int i = 0; i < 8; i++) {
 		if (upgradeInfo[i].commonValue != 0) {

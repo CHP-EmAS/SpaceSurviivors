@@ -155,9 +155,10 @@
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStats.cpp" />
-    <ClCompile Include="Highscore.cpp" />
+    <ClCompile Include="HighscoreService.h" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="LevelUp.cpp" />
+    <ClCompile Include="LocalFileHighscore.cpp" />
     <ClCompile Include="Pause.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="ScoreBoard.cpp" />
@@ -202,10 +203,10 @@
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStats.h" />
-    <ClInclude Include="Highscore.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="LevelUp.h" />
     <ClInclude Include="MainTheme.h" />
+    <ClInclude Include="LocalFileHighscore.h" />
     <ClInclude Include="Pause.h" />
     <ClInclude Include="PixelFont.h" />
     <ClInclude Include="PlayerImage.h" />

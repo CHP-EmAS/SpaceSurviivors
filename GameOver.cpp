@@ -41,6 +41,16 @@ GameOverScene::GameOverScene() : Scene(GameOver)
 
 void GameOverScene::updateScene(sf::Time deltaTime)
 {
+	if (newHighscore) {
+		bool noName = nameInput.isEmpty();
+		if (noName && continueButton.isEnabled()) {
+			continueButton.setEnabled(false);
+		}
+		else if (!noName && !continueButton.isEnabled()) {
+			continueButton.setEnabled(true);
+		}
+	}
+
 	continueButton.update();
 }
 
@@ -75,9 +85,9 @@ void GameOverScene::checkEvents(sf::Event newEvent)
 			break;
 		}
 
-		if (continueButton.isHovered()) {
+		if (continueButton.isHovered() && continueButton.isEnabled()) {
 			if (newHighscore) {
-				highscore.addHighscore(nameInput.getText(), score);
+				Locator::getHighscoreService().submitScore(nameInput.getText(), score);
 				nameInput.clear();
 				switchState(false);
 			}
@@ -112,7 +122,7 @@ void GameOverScene::setScore(int score)
 	scoreText.setString("Your Score: " + convertScore(score));
 	scoreText.setOrigin(scoreText.getLocalBounds().width / 2, 0);
 
-	switchState(highscore.isUnderTopThree(score));
+	switchState(Locator::getHighscoreService().isPersonalBest(score));
 }
 
 void GameOverScene::switchState(bool isHighscore)
@@ -127,6 +137,7 @@ void GameOverScene::switchState(bool isHighscore)
 		continueButton.setText(sf::Text("Save Highscore", Locator::getGraphicService().getFont(GraphicService::Pixel), 20));
 		continueButton.setSize(sf::Vector2f(300, 50));
 		continueButton.setOrigin(150, 25);
+		continueButton.setEnabled(false);
 	} else {
 		setInfoText("TOP 3", 32, sf::Color(255, 200, 0));
 		infoText.setPosition(WINDOW_SIZE / 2, 400);
@@ -137,6 +148,7 @@ void GameOverScene::switchState(bool isHighscore)
 		continueButton.setText(sf::Text("New Game", Locator::getGraphicService().getFont(GraphicService::Pixel), 20));
 		continueButton.setSize(sf::Vector2f(200, 50));
 		continueButton.setOrigin(100, 25);
+		continueButton.setEnabled(true);
 	}
 }
 
@@ -181,7 +193,7 @@ void GameOverScene::setInfoText(std::string string, int fontSize, sf::Color colo
 
 void GameOverScene::setHighscoresText()
 {
-	std::vector<Highscore::Entry> list = highscore.getHighscores();
+	std::vector<HighscoreService::Entry> list = Locator::getHighscoreService().getTopEntries(3);
 
 	std::string strList = "";
 

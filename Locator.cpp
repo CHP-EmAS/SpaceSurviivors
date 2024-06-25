@@ -3,18 +3,24 @@
 SceneManager* Locator::sceneManager_ = nullptr;
 GraphicService* Locator::graphicService_ = nullptr;
 SoundManager* Locator::soundManager_ = nullptr;
+HighscoreService* Locator::highscoreService_ = nullptr;
 
 void Locator::provide(SceneManager* scene) {
-	Locator::sceneManager_ = scene;
+	sceneManager_ = scene;
 }
 
 void Locator::provide(GraphicService* graphic) {
-	Locator::graphicService_ = graphic;
+	graphicService_ = graphic;
 }
 
 void Locator::provide(SoundManager* sound)
 {
-	Locator::soundManager_ = sound;
+	soundManager_ = sound;
+}
+
+void Locator::provide(HighscoreService* highscore)
+{
+	highscoreService_ = highscore;
 }
 
 SceneManager& Locator::getSceneManager()
@@ -29,4 +35,9 @@ GraphicService& Locator::getGraphicService() {
 SoundManager& Locator::getSoundManager()
 {
 	return *soundManager_;
+}
+
+HighscoreService& Locator::getHighscoreService()
+{
+	return *highscoreService_;
 }

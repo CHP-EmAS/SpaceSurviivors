@@ -4,6 +4,7 @@
 Button::Button()
 {
 	mouseOver = true;
+	enabled = true;
 	color = sf::Color(180, 220, 250);
 }
 
@@ -21,6 +22,9 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Button::update(const sf::Transform& parentTransform)
 {
+	if (!enabled)
+		return;
+
 	sf::Vector2f mousePosition = Locator::getSceneManager().getMousePosition();
 	mousePosition = parentTransform.getInverse().transformPoint(mousePosition);
 	mousePosition = getInverseTransform().transformPoint(mousePosition);
@@ -70,7 +74,24 @@ void Button::setColor(sf::Color newColor)
 	}
 }
 
+void Button::setEnabled(bool enabled)
+{
+	this->enabled = enabled;
+	
+	if (enabled) {
+		frame.setColor(color - sf::Color(80, 80, 80, 0));
+	} else {
+		frame.setColor(sf::Color(100, 100, 100, color.a));
+		mouseOver = false;
+	}
+}
+
 bool Button::isHovered()
 {
 	return mouseOver;
+}
+
+bool Button::isEnabled()
+{
+	return enabled;
 }

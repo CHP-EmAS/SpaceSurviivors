@@ -63,6 +63,11 @@ void TextInput::setFontSize(int size)
 	text.setCharacterSize(size);
 }
 
+bool TextInput::isEmpty()
+{
+	return text.getString().isEmpty();
+}
+
 std::string TextInput::getText()
 {
 	return text.getString();

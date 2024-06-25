@@ -16,8 +16,10 @@ public:
 	void setSize(sf::Vector2f size);
 	void setText(sf::Text newText);
 	void setColor(sf::Color newColor);
+	void setEnabled(bool enabled);
 
 	bool isHovered();
+	bool isEnabled();
 
 private:
 	Frame frame;
@@ -26,6 +28,7 @@ private:
 
 	Collider collider;
 	bool mouseOver;
+	bool enabled;
 
 	sf::Color color;
 };

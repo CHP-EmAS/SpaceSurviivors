@@ -3,7 +3,6 @@
 #include "Scene.h"
 #include "Button.h"
 #include "DropShadowText.h"
-#include "Highscore.h"
 #include "TextInput.h"
 
 class GameOverScene : public Scene
@@ -42,6 +41,5 @@ private:
 
 	int score;
 	bool newHighscore;
-	Highscore highscore;
 };
 

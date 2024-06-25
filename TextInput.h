@@ -18,6 +18,8 @@ public:
 	void setSize(sf::Vector2f size);
 	void setFontSize(int size);
 
+	bool isEmpty();
+
 	std::string getText();
 	sf::Vector2f getSize();
 
