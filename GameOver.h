@@ -4,6 +4,7 @@
 #include "Button.h"
 #include "DropShadowText.h"
 #include "TextInput.h"
+#include "ScoreBoard.h"
 
 class GameOverScene : public Scene
 {
@@ -23,18 +24,14 @@ private:
 	void switchState(bool isHighscore);
 
 	std::string convertScore(int score);
-	std::string convertName(std::string name);
 
 	void setHeadlineText(std::string string, sf::Color color);
-	void setInfoText(std::string string, int fontSize, sf::Color color);
-	void setHighscoresText();
 
 	DropShadowText headlineText;
 	DropShadowText scoreText;
 	DropShadowText infoText;
 
-	Frame highscoreFrame;
-	DropShadowText highscoreText;
+	ScoreBoard scoreBoard;
 
 	Button continueButton;
 	TextInput nameInput;

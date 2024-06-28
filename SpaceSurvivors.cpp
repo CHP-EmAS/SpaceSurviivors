@@ -66,6 +66,7 @@ static int mainLoop()
 		}
 	}
 
+	delete highscoreService;
 	delete sceneManager;
 	delete graphicLoader;
 	delete soundManager;
