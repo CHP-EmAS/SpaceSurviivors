@@ -37,8 +37,11 @@ unsigned long LocalFileHighscore::getPersonalHighscore()
 const std::vector<HighscoreService::Entry> LocalFileHighscore::getTopEntries(short limit)
 {
     std::vector<HighscoreService::Entry> copy(highscoreList);
-    copy.resize(limit);
 
+    if (copy.size() > limit) {
+        copy.resize(limit);
+    }
+    
     return copy;
 }
 

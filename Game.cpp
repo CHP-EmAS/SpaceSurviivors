@@ -59,6 +59,10 @@ void GameScene::checkEvents(sf::Event newEvent)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			Locator::getSceneManager().changeScene(Scene::Pause, false);
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
+			state.updateGameTime(sf::seconds(10));
+		}
 		break;
 	case sf::Event::LostFocus:
 		Locator::getSceneManager().changeScene(Scene::Pause, false);

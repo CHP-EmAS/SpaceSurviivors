@@ -93,6 +93,7 @@ std::vector<GameObject*> SpatialPartitionGrid::getCollidingObjects(GameObject* c
 	std::vector<GameObject*> collidingObjects;
 
 	sf::Vector2i cellToCheck = convertPositionToCell(collider->getPosition());
+
 	for (int nx = -1; nx < 2; nx++) {
 		for (int ny = -1; ny < 2; ny++) {
 			sf::Vector2i adjacentCell = cellToCheck + sf::Vector2i(nx, ny);
