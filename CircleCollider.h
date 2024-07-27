@@ -18,15 +18,14 @@ public:
 	float getTransformedRadius() const;
 	sf::Vector2f getTransformedCenter() const;
 
-private:
-	float radius;
-	sf::CircleShape drawCircle;
-
-	sf::FloatRect getAABB() override;
-
 	bool isCollidingWith(const sf::Vector2f& point) const override;
 	bool isCollidingWith(const Collider& other) const override;
 	bool isCollidingWith(const BoxCollider& box) const override;
 	bool isCollidingWith(const CircleCollider& circle) const override;
+
+private:
+	float radius;
+	sf::CircleShape drawCircle;
+
 };
 

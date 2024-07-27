@@ -17,7 +17,6 @@
 
 #include "Player.h"
 
-#include "CollisionQuadTree.h"
 
 class World : public sf::Drawable
 {
@@ -35,15 +34,13 @@ public:
 
 	void spawnExperiencePuddle(sf::IntRect area, int totalAmount);
 private:
-	//PartitionedLayer collisionLayer;
-	//EffectLayer effectLayer;
+	PartitionedLayer collisionLayer;
+	EffectLayer effectLayer;
 
-	CollisionQuadTree collisionPartition;
+	GameObjectFactory objectFactory;
+	EnemySpawnController enemySpawner;
 
-	//GameObjectFactory objectFactory;
-	//EnemySpawnController enemySpawner;
-
-	//ParallaxBackground background;
+	ParallaxBackground background;
 
 	std::shared_ptr<Player> player;
 

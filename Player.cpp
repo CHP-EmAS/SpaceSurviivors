@@ -169,7 +169,7 @@ bool Player::checkCollisions()
 		collidingObjects.pop_back();
 	}
 
-	std::vector<std::shared_ptr<Experience>> collidingExperience = Locator::getGameWorld().getCollisionLayer().collectExperiences(shared_from_this(), 100, 30);
+	std::vector<std::shared_ptr<Experience>> collidingExperience = Locator::getGameWorld().getCollisionLayer().collectExperiences(shared_from_this(), 100);
 
 	while (collidingExperience.size() > 0) {
 		collidingExperience.pop_back();

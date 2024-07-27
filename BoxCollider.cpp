@@ -154,20 +154,3 @@ bool BoxCollider::isCollidingWith(const CircleCollider& circle) const
     const sf::Vector2f delta(dist - hitbox.getSize() / 2.f);
     return vectorSquareLength(delta) <= circleRadius * circleRadius;
 }
-
-sf::FloatRect BoxCollider::getAABB()
-{
-    float rotationDeg = getRotation();
-
-    if (auto parent = parent_.lock()) {
-        rotationDeg += parent->getRotation();
-    }
-
-    float rad = rotationDeg * (M_PI / 180.0f);
-
-    float cosTheta = std::cos(rad);
-    float sinTheta = std::sin(rad);
-
-    float width = std::abs(hitbox.width * cosTheta) + std::abs(hitbox.height * sinTheta);
-    float height = std::abs(hitbox.width * sinTheta) + std::abs(hitbox.height * cosTheta);
-}

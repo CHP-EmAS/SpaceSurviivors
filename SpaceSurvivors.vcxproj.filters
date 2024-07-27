@@ -64,9 +64,6 @@
     <Filter Include="include\Game\Layer">
       <UniqueIdentifier>{9c4c36ab-ead1-4520-8489-c0d1b59c09ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\Test">
-      <UniqueIdentifier>{ca2b3fe3-1b2c-45a4-9829-814858e433df}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -194,9 +191,6 @@
     </ClCompile>
     <ClCompile Include="GameObjectFactory.cpp">
       <Filter>src\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionQuadTree.cpp">
-      <Filter>include\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -382,9 +376,6 @@
     </ClInclude>
     <ClInclude Include="GameObjectFactory.h">
       <Filter>include\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionQuadTree.h">
-      <Filter>include\Test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,8 +5,6 @@
 
 GameObject::GameObject(ObjectType type) : type(type)
 {
-	enabled = false;
-
 	setPosition(sf::Vector2f(0,0));
 }
 
@@ -17,10 +15,6 @@ void GameObject::interact(const Event event)
 
 void GameObject::spaw(sf::Vector2f spawnPosition, ObjectLayer layer)
 {
-	if (enabled) {
-		return;
-	}
-
 	setPosition(spawnPosition);
 
 	switch (layer) {
@@ -31,9 +25,6 @@ void GameObject::spaw(sf::Vector2f spawnPosition, ObjectLayer layer)
 		Locator::getGameWorld().getEffectLayer().add(shared_from_this());
 		break;
 	}
-	
-	
-	enabled = true;
 }
 
 void GameObject::despawn()

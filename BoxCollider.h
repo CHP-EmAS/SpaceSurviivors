@@ -20,15 +20,14 @@ public:
 
 	void getTransformedVertices(sf::Vector2f vertices[4]) const;
 
-private:
-	sf::FloatRect hitbox;
-	sf::RectangleShape drawBox;
-
-	sf::FloatRect getAABB() override;
-
 	bool isCollidingWith(const sf::Vector2f& point) const override;
 	bool isCollidingWith(const Collider& other) const override;
 	bool isCollidingWith(const BoxCollider& box) const override;
 	bool isCollidingWith(const CircleCollider& circle) const override;
+
+private:
+	sf::FloatRect hitbox;
+	sf::RectangleShape drawBox;
+
 };
 

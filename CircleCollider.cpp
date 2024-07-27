@@ -76,17 +76,3 @@ bool CircleCollider::isCollidingWith(const CircleCollider& circle) const
 	float distance = std::sqrt(vectorSquareLength(getTransformedCenter() - circle.getTransformedCenter()));
 	return distance < getTransformedRadius() + circle.getTransformedRadius();
 }
-
-sf::FloatRect CircleCollider::getAABB()
-{
-	float radius = getTransformedRadius();
-	sf::Vector2f position = getTransformedCenter();
-
-	// Berechnung der AABB
-	float left = position.x - radius;
-	float top = position.y - radius;
-	float width = 2 * radius;
-	float height = 2 * radius;
-
-	return sf::FloatRect(left, top, width, height);
-}

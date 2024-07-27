@@ -8,8 +8,6 @@ class CircleCollider;
 class Collider
 {
 public:
-    virtual sf::FloatRect getAABB() = 0;
-
     virtual void debugDraw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 
     virtual bool isCollidingWith(const sf::Vector2f& point) const = 0;

@@ -144,7 +144,6 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
-    <ClCompile Include="CollisionQuadTree.cpp" />
     <ClCompile Include="DropShadowText.cpp" />
     <ClCompile Include="EffectLayer.cpp" />
     <ClCompile Include="EmbeddedGraphicLoader.cpp" />
@@ -197,7 +196,6 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
-    <ClInclude Include="CollisionQuadTree.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DropShadowText.h" />

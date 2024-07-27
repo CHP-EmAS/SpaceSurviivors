@@ -7,16 +7,16 @@
 
 void World::initialize(GameState& state)
 {
-	//objectFactory.prepareObjects();
+	objectFactory.prepareObjects();
 
-	//enemySpawner.reset();
+	enemySpawner.reset();
 
-	//collisionLayer.addObserver(objectFactory);
-	//collisionLayer.addObserver(enemySpawner);
-	//effectLayer.addObserver(objectFactory);
-	//effectLayer.addObserver(enemySpawner);
+	collisionLayer.addObserver(objectFactory);
+	collisionLayer.addObserver(enemySpawner);
+	effectLayer.addObserver(objectFactory);
+	effectLayer.addObserver(enemySpawner);
 
-	//state.addObserver(enemySpawner);
+	state.addObserver(enemySpawner);
 	
 	gameOverTimer = 0;
 	state.setStartValues();
@@ -25,24 +25,21 @@ void World::initialize(GameState& state)
 	player->initializeComponents();
 	player->setPosition(sf::Vector2f(WORLD_SIZE / 2, WORLD_SIZE / 2));
 
-	//spawnExperiencePuddle(sf::IntRect(10, 10, 980, 980), 10);
-
-	collisionPartition.insert(player);
+	spawnExperiencePuddle(sf::IntRect(10, 10, 980, 980), 10);
 }
 
 void World::reset(GameState& state)
 {
-	//collisionLayer.clearObservers();
-	//effectLayer.clearObservers();
+	collisionLayer.clearObservers();
+	effectLayer.clearObservers();
 
-	//collisionLayer.clear();
-	//effectLayer.clear();
+	collisionLayer.clear();
+	effectLayer.clear();
 
-	//objectFactory.clear();
+	objectFactory.clear();
 
-	//state.removeObserver(enemySpawner);
+	state.removeObserver(enemySpawner);
 
-	collisionPartition.remove(player);
 	player.reset();
 }
 
@@ -51,7 +48,7 @@ void World::update(const sf::Time deltaTime, GameState& state)
 	player->update(deltaTime, state);
 
 	if (!state.isGameOver()) {
-		//enemySpawner.checkSpawnConditions(deltaTime, state, *player);
+		enemySpawner.checkSpawnConditions(deltaTime, state, *player);
 	}
 	else {
 		gameOverTimer += deltaTime.asSeconds();
@@ -63,30 +60,30 @@ void World::update(const sf::Time deltaTime, GameState& state)
 		}
 	}
 
-	//collisionLayer.updateGridObjects(deltaTime, state);
-	//effectLayer.updateObjects(deltaTime, state);
+	collisionLayer.updateGridObjects(deltaTime, state);
+	effectLayer.updateObjects(deltaTime, state);
 
-	//background.update(player->getPosition());
+	background.update(player->getPosition());
 }
 
 PartitionedLayer& World::getCollisionLayer()
 {
-	//return collisionLayer;
+	return collisionLayer;
 }
 
 EffectLayer& World::getEffectLayer()
 {
-	//return effectLayer;
+	return effectLayer;
 }
 
 GameObjectFactory& World::getGameObjectFactory()
 {
-	//return objectFactory;
+	return objectFactory;
 }
 
 EnemySpawnController& World::getEnemySpawnController()
 {
-	//return enemySpawner;
+	return enemySpawner;
 }
 
 void World::spawnExperiencePuddle(sf::IntRect area, int totalAmount)
