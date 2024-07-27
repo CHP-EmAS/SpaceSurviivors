@@ -1,69 +1,89 @@
 #include "Bullet.h"
 #include "Locator.h"
 #include "VectorExtension.h"
+#include "Event.h"
+#include "CircleCollider.h"
+#include "SpriteRenderer.h"
 
 Bullet::Bullet() : GameObject(ObjectType::O_Bullet)
 {
-	this->next = nullptr;
-	
-	sprite.setTexture(Locator::getGraphicService().getTexture(GraphicService::Bullets));
-	sprite.setTextureRect(sf::IntRect(64, 0, 20, 10));
-
-	sf::Vector2f origin = sf::Vector2f(sprite.getTextureRect().getSize().x / 2, sprite.getTextureRect().getSize().y / 2);
-	setOrigin(origin);
-
-	collider = Collider(this, sprite.getTextureRect().getSize().x, sprite.getTextureRect().getSize().y);
-
-	isActive = false;
-	shotBy = nullptr;
+	owner = std::shared_ptr<GameObject>();
 	speed = 1200.f;
 	damage = 0;
+	
+	setScale(0.666f, 0.666f);
+
+	std::cout << "Bullet created" << std::endl;
 }
 
-void Bullet::setDamage(int damage)
+Bullet::~Bullet()
 {
-	if (damage > 0) {
-		this->damage = damage;
-	}
+	std::cout << "Bullet deleted" << std::endl;
 }
 
-void Bullet::setOwner(GameObject* owner)
+void Bullet::initializeComponents()
 {
-	shotBy = owner;
+	SpriteRenderer spriteRenderer(shared_from_this());
+	CircleCollider collider(shared_from_this(), 6);
+
+	sf::Sprite bulletSprite(Locator::getGraphicService().getTexture(GraphicService::Bullets));
+	bulletSprite.setTextureRect(sf::IntRect(64, 0, 20, 10));
+	spriteRenderer.setSprite(bulletSprite);
+
+	sf::Vector2f origin = sf::Vector2f(bulletSprite.getTextureRect().getSize().x / 2, bulletSprite.getTextureRect().getSize().y / 2);
+	setOrigin(origin);
+	collider.setPosition(origin + sf::Vector2f(4, 0));
+
+	registerComponent(std::make_unique<SpriteRenderer>(spriteRenderer));
+	registerComponent(std::make_unique<CircleCollider>(collider));
 }
 
-bool Bullet::bulletUpdate(sf::Time deltaTime)
+void Bullet::reinitialize(sf::Vector2f direction, int damage)
 {
-	if (!isActive) {
-		return false;
-	}
-	 
-	sf::Vector2f position = getPosition();
+	this->damage = damage;
+	this->direction = direction;
 
-	if (position.x > -50 && position.x < WINDOW_SIZE + 50 &&
-		position.y > -50 && position.y < WINDOW_SIZE + 50) {
+	setRotation(getAngle(direction));
+}
 
-		sf::Vector2f direction = VectorExtension::toUnitVector(getRotation());
+void Bullet::shotBy(std::shared_ptr<GameObject> owner)
+{
+	this->owner = owner;
+}
 
-		move(direction * speed * deltaTime.asSeconds());
-	} else {
-		//deactivete bullet;
-		return true;
-	}
+void Bullet::update(sf::Time deltaTime, GameState& state)
+{
+	//move
+	move(direction * speed * deltaTime.asSeconds());
+	
+	//collision
+	bool collsion = false;
+	std::vector<std::shared_ptr<GameObject>> collidingObjects = Locator::getGameWorld().getCollisionLayer().getCollidingObjects(shared_from_this());
 
-	bool collision = false;
-	std::vector<GameObject*> collidingObjects = grid->getCollidingObjects(this);
+	while (collidingObjects.size() > 0) {
+		auto& collidingObject = collidingObjects.back();
 
-	while(collidingObjects.size() > 0) {
-		GameObject* collidingObject = collidingObjects.back();
-
-		if (shotBy != collidingObject) {
-			collidingObject->interact(BulletCollision, *this);
-			collision = true;
+		if (owner.lock().get() != collidingObject.get()) {
+			collidingObject->interact(Event(Event::BulletCollision,shared_from_this()));
+			collsion = true;
 		}
-		
+
 		collidingObjects.pop_back();
 	}
-	
-	return collision;
+
+	if (collsion) {
+		despawn();
+	}
 }
+
+void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	states.transform *= getTransform();
+	getComponent<SpriteRenderer>()->draw(target, states);
+
+#if _DEBUG
+	getComponent<CircleCollider>()->debugDraw(target, states);
+#endif
+}
+
+

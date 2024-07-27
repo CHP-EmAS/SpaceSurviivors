@@ -1,4 +1,5 @@
 ﻿#include <SFML/Graphics.hpp>
+#include <Steam/steam_api.h>
 
 #include <thread>
 
@@ -12,23 +13,31 @@
 
 static int mainLoop()
 {
+	SteamAPI_Init();
+
+	if (SteamAPI_IsSteamRunning()) {
+		std::cout << "Steam is running!" << std::endl;
+	} else {
+		std::cout << "Steam is not running!" << std::endl;
+	}
+
     srand(time(NULL));
 
-	EmbeddedGraphicLoader* graphicLoader = new EmbeddedGraphicLoader();
-	Locator::provide(graphicLoader);
+	EmbeddedGraphicLoader graphicLoader = EmbeddedGraphicLoader();
+	Locator::provide(&graphicLoader);
 	
-	SoundManager* soundManager = new SoundManager();
-	Locator::provide(soundManager);
-	soundManager->changeBackgroundMusic();
+	SoundManager soundManager = SoundManager();
+	Locator::provide(&soundManager);
+	soundManager.changeBackgroundMusic();
 
-	LocalFileHighscore* highscoreService = new LocalFileHighscore();
-	Locator::provide(highscoreService);
+	LocalFileHighscore highscoreService = LocalFileHighscore();
+	Locator::provide(&highscoreService);
 
-	SceneManager* sceneManager = new SceneManager();
-	Locator::provide(sceneManager);
-	sceneManager->setWindowMode(true, false);
-	sceneManager->initScenes();
-	sceneManager->changeScene(Scene::GameOver, false);
+	SceneManager sceneManager =SceneManager();
+	Locator::provide(&sceneManager);
+	sceneManager.setWindowMode(true, false);
+	sceneManager.initScenes();
+	sceneManager.changeScene(Scene::GameOver, false);
 
 	sf::Clock drawClock;
 	sf::Clock updateClock;
@@ -39,37 +48,32 @@ static int mainLoop()
 	int frames = 0;
 
 	//Haupt-Loop
-	while (sceneManager->getGameWindow().isOpen())
+	while (sceneManager.getGameWindow().isOpen())
 	{
 		//Updaten des Fensters
 		if (updateClock.getElapsedTime().asMicroseconds() >= updateWaitDelay)
 		{
 			sf::Time deltaTime = updateClock.restart();
 
-			sceneManager->checkWindowEvents();
-			sceneManager->updateActivScene(deltaTime);
+			sceneManager.checkWindowEvents();
+			sceneManager.updateActivScene(deltaTime / 10.f);
 		}
 
 		//Zeichnen des Fensters
 		if (drawClock.getElapsedTime().asMicroseconds() >= drawWaitDelay)
 		{
 			drawClock.restart();
-			sceneManager->drawActivScene();
+			sceneManager.drawActivScene();
 
 			frames++;
 		}
 
 		if (fpsClock.getElapsedTime().asMicroseconds() > 1000000) {
 			fpsClock.restart();
-			sceneManager->setDisplayFPS(frames);
+			sceneManager.setDisplayFPS(frames);
 			frames = 0;
 		}
 	}
-
-	delete highscoreService;
-	delete sceneManager;
-	delete graphicLoader;
-	delete soundManager;
 
 	return EXIT_SUCCESS;
 }

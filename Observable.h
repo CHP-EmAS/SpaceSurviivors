@@ -1,45 +1,26 @@
 #pragma once
 
+#include <vector>
+#include "Event.h"
+
 class Observer;
-class GameObject;
 
 class Observable
 {
 public:
-	enum Event {
-		GRID_OBJECT_SPAWNED,
-		GRID_OBJECT_DESPAWNED,
-		GRID_OBJECT_OUT_OF_BOUNDS,
+	Observable();
 
-		SCORE_UPDATED,
-		EXPERIENCE_UPDATED,
-		MAX_EXPERIENCE_UPDATED,
-		LEVEL_UPDATED,
-		HEALTH_UPDATED,
-		MAX_HEALTH_UPDATED,
+	void addObserver(Observer& observer);
+	void removeObserver(Observer& observer);
 
-		GAME_OVER
-	};
-
-	struct EventInfo {
-		GameObject* object = nullptr;
-		int value = 0;
-	};
-
-	void addObserver(Observer* observer);
-	void removeObserver(Observer* observer);
+	void clearObservers();
 
 	~Observable();
 
 protected:
-	void notifyObservers(const Event event, const EventInfo info);
+	void broadcastEvent(const Event event);
 
 private:
-	struct ObserverNode {
-		ObserverNode* next;
-		Observer* observer;
-	};
-
-	ObserverNode* head;
+	std::vector<Observer*> _listeners;
 };
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Collider.h"
+#include "BoxCollider.h"
 #include "Frame.h"
 #include "DropShadowText.h"
 
@@ -23,10 +23,10 @@ public:
 
 private:
 	Frame frame;
-
 	DropShadowText text;
 
-	Collider collider;
+	BoxCollider collider;
+
 	bool mouseOver;
 	bool enabled;
 

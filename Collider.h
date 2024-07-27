@@ -1,29 +1,21 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 
-class GameObject;
-class Collider : public sf::Transformable, public sf::Drawable
+class BoxCollider;
+class CircleCollider;
+
+class Collider
 {
 public:
-	Collider();
-	Collider(GameObject* parent, float width, float height);
-	Collider(GameObject* parent, sf::Vector2f size);
-	
-	void setSize(float width, float height);
-	void setSize(sf::Vector2f size);
+    virtual sf::FloatRect getAABB() = 0;
 
-	bool isCollidingWith(Collider* other);
-	bool isCollidingWith(sf::Vector2f point);
+    virtual void debugDraw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    virtual bool isCollidingWith(const sf::Vector2f& point) const = 0;
 
-	void getTransformedVertices(sf::Vector2f vertices[4]);
-	
-private:
-	GameObject* bindObject;
-	sf::FloatRect hitbox;
-
-	sf::RectangleShape drawBox;
+    virtual bool isCollidingWith(const Collider& other) const = 0;
+    virtual bool isCollidingWith(const BoxCollider& box) const = 0;
+    virtual bool isCollidingWith(const CircleCollider& circle) const = 0;
 };
 

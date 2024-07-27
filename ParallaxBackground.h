@@ -11,13 +11,13 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
-	float maxOffset1;
-	float maxOffset2;
-	float maxOffset3;
+	const float maxOffset1;
+	const float maxOffset2;
+	const float maxOffset3;
 
-	sf::RectangleShape background0;
-	sf::RectangleShape background1;
-	sf::RectangleShape background2;
-	sf::RectangleShape background3;
+	sf::Sprite background0;
+	sf::Sprite background1;
+	sf::Sprite background2;
+	sf::Sprite background3;
 };
 

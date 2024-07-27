@@ -71,6 +71,11 @@ EmbeddedGraphicLoader::EmbeddedGraphicLoader()
 	text_Background1.loadFromMemory(emb_bg1_img, sizeof(emb_bg1_img));
 	text_Background2.loadFromMemory(emb_bg2_img, sizeof(emb_bg2_img));
 	text_Background3.loadFromMemory(emb_bg3_img, sizeof(emb_bg3_img));
+
+	text_Background0.setRepeated(true);
+	text_Background1.setRepeated(true);
+	text_Background2.setRepeated(true);
+	text_Background3.setRepeated(true);
 	
 	text_ui_frame.loadFromMemory(emb_frame_img, sizeof(emb_frame_img));
 	text_ui_blueBar.loadFromMemory(emb_blueBar_img, sizeof(emb_blueBar_img));

@@ -6,7 +6,7 @@
 #include "LevelUp.h"
 #include "Locator.h"
 
-bool GameState::isGameOver()
+bool GameState::isGameOver() const
 {
 	return gameOver;
 }
@@ -19,7 +19,7 @@ void GameState::updateGameTime(sf::Time deltaTime)
 void GameState::increaseScoreBy(int score)
 {
 	this->score += score * scoreMultiplier;
-	notifyObservers(SCORE_UPDATED, { NULL, this->score});
+	broadcastEvent(Event::Event(Event::SCORE_UPDATED, this->score));
 }
 
 void GameState::increaseScoreMultiplierBy(float multiplier)
@@ -31,11 +31,11 @@ void GameState::decreaseHealthBy(int damage)
 {
 	health -= damage;
 
-	notifyObservers(HEALTH_UPDATED, {NULL, this->health });
+	broadcastEvent(Event::Event(Event::HEALTH_UPDATED, this->health));
 
 	if (health <= 0) {
 		gameOver = true;
-		notifyObservers(GAME_OVER, {});
+		broadcastEvent(Event::Event(Event::GAME_OVER));
 	}
 }
 
@@ -47,7 +47,7 @@ void GameState::increaseHealthBy(int heal)
 		health = maxHealth;
 	}
 
-	notifyObservers(HEALTH_UPDATED, { NULL, this->health });
+	broadcastEvent(Event::Event(Event::HEALTH_UPDATED, this->health));
 }
 
 void GameState::increaseMaxHealthBy(int health)
@@ -55,8 +55,8 @@ void GameState::increaseMaxHealthBy(int health)
 	maxHealth += health;
 	this->health += health;
 
-	notifyObservers(MAX_HEALTH_UPDATED, { NULL, this->maxHealth });
-	notifyObservers(HEALTH_UPDATED, { NULL, this->health });
+	broadcastEvent(Event::Event(Event::MAX_HEALTH_UPDATED, this->maxHealth));
+	broadcastEvent(Event::Event(Event::HEALTH_UPDATED, this->health));
 }
 
 void GameState::increaseExperienceBy(int experienceToAdd)
@@ -68,7 +68,7 @@ void GameState::increaseExperienceBy(int experienceToAdd)
 		increaseLevelByOne();
 	}
 
-	notifyObservers(EXPERIENCE_UPDATED, { NULL, this->experience });
+	broadcastEvent(Event::Event(Event::EXPERIENCE_UPDATED, this->experience));
 }
 
 void GameState::increaseExperienceMultiplierBy(float multiplier)
@@ -82,8 +82,8 @@ void GameState::increaseLevelByOne()
 	
 	experienceForLevelUp = 7 * level * level;
 
-	notifyObservers(LEVEL_UPDATED, { NULL, level });
-	notifyObservers(MAX_EXPERIENCE_UPDATED, { NULL, experienceForLevelUp });
+	broadcastEvent(Event::Event(Event::LEVEL_UPDATED, this->level));
+	broadcastEvent(Event::Event(Event::MAX_EXPERIENCE_UPDATED, this->experienceForLevelUp));
 
 	static_cast<LevelUpScene*>(Locator::getSceneManager().getScene(Scene::Level_UP))->rollUpgrades(*this);
 	Locator::getSceneManager().changeScene(Scene::Level_UP, false);
@@ -132,12 +132,12 @@ void GameState::setStartValues()
 	playerInvinciblyInterval = 1.5;
 	playerDamage = 10;
 
-	notifyObservers(SCORE_UPDATED, { NULL, score });
-	notifyObservers(EXPERIENCE_UPDATED, { NULL, experience });
-	notifyObservers(MAX_EXPERIENCE_UPDATED, { NULL, experienceForLevelUp });
-	notifyObservers(LEVEL_UPDATED, { NULL, level });
-	notifyObservers(MAX_HEALTH_UPDATED, { NULL, maxHealth });
-	notifyObservers(HEALTH_UPDATED, { NULL, health });
+	broadcastEvent(Event::Event(Event::SCORE_UPDATED, this->score));
+	broadcastEvent(Event::Event(Event::LEVEL_UPDATED, this->level));
+	broadcastEvent(Event::Event(Event::HEALTH_UPDATED, this->health));
+	broadcastEvent(Event::Event(Event::MAX_HEALTH_UPDATED, this->maxHealth));
+	broadcastEvent(Event::Event(Event::EXPERIENCE_UPDATED, this->experience));
+	broadcastEvent(Event::Event(Event::MAX_EXPERIENCE_UPDATED, this->experienceForLevelUp));
 }
 
 

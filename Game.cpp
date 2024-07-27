@@ -9,46 +9,25 @@
 
 GameScene::GameScene(void) : Scene(Scene::Game)
 {
-	
+	Locator::provide(&world);
+	Locator::provide(&state);
 }
 
 void GameScene::updateScene(sf::Time deltaTime)
 {
 	state.updateGameTime(deltaTime);
-
-	player->update(deltaTime, state);
-
-	if (!state.isGameOver()) {
-		enemySpawner.checkSpawnConditions(deltaTime, state, *player);
-	} else {
-		gameOverTimer += deltaTime.asSeconds();
-
-		if (gameOverTimer >= 4.f) {
-			Scene* scene = Locator::getSceneManager().getScene(Scene::GameOver);
-			dynamic_cast<GameOverScene*>(scene)->setScore(state.getScore());
-			Locator::getSceneManager().changeScene(Scene::GameOver);
-		}
-	}
-
-	spatialPartitionGrid.updateAll(deltaTime, state);
-	bulletPool->updateAll(deltaTime);
-
-	Locator::getSceneManager().setBackgorundReferencePoint(player->getPosition());
+	world.update(deltaTime, state);
 }
 
 void GameScene::drawScene(sf::RenderWindow& mainWindow)
 {
-	bulletPool->drawAll(mainWindow);
-
-	mainWindow.draw(*player);
-
-	spatialPartitionGrid.drawAll(mainWindow);
-	
-	if (Locator::getSceneManager().debugShowSpatialGrid()) {
-		spatialPartitionGrid.debugDraw(mainWindow);
-	}
-
+	mainWindow.draw(world);
 	mainWindow.draw(hud);
+
+#ifdef _DEBUG
+	world.getCollisionLayer().debugDraw(mainWindow);
+#endif
+
 }
 
 void GameScene::checkEvents(sf::Event newEvent)
@@ -72,21 +51,9 @@ void GameScene::checkEvents(sf::Event newEvent)
 
 void GameScene::loadScene()
 {
-	bulletPool = new BulletPool(&spatialPartitionGrid);
+	state.addObserver(hud);
 
-	enemySpawner.setSpatialPartitionGrid(&spatialPartitionGrid);
-	enemySpawner.reset();
-
-	spatialPartitionGrid.addObserver(&enemySpawner);
-
-	state.addObserver(&enemySpawner);
-	state.addObserver(&hud);
-
-	gameOverTimer = 0;
-	state.setStartValues();
-
-	player = new Player(bulletPool, &spatialPartitionGrid);
-	player->setPosition(sf::Vector2f(WINDOW_SIZE / 2, WINDOW_SIZE / 2));
+	world.initialize(state);
 
 	setLoaded(true);
 }
@@ -99,17 +66,9 @@ void GameScene::restartScene()
 
 void GameScene::closeScene()
 {
-	spatialPartitionGrid.removeObserver(&enemySpawner);
-	spatialPartitionGrid.clear();
+	world.reset(state);
 
-	state.removeObserver(&enemySpawner);
-	state.removeObserver(&hud);
-
-	delete bulletPool;
-	bulletPool = nullptr;
-
-	delete player;
-	player = nullptr;
+	state.removeObserver(hud);
 
 	setLoaded(false);
 }

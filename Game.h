@@ -3,12 +3,11 @@
 #include "Scene.h"
 
 #include "GameState.h"
-#include "Player.h"
-#include "BulletPool.h"
-#include "SpatialPartitionGrid.h"
-#include "ParallaxBackground.h"
-#include "EnemySpawnController.h"
+#include "World.h"
 #include "HUD.h"
+
+#include "CircleCollider.h"
+#include "BoxCollider.h"
 
 class GameScene : public Scene
 {
@@ -32,18 +31,13 @@ private:
 	//State
 	GameState state;
 
-	//Grid
-	SpatialPartitionGrid spatialPartitionGrid;
-
-	//GameObjects
-	Player* player;
-	BulletPool* bulletPool;
-
-	EnemySpawnController enemySpawner;
+	//World
+	World world;
 
 	//HUD
 	HUD hud;
 
-	float gameOverTimer;
+	sf::Shader fragtest;
+	sf::Texture normal;
 };
 

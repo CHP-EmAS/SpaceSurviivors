@@ -1,20 +1,22 @@
 #pragma once
 
+#include "GameState.h"
 #include "GameObject.h"
-#include "BulletPool.h"
 
 class Player : public GameObject
 {
 public:
-	Player(BulletPool* bulletPool, SpatialPartitionGrid* grid);
+	Player();
 
-	void interact(Interaction action, GameObject& interactor) override;
+	void initializeComponents() override;
 
-	void update(sf::Time deltaTime, GameState& state) override;
+	void interact(const Event event) override;
+
+	void update(const sf::Time deltaTime, GameState& state) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	void setInvincibility(sf::Time duration);
-	bool isInvincible();
+	bool isInvincible() const;
 
 	void playGameOverAnimation(sf::Time deltaTime);
 	
@@ -26,7 +28,6 @@ private:
 
 	void shootBullet(int bulletDamage);
 
-	BulletPool* bulletPool;
 	sf::Vector2f bulletSpawnPoint;
 	float timeSinceLastShot;
 	

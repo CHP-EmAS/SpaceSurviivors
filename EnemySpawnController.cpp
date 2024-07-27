@@ -1,30 +1,27 @@
 #include "EnemySpawnController.h"
 #include "Defines.h"
 #include "Asteroid.h"
+#include "Locator.h"
+#include "Event.h"
 
 EnemySpawnController::EnemySpawnController()
 {
-	reset();
-}
-
-void EnemySpawnController::setSpatialPartitionGrid(SpatialPartitionGrid* grid)
-{
-	this->grid = grid;
+	enemyAmountTargetValue = 1;
+	currentEnemySpawned = 0;
+	spawnIntervall = 0.6;
+	spawnTimer = 0;
+	updateTimer = 0;
 }
 
 void EnemySpawnController::explodeAllEnemys()
 {
-	if (grid == nullptr) {
-		return;
-	}
-
-	std::vector<GameObject*> objects = grid->getAllObjects();
+	std::list<std::shared_ptr<GameObject>> objects = Locator::getGameWorld().getCollisionLayer().getAllObjects();
 	
 	while (objects.size() > 0) {
-		GameObject* object = objects.back();
+		auto& object = objects.back();
 
-		if (object->getType() == GameObject::O_Asteroid) {
-			Asteroid* asteroid = dynamic_cast<Asteroid*>(object);
+		if (object->type == O_Asteroid) {
+			Asteroid* asteroid = dynamic_cast<Asteroid*>(object.get());
 			asteroid->explode();
 		}
 
@@ -42,17 +39,11 @@ void EnemySpawnController::reset()
 	spawnTimer = 0;
 	updateTimer = 0;
 
-	if (grid != nullptr) {
-		grid->clear();
-	}
+	Locator::getGameWorld().getCollisionLayer().clear();
 }
 
 void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& state, Player& player)
 {
-	if (grid == nullptr) {
-		return;
-	}
-		
 	spawnTimer += deltaTime.asSeconds();
 	updateTimer += deltaTime.asSeconds();
 
@@ -63,28 +54,33 @@ void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& s
 
 		switch (dir) {
 		case 0: //LEFT
-			spawnX = -SpatialPartitionGrid::CELL_SIZE + 1;
-			spawnY = rand() % WINDOW_SIZE;
+			spawnX = -PartitionedLayer::CELL_SIZE + 1;
+			spawnY = rand() % WORLD_SIZE;
 			break;
 		case 1: //RIGHT
-			spawnX = WINDOW_SIZE + SpatialPartitionGrid::CELL_SIZE - 1;
-			spawnY = rand() % WINDOW_SIZE;
+			spawnX = WORLD_SIZE + PartitionedLayer::CELL_SIZE - 1;
+			spawnY = rand() % WORLD_SIZE;
 			break;
 		case 2: //TOP
-			spawnX = rand() % WINDOW_SIZE;
-			spawnY = -SpatialPartitionGrid::CELL_SIZE + 1;
+			spawnX = rand() % WORLD_SIZE;
+			spawnY = -PartitionedLayer::CELL_SIZE + 1;
 			break;
 		case 3: //BOTTOM
-			spawnX = rand() % WINDOW_SIZE;
-			spawnY = WINDOW_SIZE + SpatialPartitionGrid::CELL_SIZE - 1;
+			spawnX = rand() % WORLD_SIZE;
+			spawnY = WORLD_SIZE + PartitionedLayer::CELL_SIZE - 1;
 			break;
 		}
 
-		sf::Vector2f spawnPoint = sf::Vector2f(spawnX, spawnY);
-		sf::Vector2f direction = player.getPosition() - spawnPoint + sf::Vector2f(rand() % 1000 - 500, rand() % 1000 - 500);
+		sf::Vector2f asteroidSpawnPoint = sf::Vector2f(spawnX, spawnY);
+		sf::Vector2f asteroidDirection = player.getPosition() - asteroidSpawnPoint + sf::Vector2f(rand() % 1000 - 500, rand() % 1000 - 500);
+		float asteroidScale = (rand() % 2666 + 666) / 1000.f;
+		float asteroidSpeed = rand() % 300 + 100;
+		float asteroidRotationSpeed = rand() % 360;
 
-		Asteroid* newAsteroid = new Asteroid(direction, (rand() % 4000 + 1000) / 1000.f, rand() % 300 + 100, rand() % 360);
-		newAsteroid->spawOnGrid(grid, spawnPoint);
+		std::shared_ptr<Asteroid> newAsteroid = Locator::getGameWorld().getGameObjectFactory()
+			.acquireAsteroid(asteroidDirection, asteroidScale, asteroidSpeed, asteroidRotationSpeed);
+
+		newAsteroid->spaw(asteroidSpawnPoint, L_Collision);
 
 		spawnTimer = 0;
 	}
@@ -96,26 +92,33 @@ void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& s
 		enemyAmountTargetValue = std::max(1, int(100.f * difficutlyRatio));
 		spawnIntervall = std::max(0.075f, float(0.6 - 0.525 * difficutlyRatio));
 
-		std::cout << difficutlyRatio << " -> " << enemyAmountTargetValue << " : " << spawnIntervall << std::endl;
-
 		updateTimer = 0;
 	}
 }
 
-void EnemySpawnController::onEvent(const Observable::Event event, const Observable::EventInfo info)
+void EnemySpawnController::onEvent(const Event event)
 {
-	switch (event) {
-	case Observable::GRID_OBJECT_SPAWNED:
-		if (info.object->getType() == GameObject::O_Asteroid) {
+	switch (event.type) {
+	case Event::GRID_OBJECT_SPAWNED:
+	{
+		GameObjectWrapper objectWrapper = std::get<GameObjectWrapper>(event.info);
+
+		if (objectWrapper.ref->type == O_Asteroid) {
 			currentEnemySpawned++;
 		}
 		break;
-	case Observable::GRID_OBJECT_DESPAWNED:
-		if (info.object->getType() == GameObject::O_Asteroid) {
+	}
+	case Event::GRID_OBJECT_DESPAWNED:
+	case Event::GRID_OBJECT_OUT_OF_BOUNDS:
+	{
+		GameObjectWrapper objectWrapper = std::get<GameObjectWrapper>(event.info);
+
+		if (objectWrapper.ref->type == O_Asteroid) {
 			currentEnemySpawned--;
 		}
 		break;
-	case Observable::GAME_OVER:
+	}
+	case Event::GAME_OVER:
 		explodeAllEnemys();
 		break;
 	}

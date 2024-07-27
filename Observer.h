@@ -1,10 +1,9 @@
 #pragma once
 
 #include "Observable.h"
-
-class GameObject;
+#include "Event.h"
 
 class Observer {
 public:
-	virtual void onEvent(const Observable::Event event, const Observable::EventInfo info) = 0;
+	virtual void onEvent(const Event event) = 0;
 };

@@ -5,6 +5,9 @@ GraphicService* Locator::graphicService_ = nullptr;
 SoundManager* Locator::soundManager_ = nullptr;
 HighscoreService* Locator::highscoreService_ = nullptr;
 
+World* Locator::gameWorld_ = nullptr;
+GameState* Locator::gameState_ = nullptr;
+
 void Locator::provide(SceneManager* scene) {
 	sceneManager_ = scene;
 }
@@ -21,6 +24,16 @@ void Locator::provide(SoundManager* sound)
 void Locator::provide(HighscoreService* highscore)
 {
 	highscoreService_ = highscore;
+}
+
+void Locator::provide(World* gameWorld)
+{
+	gameWorld_ = gameWorld;
+}
+
+void Locator::provide(GameState* gameState)
+{
+	gameState_ = gameState;
 }
 
 SceneManager& Locator::getSceneManager()
@@ -40,4 +53,14 @@ SoundManager& Locator::getSoundManager()
 HighscoreService& Locator::getHighscoreService()
 {
 	return *highscoreService_;
+}
+
+World& Locator::getGameWorld()
+{
+	return *gameWorld_;
+}
+
+GameState& Locator::getGameState()
+{
+	return *gameState_;
 }

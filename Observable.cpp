@@ -1,52 +1,37 @@
 #include "Observable.h"
 #include "Observer.h"
 
-void Observable::addObserver(Observer* observer)
+Observable::Observable()
 {
-	ObserverNode* newNode = new ObserverNode();
-	newNode->observer = observer;
-	newNode->next = head;
-	head = newNode;
-}
 
-void Observable::removeObserver(Observer* observer)
-{
-	if (head == nullptr)
-		return;
-
-	if (head->observer == observer) {
-		ObserverNode* toDelete = head;
-		head = head->next;
-		delete toDelete;
-		return;
-	}
-
-	ObserverNode* cursor = head;
-	while (cursor->next != nullptr) {
-		if (cursor->next->observer == observer) {
-			ObserverNode* toDelete = cursor->next;
-			cursor->next = cursor->next->next;
-			delete toDelete;
-			return;
-		}
-		cursor = cursor->next;
-	}
-}
-
-void Observable::notifyObservers(const Event event, const EventInfo info)
-{
-	ObserverNode* cursor = head;
-	while (cursor != nullptr) {
-		cursor->observer->onEvent(event, info);
-		cursor = cursor->next;
-	}
 }
 
 Observable::~Observable()
 {
-	while (head != nullptr) {
-		ObserverNode* toDelete = head;
-		head = head->next;
-		delete toDelete;
+
+}
+
+void Observable::addObserver(Observer& observer)
+{
+	_listeners.push_back(&observer);
+}
+
+void Observable::removeObserver(Observer& observer)
+{
+	auto elementToDelete = std::find(_listeners.begin(), _listeners.end(), &observer);
+	if (elementToDelete != _listeners.end()) {
+		_listeners.erase(elementToDelete);
+	}
+}
+
+void Observable::clearObservers()
+{
+	_listeners.clear();
+}
+
+void Observable::broadcastEvent(const Event event)
+{
+	for (auto observer : _listeners) {
+		observer->onEvent(event);
 	}
 }

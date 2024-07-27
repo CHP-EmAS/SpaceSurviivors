@@ -20,7 +20,7 @@ public:
 	void updateHealthBar(int health, int maxHealth);
 
 private:
-	void onEvent(const Observable::Event event, const Observable::EventInfo info) override;
+	void onEvent(const Event event) override;
 
 	Frame scoreFrame;
 	DropShadowText scoreText;

@@ -1,94 +1,47 @@
 #include "GameObject.h"
+
+#include <iostream>
 #include "Locator.h"
-#include "VectorExtension.h"
-#include "SpatialPartitionGrid.h"
 
-GameObject::GameObject(ObjectType type) : controller(nullptr), type(type)
+GameObject::GameObject(ObjectType type) : type(type)
 {
+	enabled = false;
+
 	setPosition(sf::Vector2f(0,0));
-	markedForDespawn = false;
-	managedByGrid = false;
-
-	controller = nullptr;
-
-	grid = nullptr;
-	nextObject = nullptr;
-	prevObject = nullptr;
 }
 
-
-void GameObject::update(sf::Time deltaTime, GameState& state)
+void GameObject::interact(const Event event)
 {
-	sf::Vector2f lastPosition = getPosition();
+	std::cout << "Actor interacted with Action <" << event.type << "> to Base" << std::endl;
+}
 
-	if (controller) {
-		controller->simulate(deltaTime, state);
+void GameObject::spaw(sf::Vector2f spawnPosition, ObjectLayer layer)
+{
+	if (enabled) {
+		return;
 	}
 
-	if (grid && managedByGrid) {
-		grid->onObjectPositionUpdated(this, lastPosition);
+	setPosition(spawnPosition);
+
+	switch (layer) {
+	case L_Collision:
+		Locator::getGameWorld().getCollisionLayer().add(shared_from_this());
+		break;
+	case L_Effect:
+		Locator::getGameWorld().getEffectLayer().add(shared_from_this());
+		break;
 	}
+	
+	
+	enabled = true;
 }
 
-void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void GameObject::despawn()
 {
-	states.transform *= getTransform();
-	target.draw(sprite, states);
-
-	if (Locator::getSceneManager().debugShowHitboxes()) {
-		target.draw(collider, states);
-	}
-
-	if (controller && Locator::getSceneManager().debugShowVelocity()) {
-		controller->debugDraw(target);
-	}
+	enabled = false;
 }
 
-void GameObject::interact(Interaction action, GameObject& interactor)
+bool GameObject::isEnabled() const
 {
-	std::cout << "Actor " << &interactor << " interacted with Action <" << action << ">" << std::endl;
-}
-
-void GameObject::spawOnGrid(SpatialPartitionGrid* grid, sf::Vector2f position)
-{
-	markedForDespawn = false;
-	setPosition(position);
-
-	this->grid = grid;
-	grid->add(this);
-	managedByGrid = true;
-}
-
-void GameObject::markForDespawn()
-{
-	markedForDespawn = true;
-}
-
-void GameObject::setController(Controller* newController)
-{
-	if (controller)
-	{
-		delete controller;
-	}
-	controller = newController;
-}
-
-Controller* GameObject::getController()
-{
-	return controller;
-}
-
-Collider* GameObject::getCollider()
-{
-	return &collider;
-}
-
-GameObject::ObjectType GameObject::getType() const
-{
-	return this->type;
-}
-
-GameObject::~GameObject()
-{
-	delete controller;
+	return enabled;
 }

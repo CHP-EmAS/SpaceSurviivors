@@ -16,7 +16,7 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(text, states);
 
 	if (Locator::getSceneManager().debugShowHitboxes()) {
-		target.draw(collider, states);
+		collider.debugDraw(target, states);
 	}
 }
 
@@ -48,6 +48,7 @@ void Button::setSize(sf::Vector2f size)
 {
 	frame.setSize(size);
 	collider.setSize(size);
+	collider.setPosition(size / 2.f);
 	
 	setText(text.getText());
 }

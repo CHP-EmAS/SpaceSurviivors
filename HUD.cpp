@@ -101,26 +101,31 @@ void HUD::updateHealthBar(int health, int maxHealth)
 	healthText.setString(text);
 }
 
-void HUD::onEvent(const Observable::Event event, const Observable::EventInfo info)
+void HUD::onEvent(const Event event)
 {
-	switch(event) {
-	case Observable::SCORE_UPDATED:
-		updateScore(info.value);
+	int int_update = 0;
+	if (std::holds_alternative<IntUpdate>(event.info)) {
+		int_update = std::get<IntUpdate>(event.info).value;
+	}
+
+	switch (event.type) {
+	case Event::SCORE_UPDATED:
+		updateScore(int_update);
 		break;
-	case Observable::EXPERIENCE_UPDATED:
-		updateExperienceBar(info.value, displayedMaxExperience);
+	case Event::EXPERIENCE_UPDATED:
+		updateExperienceBar(int_update, displayedMaxExperience);
 		break;
-	case Observable::MAX_EXPERIENCE_UPDATED:
-		updateExperienceBar(displayedExperience, info.value);
+	case Event::MAX_EXPERIENCE_UPDATED:
+		updateExperienceBar(displayedExperience, int_update);
 		break;
-	case Observable::LEVEL_UPDATED:
-		updateLevel(info.value);
+	case Event::LEVEL_UPDATED:
+		updateLevel(int_update);
 		break;
-	case Observable::HEALTH_UPDATED:
-		updateHealthBar(info.value, displayedMaxHealth);
+	case Event::HEALTH_UPDATED:
+		updateHealthBar(int_update, displayedMaxHealth);
 		break;
-	case Observable::MAX_HEALTH_UPDATED:
-		updateHealthBar(displayedHealth, info.value);
+	case Event::MAX_HEALTH_UPDATED:
+		updateHealthBar(displayedHealth, int_update);
 		break;
 	}
 }

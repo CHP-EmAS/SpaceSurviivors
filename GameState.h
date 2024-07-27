@@ -1,35 +1,34 @@
 #pragma once
 
-#include "SFML/System.hpp"
+#include <SFML/System.hpp>
 
 #include "Observable.h"
 
 class GameState : public Observable
 {
 public:
-	bool isGameOver();
+	bool isGameOver() const;
 
-	inline sf::Time getGameTime() { return gameTime; };
+	const sf::Time getGameTime() const { return gameTime; };
 
-	inline int getScore() const { return score; }
-	inline float getScoreMultiplier() const { return scoreMultiplier; }
-
-	inline int getHealth() const { return health; }
-	inline int getMaxHealth() const { return maxHealth; }
-	inline bool isFullHealth() const { return health == maxHealth; }
-
-	inline int getLuck() { return luck; };
-
-	inline int getExperience() const { return experience; }
-	inline int getExperienceForLevelUp() const { return experienceForLevelUp; }
-	inline float getExperienceMultiplier() const { return experienceMultiplier; }
-	inline int getLevel() const { return level; }
-
-	inline float getPlayerAcceleration() { return playerAcceleration; }
-	inline float getPlayerShotsPerSecond() { return playerShotsPerSecond; }
-	inline float getPlayerInvinciblyInterval() { return playerInvinciblyInterval; }
-	inline int getPlayerDamage() { return playerDamage; }
-
+	int getScore() const { return score; }
+	float getScoreMultiplier() const { return scoreMultiplier; }
+	
+	int getHealth() const { return health; }
+	int getMaxHealth() const { return maxHealth; }
+	bool isFullHealth() const { return health == maxHealth; }
+	
+	int getLuck() const { return luck; };
+	
+	int getExperience() const { return experience; }
+	int getExperienceForLevelUp() const { return experienceForLevelUp; }
+	float getExperienceMultiplier() const { return experienceMultiplier; }
+	int getLevel() const { return level; }
+	
+	float getPlayerAcceleration() { return playerAcceleration; }
+	float getPlayerShotsPerSecond() const { return playerShotsPerSecond; }
+	float getPlayerInvinciblyInterval() const { return playerInvinciblyInterval; }
+	int getPlayerDamage() const { return playerDamage; }
 
 	void updateGameTime(sf::Time deltaTime);
 
@@ -71,7 +70,6 @@ private:
 	float playerShotsPerSecond;
 	float playerInvinciblyInterval;
 	int playerDamage;
-
 
 	sf::Time gameTime;
 };

@@ -53,7 +53,7 @@ void SceneManager::initScenes()
 
 void SceneManager::deleteScenes()
 {
-	for (int i_scene = 0; i_scene < Scene::None; i_scene++)
+	for (int i_scene = 0; i_scene < SCENE_AMOUNT; i_scene++)
 	{
 		if (allScenes[Scene::SceneNames(i_scene)] != nullptr)
 		{
@@ -109,7 +109,7 @@ void SceneManager::drawActivScene()
 {
 	gameWindow->clear();
 
-	gameWindow->draw(background);
+	//gameWindow->draw(background);
 
 	activScene->drawScene(*gameWindow);
 
@@ -249,7 +249,7 @@ void SceneManager::updateWindowSize()
 	if (!zoomOut) {
 		windowView.setSize(WINDOW_SIZE, WINDOW_SIZE);
 	} else {
-		windowView.setSize(WINDOW_SIZE + 300, WINDOW_SIZE + 300);
+		windowView.setSize(WINDOW_SIZE + WINDOW_SIZE, WINDOW_SIZE + WINDOW_SIZE);
 	}
 	
 	windowView.setViewport(sf::FloatRect(posPercentX, 0, percentX, 1));

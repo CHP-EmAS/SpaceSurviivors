@@ -1,28 +1,28 @@
 #pragma once
 
 #include "GameObject.h"
-#include "SpatialPartitionGrid.h"
 
 class Bullet : public GameObject
 {
-	friend class BulletPool;
 public:
 	Bullet();
+	~Bullet();
 
-	void setDamage(int damage);
-	void setOwner(GameObject* owner);
+	void initializeComponents() override;
+	void reinitialize(sf::Vector2f direction, int damage);
+	
+	void shotBy(std::shared_ptr<GameObject> owner);
 
-	bool bulletUpdate(sf::Time deltaTime);
+	void update(sf::Time deltaTime, GameState& state) override;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	int getDamage() { return damage; };
+	int getDamage() const { return damage; };
 private:
 	float speed;
 	int damage;
 
-	GameObject* shotBy;
+	sf::Vector2f direction;
 
-	//Pool
-	bool isActive;
-	Bullet* next;
+	std::weak_ptr<GameObject> owner;
 };
 

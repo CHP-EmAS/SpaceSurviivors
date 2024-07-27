@@ -10,3 +10,4 @@
 #define UPS_LIMIT 200
 
 #define WINDOW_SIZE 1000
+#define WORLD_SIZE 1000
