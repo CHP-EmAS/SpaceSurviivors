@@ -26,7 +26,7 @@ SceneManager::SceneManager(void)
 	//fps
 	fpsText.setString("XXX FPS");
 	fpsText.setFillColor(sf::Color::Green);
-	fpsText.setFont(Locator::getGraphicService().getFont(GraphicService::Arial));
+	fpsText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Arial));
 	fpsText.setCharacterSize(15);
 	fpsText.setPosition(2, 0);
 
@@ -120,7 +120,7 @@ void SceneManager::drawActivScene()
 	gameWindow->display();
 }
 
-void SceneManager::updateActivScene(sf::Time deltaTime)
+void SceneManager::updateActivScene(const sf::Time& deltaTime)
 {
 	//Sicheres löschen
 	if (secureCloseScene != Scene::None)
@@ -288,7 +288,7 @@ Scene* SceneManager::getActivScene()
 	return activScene;
 }
 
-Scene* SceneManager::getScene(Scene::SceneNames scene)
+Scene* SceneManager::getScene(Scene::SceneNames scene)  const
 {
 	if (int(scene) >= 0 && int(scene) < (int)Scene::None)
 	{
@@ -300,17 +300,17 @@ Scene* SceneManager::getScene(Scene::SceneNames scene)
 	}
 }
 
-bool SceneManager::debugShowHitboxes()
+bool SceneManager::debugShowHitboxes() const
 {
 	return showHitboxes;
 }
 
-bool SceneManager::debugShowVelocity()
+bool SceneManager::debugShowVelocity() const
 {
 	return showVelocity;
 }
 
-bool SceneManager::debugShowSpatialGrid()
+bool SceneManager::debugShowSpatialGrid() const
 {
 	return showSpatialGrid;
 }

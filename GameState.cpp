@@ -11,7 +11,7 @@ bool GameState::isGameOver() const
 	return gameOver;
 }
 
-void GameState::updateGameTime(sf::Time deltaTime)
+void GameState::updateGameTime(const sf::Time& deltaTime)
 {
 	gameTime += deltaTime;
 }
@@ -19,7 +19,7 @@ void GameState::updateGameTime(sf::Time deltaTime)
 void GameState::increaseScoreBy(int score)
 {
 	this->score += score * scoreMultiplier;
-	broadcastEvent(Event::Event(Event::SCORE_UPDATED, this->score));
+	EventDispatcher::dispatch(Event(EventType::SCORE_UPDATED, this->score));
 }
 
 void GameState::increaseScoreMultiplierBy(float multiplier)
@@ -31,11 +31,11 @@ void GameState::decreaseHealthBy(int damage)
 {
 	health -= damage;
 
-	broadcastEvent(Event::Event(Event::HEALTH_UPDATED, this->health));
+	EventDispatcher::dispatch(Event(EventType::HEALTH_UPDATED, this->health));
 
 	if (health <= 0) {
 		gameOver = true;
-		broadcastEvent(Event::Event(Event::GAME_OVER));
+		EventDispatcher::dispatch(Event(EventType::GAME_OVER));
 	}
 }
 
@@ -47,7 +47,7 @@ void GameState::increaseHealthBy(int heal)
 		health = maxHealth;
 	}
 
-	broadcastEvent(Event::Event(Event::HEALTH_UPDATED, this->health));
+	EventDispatcher::dispatch(Event(EventType::HEALTH_UPDATED, this->health));
 }
 
 void GameState::increaseMaxHealthBy(int health)
@@ -55,8 +55,8 @@ void GameState::increaseMaxHealthBy(int health)
 	maxHealth += health;
 	this->health += health;
 
-	broadcastEvent(Event::Event(Event::MAX_HEALTH_UPDATED, this->maxHealth));
-	broadcastEvent(Event::Event(Event::HEALTH_UPDATED, this->health));
+	EventDispatcher::dispatch(Event(EventType::MAX_HEALTH_UPDATED, this->maxHealth));
+	EventDispatcher::dispatch(Event(EventType::HEALTH_UPDATED, this->health));
 }
 
 void GameState::increaseExperienceBy(int experienceToAdd)
@@ -68,7 +68,7 @@ void GameState::increaseExperienceBy(int experienceToAdd)
 		increaseLevelByOne();
 	}
 
-	broadcastEvent(Event::Event(Event::EXPERIENCE_UPDATED, this->experience));
+	EventDispatcher::dispatch(Event(EventType::EXPERIENCE_UPDATED, this->experience));
 }
 
 void GameState::increaseExperienceMultiplierBy(float multiplier)
@@ -82,11 +82,13 @@ void GameState::increaseLevelByOne()
 	
 	experienceForLevelUp = 7 * level * level;
 
-	broadcastEvent(Event::Event(Event::LEVEL_UPDATED, this->level));
-	broadcastEvent(Event::Event(Event::MAX_EXPERIENCE_UPDATED, this->experienceForLevelUp));
+	EventDispatcher::dispatch(Event(EventType::LEVEL_UPDATED, this->level));
+	EventDispatcher::dispatch(Event(EventType::MAX_EXPERIENCE_UPDATED, this->experienceForLevelUp));
+	
+	auto sceneManager = Locator::get<SceneManager>();
 
-	static_cast<LevelUpScene*>(Locator::getSceneManager().getScene(Scene::Level_UP))->rollUpgrades(*this);
-	Locator::getSceneManager().changeScene(Scene::Level_UP, false);
+	static_cast<LevelUpScene*>(sceneManager->getScene(Scene::Level_UP))->rollUpgrades(*this);
+	sceneManager->changeScene(Scene::Level_UP, false);
 }
 
 void GameState::increasePlayerAccelerationBy(float acceleration)
@@ -132,12 +134,12 @@ void GameState::setStartValues()
 	playerInvinciblyInterval = 1.5;
 	playerDamage = 10;
 
-	broadcastEvent(Event::Event(Event::SCORE_UPDATED, this->score));
-	broadcastEvent(Event::Event(Event::LEVEL_UPDATED, this->level));
-	broadcastEvent(Event::Event(Event::HEALTH_UPDATED, this->health));
-	broadcastEvent(Event::Event(Event::MAX_HEALTH_UPDATED, this->maxHealth));
-	broadcastEvent(Event::Event(Event::EXPERIENCE_UPDATED, this->experience));
-	broadcastEvent(Event::Event(Event::MAX_EXPERIENCE_UPDATED, this->experienceForLevelUp));
+	EventDispatcher::dispatch(Event(EventType::SCORE_UPDATED, this->score));
+	EventDispatcher::dispatch(Event(EventType::LEVEL_UPDATED, this->level));
+	EventDispatcher::dispatch(Event(EventType::HEALTH_UPDATED, this->health));
+	EventDispatcher::dispatch(Event(EventType::MAX_HEALTH_UPDATED, this->maxHealth));
+	EventDispatcher::dispatch(Event(EventType::EXPERIENCE_UPDATED, this->experience));
+	EventDispatcher::dispatch(Event(EventType::MAX_EXPERIENCE_UPDATED, this->experienceForLevelUp));
 }
 
 

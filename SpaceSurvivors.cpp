@@ -23,21 +23,21 @@ static int mainLoop()
 
     srand(time(NULL));
 
-	EmbeddedGraphicLoader graphicLoader = EmbeddedGraphicLoader();
-	Locator::provide(&graphicLoader);
+	std::shared_ptr<GraphicService> graphicLoader = std::make_shared<EmbeddedGraphicLoader>();
+	Locator::provideGlobal(graphicLoader);
 	
-	SoundManager soundManager = SoundManager();
-	Locator::provide(&soundManager);
-	soundManager.changeBackgroundMusic();
+	std::shared_ptr<SoundManager> soundManager = std::make_shared<SoundManager>();
+	Locator::provideGlobal(soundManager);
+	soundManager->changeBackgroundMusic();
 
-	LocalFileHighscore highscoreService = LocalFileHighscore();
-	Locator::provide(&highscoreService);
+	std::shared_ptr<HighscoreService> highscoreService = std::make_shared<LocalFileHighscore>();
+	Locator::provideGlobal(highscoreService);
 
-	SceneManager sceneManager =SceneManager();
-	Locator::provide(&sceneManager);
-	sceneManager.setWindowMode(true, false);
-	sceneManager.initScenes();
-	sceneManager.changeScene(Scene::GameOver, false);
+	std::shared_ptr<SceneManager> sceneManager = std::make_shared<SceneManager>();
+	Locator::provideGlobal(sceneManager);
+	sceneManager->setWindowMode(true, false);
+	sceneManager->initScenes();
+	sceneManager->changeScene(Scene::GameOver, false);
 
 	sf::Clock drawClock;
 	sf::Clock updateClock;
@@ -48,29 +48,29 @@ static int mainLoop()
 	int frames = 0;
 
 	//Haupt-Loop
-	while (sceneManager.getGameWindow().isOpen())
+	while (sceneManager->getGameWindow().isOpen())
 	{
 		//Updaten des Fensters
 		if (updateClock.getElapsedTime().asMicroseconds() >= updateWaitDelay)
 		{
 			sf::Time deltaTime = updateClock.restart();
 
-			sceneManager.checkWindowEvents();
-			sceneManager.updateActivScene(deltaTime / 10.f);
+			sceneManager->checkWindowEvents();
+			sceneManager->updateActivScene(deltaTime);
 		}
 
 		//Zeichnen des Fensters
 		if (drawClock.getElapsedTime().asMicroseconds() >= drawWaitDelay)
 		{
 			drawClock.restart();
-			sceneManager.drawActivScene();
+			sceneManager->drawActivScene();
 
 			frames++;
 		}
 
 		if (fpsClock.getElapsedTime().asMicroseconds() > 1000000) {
 			fpsClock.restart();
-			sceneManager.setDisplayFPS(frames);
+			sceneManager->setDisplayFPS(frames);
 			frames = 0;
 		}
 	}

@@ -9,9 +9,9 @@ public:
 	PlayerInputComponent(std::shared_ptr<GameObject> parent);
 	~PlayerInputComponent();
 
-	void checkInput(sf::Time deltaTime);
+	void onUpdate(const sf::Time& deltaTime) override;
 
 private:
-	void rotateToMouse(sf::Time deltaTime);
+	void rotateToMouse(const sf::Time& deltaTime);
 
 };

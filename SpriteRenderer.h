@@ -9,7 +9,7 @@ public:
 	SpriteRenderer(std::shared_ptr<GameObject> parent);
 	~SpriteRenderer();
 
-	void draw(sf::RenderTarget& target, sf::RenderStates states);
+	void onDraw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	void setSprite(sf::Sprite sprite);
 	sf::Sprite* getSprite();

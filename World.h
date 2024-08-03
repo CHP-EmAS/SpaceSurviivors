@@ -8,8 +8,7 @@
 #include "Asteroid.h"
 #include "Explosion.h"
 
-#include "PartitionedLayer.h"
-#include "EffectLayer.h"
+#include "CollisionGrid.h"
 
 #include "ParallaxBackground.h"
 #include "EnemySpawnController.h"
@@ -21,31 +20,28 @@
 class World : public sf::Drawable
 {
 public:
-	void initialize(GameState& state);
-	void reset(GameState& state);
+	World();
 
-	void update(const sf::Time deltaTime, GameState& state);
+	void initialize();
+	void reset();
 
-	PartitionedLayer& getCollisionLayer();
-	EffectLayer& getEffectLayer();
+	std::vector<std::shared_ptr<GameObject>> getAllObjects();
 
-	GameObjectFactory& getGameObjectFactory();
-	EnemySpawnController& getEnemySpawnController();
+	void spawnObject(std::shared_ptr<GameObject> object, sf::Vector2f spawnPoint);
+	void update(const sf::Time& deltaTime);
 
 	void spawnExperiencePuddle(sf::IntRect area, int totalAmount);
 private:
-	PartitionedLayer collisionLayer;
-	EffectLayer effectLayer;
+	ParallaxBackground background;
+	std::shared_ptr<Player> player;
+	
+	sf::FloatRect validArea;
 
-	GameObjectFactory objectFactory;
 	EnemySpawnController enemySpawner;
 
-	ParallaxBackground background;
-
-	std::shared_ptr<Player> player;
-
-	float gameOverTimer;
+	std::vector<std::shared_ptr<GameObject>> objects;
+	std::vector<std::shared_ptr<GameObject>> newlySpawnedObjects;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	void updateObjects(const sf::Time& deltaTime);
 };
-

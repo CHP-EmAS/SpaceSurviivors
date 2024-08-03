@@ -3,12 +3,12 @@
 
 GameOverScene::GameOverScene() : Scene(GameOver)
 {
-	headlineText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	headlineText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 	headlineText.setFontSize(60);
 	headlineText.setPosition(WINDOW_SIZE / 2, 200);
 	headlineText.setShadowOffset(5);
 
-	infoText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	infoText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 	infoText.setShadowOffset(3);
 	infoText.setColor(sf::Color::White);
 	infoText.setFontSize(25);
@@ -16,7 +16,7 @@ GameOverScene::GameOverScene() : Scene(GameOver)
 	infoText.setOrigin(infoText.getLocalBounds().width / 2, 0);
 	infoText.setPosition(WINDOW_SIZE / 2, 425);
 
-	scoreText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	scoreText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 	scoreText.setFontSize(30);
 	scoreText.setPosition(WINDOW_SIZE / 2, 300);
 	scoreText.setShadowOffset(4);
@@ -36,7 +36,7 @@ GameOverScene::GameOverScene() : Scene(GameOver)
 	switchState(false);
 }
 
-void GameOverScene::updateScene(sf::Time deltaTime)
+void GameOverScene::updateScene(const sf::Time& deltaTime)
 {
 	if (newHighscore) {
 		bool noName = nameInput.isEmpty();
@@ -82,12 +82,12 @@ void GameOverScene::checkEvents(sf::Event newEvent)
 
 		if (continueButton.isHovered() && continueButton.isEnabled()) {
 			if (newHighscore) {
-				Locator::getHighscoreService().submitScore(nameInput.getText(), score);
+				Locator::get<HighscoreService>()->submitScore(nameInput.getText(), score);
 				nameInput.clear();
 				switchState(false);
 			}
 			else {
-				Locator::getSceneManager().changeScene(Scene::Game);
+				Locator::get<SceneManager>()->changeScene(Scene::Game);
 			}
 		}
 
@@ -117,7 +117,7 @@ void GameOverScene::setScore(int score)
 	scoreText.setString("Your Score: " + convertScore(score));
 	scoreText.setOrigin(scoreText.getLocalBounds().width / 2, 0);
 
-	switchState(Locator::getHighscoreService().isPersonalBest(score));
+	switchState(Locator::get<HighscoreService>()->isPersonalBest(score));
 }
 
 void GameOverScene::switchState(bool isHighscore)
@@ -126,13 +126,13 @@ void GameOverScene::switchState(bool isHighscore)
 	
 	if (isHighscore) {
 		setHeadlineText("New Highscore!", sf::Color(255, 205, 0));
-		continueButton.setText(sf::Text("Save Highscore", Locator::getGraphicService().getFont(GraphicService::Pixel), 20));
+		continueButton.setText(sf::Text("Save Highscore", Locator::get<GraphicService>()->getFont(GraphicService::Pixel), 20));
 		continueButton.setSize(sf::Vector2f(300, 50));
 		continueButton.setOrigin(150, 25);
 		continueButton.setEnabled(false);
 	} else {
 		setHeadlineText("Game Over", sf::Color::Red);
-		continueButton.setText(sf::Text("New Game", Locator::getGraphicService().getFont(GraphicService::Pixel), 20));
+		continueButton.setText(sf::Text("New Game", Locator::get<GraphicService>()->getFont(GraphicService::Pixel), 20));
 		continueButton.setSize(sf::Vector2f(200, 50));
 		continueButton.setOrigin(100, 25);
 		continueButton.setEnabled(true);

@@ -6,9 +6,9 @@ ProgressBar::ProgressBar()
 	setLength(100);
 	progress = 0;
 	
-	barBeginn.setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_BlueBar));
-	barMiddle.setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_BlueBar));
-	barEnd.setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_BlueBar));
+	barBeginn.setTexture(Locator::get<GraphicService>()->getTexture(GraphicService::UI_BlueBar));
+	barMiddle.setTexture(Locator::get<GraphicService>()->getTexture(GraphicService::UI_BlueBar));
+	barEnd.setTexture(Locator::get<GraphicService>()->getTexture(GraphicService::UI_BlueBar));
 
 	barBeginn.setTextureRect(sf::IntRect(0, 0, 6, 26));
 	barMiddle.setTextureRect(sf::IntRect(6, 0, 1, 26));

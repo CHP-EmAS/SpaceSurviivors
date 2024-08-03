@@ -11,7 +11,7 @@ class GameOverScene : public Scene
 public:
 	GameOverScene();
 
-	void updateScene(sf::Time deltaTime) override;
+	void updateScene(const sf::Time& deltaTime) override;
 	void drawScene(sf::RenderWindow& mainWindow) override;
 	void checkEvents(sf::Event newEvent) override;
 	void loadScene() override;

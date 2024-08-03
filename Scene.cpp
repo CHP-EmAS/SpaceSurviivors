@@ -22,12 +22,12 @@ void Scene::setLoaded(bool load)
 	isLoaded = load;
 }
 
-bool Scene::isSceneLoaded()
+bool Scene::isSceneLoaded() const
 {
 	return isLoaded;
 }
 
-Scene::SceneNames Scene::getSceneName()
+Scene::SceneNames Scene::getSceneName() const
 {
 	return sceneName;
 }

@@ -1,16 +1,17 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "Observer.h"
 #include "GameState.h"
 #include "ProgressBar.h"
 #include "Frame.h"
 #include "DropShadowText.h"
+#include "EventDispatcher.h"
 
-class HUD : public sf::Drawable, public Observer
+class HUD : public sf::Drawable
 {
 public:
 	HUD();
+	~HUD();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -20,8 +21,6 @@ public:
 	void updateHealthBar(int health, int maxHealth);
 
 private:
-	void onEvent(const Event event) override;
-
 	Frame scoreFrame;
 	DropShadowText scoreText;
 
@@ -35,6 +34,20 @@ private:
 	int displayedMaxHealth;
 
 	int displayedExperience;
-	int displayedMaxExperience;	
+	int displayedMaxExperience;
+
+	void onScoreUpdated(const EventInfo& info);
+	void onExperienceUpdated(const EventInfo& info);
+	void onMaxExperienceUpdated(const EventInfo& info);
+	void onLevelUpdated(const EventInfo& info);
+	void onHealthUpdated(const EventInfo& info);
+	void onMaxHealthUpdated(const EventInfo& info);
+
+	EventHandlerID scoreHandler;
+	EventHandlerID experienceHandler;
+	EventHandlerID maxExperienceHandler;
+	EventHandlerID levelHandler;
+	EventHandlerID healthHandler;
+	EventHandlerID maxHealthHandler;
 };
 

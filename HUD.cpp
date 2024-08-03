@@ -1,6 +1,6 @@
 #include "HUD.h"
 
-//#include <string>
+#include "EventDispatcher.h"
 
 #include "Defines.h"
 #include "Locator.h"
@@ -12,7 +12,7 @@ HUD::HUD()
 	scoreFrame.setPosition(WINDOW_SIZE - 20, 20);
 	scoreFrame.setScale(1.5, 1.5);
 
-	healthProgressBar.setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_RedBar));
+	healthProgressBar.setTexture(Locator::get<GraphicService>()->getTexture(GraphicService::UI_RedBar));
 	healthProgressBar.setLength(127);
 	healthProgressBar.setPosition(20, 20);
 	healthProgressBar.setScale(1.5, 1.5);
@@ -23,24 +23,52 @@ HUD::HUD()
 	experienceProgressBar.setScale(1.5, 1.5);
 
 	scoreText.setString("XXXXXXXX");
-	scoreText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	scoreText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 	scoreText.setFontSize(26);
 	scoreText.setPosition(WINDOW_SIZE - 40, 26);
 	scoreText.setOrigin(scoreText.getLocalBounds().width, 0);
 	scoreText.setShadowOffset(2);
 
 	levelText.setString("Level X");
-	levelText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	levelText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 	levelText.setFontSize(26);
 	levelText.setPosition(WINDOW_SIZE / 2, 26);
 	levelText.setOrigin(levelText.getLocalBounds().width / 2, 0);
 	levelText.setShadowOffset(2);
 
 	healthText.setString("X/X HP");
-	healthText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	healthText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 	healthText.setFontSize(26);
 	healthText.setPosition(55, 26);
 	healthText.setShadowOffset(2);
+
+	scoreHandler = EventDispatcher::registerHandler( EventType::SCORE_UPDATED, 
+		std::bind(&HUD::onScoreUpdated, this, std::placeholders::_1));
+
+	experienceHandler = EventDispatcher::registerHandler( EventType::EXPERIENCE_UPDATED,
+		std::bind(&HUD::onExperienceUpdated, this, std::placeholders::_1));
+
+	maxExperienceHandler = EventDispatcher::registerHandler( EventType::MAX_EXPERIENCE_UPDATED, 
+		std::bind(&HUD::onMaxExperienceUpdated, this, std::placeholders::_1));
+
+	levelHandler = EventDispatcher::registerHandler( EventType::LEVEL_UPDATED,
+		std::bind(&HUD::onLevelUpdated, this, std::placeholders::_1));
+
+	healthHandler = EventDispatcher::registerHandler( EventType::HEALTH_UPDATED,
+		std::bind(&HUD::onHealthUpdated, this, std::placeholders::_1));
+
+	maxHealthHandler = EventDispatcher::registerHandler( EventType::MAX_HEALTH_UPDATED,
+		std::bind(&HUD::onMaxHealthUpdated, this, std::placeholders::_1));
+}
+
+HUD::~HUD()
+{
+	EventDispatcher::unregisterHandler(EventType::SCORE_UPDATED, scoreHandler);
+	EventDispatcher::unregisterHandler(EventType::EXPERIENCE_UPDATED, experienceHandler);
+	EventDispatcher::unregisterHandler(EventType::MAX_EXPERIENCE_UPDATED, maxExperienceHandler);
+	EventDispatcher::unregisterHandler(EventType::LEVEL_UPDATED, levelHandler);
+	EventDispatcher::unregisterHandler(EventType::HEALTH_UPDATED, healthHandler);
+	EventDispatcher::unregisterHandler(EventType::MAX_HEALTH_UPDATED, maxHealthHandler);
 }
 
 void HUD::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -101,31 +129,38 @@ void HUD::updateHealthBar(int health, int maxHealth)
 	healthText.setString(text);
 }
 
-void HUD::onEvent(const Event event)
+void HUD::onScoreUpdated(const EventInfo& info)
 {
-	int int_update = 0;
-	if (std::holds_alternative<IntUpdate>(event.info)) {
-		int_update = std::get<IntUpdate>(event.info).value;
-	}
+	const int value = std::get<IntegerEventInfo>(info).value;
+	updateScore(value);
+}
 
-	switch (event.type) {
-	case Event::SCORE_UPDATED:
-		updateScore(int_update);
-		break;
-	case Event::EXPERIENCE_UPDATED:
-		updateExperienceBar(int_update, displayedMaxExperience);
-		break;
-	case Event::MAX_EXPERIENCE_UPDATED:
-		updateExperienceBar(displayedExperience, int_update);
-		break;
-	case Event::LEVEL_UPDATED:
-		updateLevel(int_update);
-		break;
-	case Event::HEALTH_UPDATED:
-		updateHealthBar(int_update, displayedMaxHealth);
-		break;
-	case Event::MAX_HEALTH_UPDATED:
-		updateHealthBar(displayedHealth, int_update);
-		break;
-	}
+void HUD::onExperienceUpdated(const EventInfo& info)
+{
+	const int value = std::get<IntegerEventInfo>(info).value;
+	updateExperienceBar(value, displayedMaxExperience);
+}
+
+void HUD::onMaxExperienceUpdated(const EventInfo& info)
+{
+	const int value = std::get<IntegerEventInfo>(info).value;
+	updateExperienceBar(displayedExperience, value);
+}
+
+void HUD::onLevelUpdated(const EventInfo& info)
+{
+	const int value = std::get<IntegerEventInfo>(info).value;
+	updateLevel(value);
+}
+
+void HUD::onHealthUpdated(const EventInfo& info)
+{
+	const int value = std::get<IntegerEventInfo>(info).value;
+	updateHealthBar(value, displayedMaxHealth);
+}
+
+void HUD::onMaxHealthUpdated(const EventInfo& info)
+{
+	const int value = std::get<IntegerEventInfo>(info).value;
+	updateHealthBar(displayedHealth, value);
 }

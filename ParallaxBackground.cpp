@@ -12,19 +12,19 @@ ParallaxBackground::ParallaxBackground() : maxOffset1(50), maxOffset2(100), maxO
 	const int size2 = (float(WORLD_SIZE) + maxOffset2) / scale.x;
 	const int size3 = (float(WORLD_SIZE) + maxOffset3) / scale.x;
 
-	background0.setTexture(Locator::getGraphicService().getTexture(GraphicService::Background_0));
+	background0.setTexture(Locator::get<GraphicService>()->getTexture(GraphicService::Background_0));
 	background0.setTextureRect(sf::IntRect(0, 0, size0, size0));
 	background0.setScale(scale);
 
-	background1.setTexture(Locator::getGraphicService().getTexture(GraphicService::Background_1));
+	background1.setTexture(Locator::get<GraphicService>()->getTexture(GraphicService::Background_1));
 	background1.setTextureRect(sf::IntRect(0, 0, size1, size1));
 	background1.setScale(scale);
 	
-	background2.setTexture(Locator::getGraphicService().getTexture(GraphicService::Background_2));
+	background2.setTexture(Locator::get<GraphicService>()->getTexture(GraphicService::Background_2));
 	background2.setTextureRect(sf::IntRect(0, 0, size2, size2));
 	background2.setScale(scale);
 	
-	background3.setTexture(Locator::getGraphicService().getTexture(GraphicService::Background_3));
+	background3.setTexture(Locator::get<GraphicService>()->getTexture(GraphicService::Background_3));
 	background3.setTextureRect(sf::IntRect(0, 0, size3, size3));
 	background3.setScale(scale);
 }

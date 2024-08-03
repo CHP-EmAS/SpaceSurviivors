@@ -1,21 +1,22 @@
 #pragma once
 
-#include "Observer.h"
 #include "Player.h"
 #include "ObjectPool.h"
+#include "EventDispatcher.h"
 
-class EnemySpawnController : public Observer
+class EnemySpawnController
 {
 public:
 	EnemySpawnController();
-	void checkSpawnConditions(sf::Time deltaTime, GameState& state, Player& player);
+	~EnemySpawnController();
+
+	void checkSpawnConditions(sf::Time deltaTime, Player& player);
 
 	void explodeAllEnemys();
 
 	void reset();
 
 private:
-
 	int enemyAmountTargetValue;
 	int currentEnemySpawned;
 
@@ -24,6 +25,12 @@ private:
 
 	float updateTimer;
 
-	void onEvent(const Event event) override;
+	void onObjectSpawned(const EventInfo& event);
+	void onObjectDespawned(const EventInfo& event);
+	void onGameOver(const EventInfo& event);
+
+	EventHandlerID objSpawned;
+	EventHandlerID objDespawned;
+	EventHandlerID gameOver;
 };
 

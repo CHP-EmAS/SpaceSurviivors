@@ -55,14 +55,32 @@
     <Filter Include="src\Components\Collider">
       <UniqueIdentifier>{53fc03a9-f1d0-40a4-bd9f-cb99106c6898}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Generic">
-      <UniqueIdentifier>{c34a4ea9-fbf6-4cd2-a514-80b02520c882}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Game\Layer">
       <UniqueIdentifier>{e468bb87-56ac-49a2-b1f2-189874f6f657}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\Game\Layer">
       <UniqueIdentifier>{9c4c36ab-ead1-4520-8489-c0d1b59c09ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameObjects\Asteroid">
+      <UniqueIdentifier>{bb5a967e-fce5-46d9-9850-2f5b1d60e6ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Components\Controller">
+      <UniqueIdentifier>{81b647d3-34f2-4ffe-97e6-874815bbe7f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameObjects\Bullet">
+      <UniqueIdentifier>{ad7b74b9-0fb6-46de-9f14-819a01f20e50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameObjects\Experience">
+      <UniqueIdentifier>{c67b20b6-7316-4f42-9509-efe3bb8ac8b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameObjects\Explosion">
+      <UniqueIdentifier>{b6f27b6f-8b10-448b-b75d-838442a73c66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameObjects\Player">
+      <UniqueIdentifier>{b4ca930f-733f-4df5-a589-f6b7f8fb30fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Generic">
+      <UniqueIdentifier>{18a3c5d7-15bf-4b1f-88c3-22fa1db5ba4a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -129,18 +147,6 @@
     <ClCompile Include="HighscoreService.h">
       <Filter>include\Services</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>src\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Asteroid.cpp">
-      <Filter>src\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>src\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Explosion.cpp">
-      <Filter>src\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>src\GameObjects</Filter>
     </ClCompile>
@@ -168,29 +174,56 @@
     <ClCompile Include="GraphicLoader.cpp">
       <Filter>src\Services</Filter>
     </ClCompile>
-    <ClCompile Include="Locator.cpp">
-      <Filter>src\Generic</Filter>
-    </ClCompile>
     <ClCompile Include="EnemySpawnController.cpp">
       <Filter>src\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Observable.cpp">
-      <Filter>src\Generic</Filter>
-    </ClCompile>
-    <ClCompile Include="PartitionedLayer.cpp">
+    <ClCompile Include="CollisionGrid.cpp">
       <Filter>src\Game\Layer</Filter>
     </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>src\Game</Filter>
     </ClCompile>
-    <ClCompile Include="EffectLayer.cpp">
-      <Filter>src\Game\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="Experience.cpp">
-      <Filter>src\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjectFactory.cpp">
       <Filter>src\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GridComponent.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Asteroid.cpp">
+      <Filter>src\GameObjects\Asteroid</Filter>
+    </ClCompile>
+    <ClCompile Include="AsteroidController.cpp">
+      <Filter>src\GameObjects\Asteroid</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>src\GameObjects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletController.cpp">
+      <Filter>src\GameObjects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Experience.cpp">
+      <Filter>src\GameObjects\Experience</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>src\GameObjects\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>src\GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ExperienceController.cpp">
+      <Filter>src\GameObjects\Experience</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosionController.cpp">
+      <Filter>src\GameObjects\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>src\GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Locator.cpp">
+      <Filter>src\Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="EventDispatcher.cpp">
+      <Filter>src\Generic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -335,12 +368,6 @@
     <ClInclude Include="ObjectPool.h">
       <Filter>include\Generic</Filter>
     </ClInclude>
-    <ClInclude Include="Observable.h">
-      <Filter>include\Generic</Filter>
-    </ClInclude>
-    <ClInclude Include="Observer.h">
-      <Filter>include\Generic</Filter>
-    </ClInclude>
     <ClInclude Include="ParallaxBackground.h">
       <Filter>include\Game</Filter>
     </ClInclude>
@@ -359,16 +386,10 @@
     <ClInclude Include="EmbeddedGraphicLoader.h">
       <Filter>include\Services</Filter>
     </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>include\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="EffectLayer.h">
-      <Filter>include\Game\Layer</Filter>
-    </ClInclude>
     <ClInclude Include="EnemySpawnController.h">
       <Filter>include\Game</Filter>
     </ClInclude>
-    <ClInclude Include="PartitionedLayer.h">
+    <ClInclude Include="CollisionGrid.h">
       <Filter>include\Game\Layer</Filter>
     </ClInclude>
     <ClInclude Include="Experience.h">
@@ -376,6 +397,30 @@
     </ClInclude>
     <ClInclude Include="GameObjectFactory.h">
       <Filter>include\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GridComponent.h">
+      <Filter>include\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AsteroidController.h">
+      <Filter>include\Components\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletController.h">
+      <Filter>include\Components\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="ExperienceController.h">
+      <Filter>include\Components\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionController.h">
+      <Filter>include\Components\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>include\Components\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>include\Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="EventDispatcher.h">
+      <Filter>include\Generic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

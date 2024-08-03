@@ -17,7 +17,7 @@ public:
 	void doSecureClose(Scene::SceneNames scene);
 
 	void drawActivScene();
-	void updateActivScene(sf::Time deltaTime);
+	void updateActivScene(const sf::Time& deltaTime);
 	void checkWindowEvents();
 
 	void setWindowMode(bool border, bool fullscreen);
@@ -31,11 +31,11 @@ public:
 
 	Scene* getLastScene();
 	Scene* getActivScene();
-	Scene* getScene(Scene::SceneNames sceneType);
+	Scene* getScene(Scene::SceneNames sceneType) const;
 
-	bool debugShowHitboxes();
-	bool debugShowVelocity();
-	bool debugShowSpatialGrid();
+	bool debugShowHitboxes() const;
+	bool debugShowVelocity() const;
+	bool debugShowSpatialGrid() const;
 
 	~SceneManager(void);
 private:

@@ -14,16 +14,16 @@ RigidBody::RigidBody(std::shared_ptr<GameObject> parent) : Component(parent)
     friction = 0;
     boundingBox = sf::FloatRect(0, 0, 0, 0);
 
-	velocityLine[0].position = sf::Vector2f(0, 0);
-    velocityLine[0].color = sf::Color::Red;
-	velocityLine[1].position = sf::Vector2f(0, 0);
+	debugVelocityLine[0].position = sf::Vector2f(0, 0);
+    debugVelocityLine[0].color = sf::Color::Red;
+	debugVelocityLine[1].position = sf::Vector2f(0, 0);
 }
 
 RigidBody::~RigidBody() {}
 
-void RigidBody::simulate(sf::Time deltaTime)
+void RigidBody::onSimulate(const sf::Time& deltaTime)
 {
-    if (auto parent = parent_.lock()) {
+    if (auto parent = _parent.lock()) {
         if (velocity != sf::Vector2f(0, 0)) {
             if (maxSpeed > 0) {
                 if (std::sqrt(vectorSquareLength(velocity)) > maxSpeed)
@@ -52,14 +52,14 @@ void RigidBody::simulate(sf::Time deltaTime)
     }
 }
 
-void RigidBody::debugDraw(sf::RenderTarget& target, sf::RenderStates states)
+void RigidBody::onDebugDraw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if (Locator::getSceneManager().debugShowVelocity()) {
-        if (auto parent = parent_.lock()) {
-            velocityLine[0].position = parent->getPosition();
-            velocityLine[1].position = velocityLine[0].position + velocity;
+    if (Locator::get<SceneManager>()->debugShowVelocity()) {
+        if (auto parent = _parent.lock()) {
+            debugVelocityLine[0].position = parent->getPosition();
+            debugVelocityLine[1].position = debugVelocityLine[0].position + velocity;
 
-            target.draw(velocityLine, 2, sf::Lines);
+            target.draw(debugVelocityLine, 2, sf::Lines);
         }
     }
 }
@@ -106,7 +106,7 @@ float RigidBody::getMaxSpeed() const
 
 void RigidBody::clipToBoundingBox()
 {
-    if (auto parent = parent_.lock()) {
+    if (auto parent = _parent.lock()) {
         sf::Vector2f movePosition = parent->getPosition() + velocity;
 
         movePosition.x = std::clamp(movePosition.x, boundingBox.left, boundingBox.width);

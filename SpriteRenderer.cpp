@@ -5,7 +5,7 @@ SpriteRenderer::SpriteRenderer(std::shared_ptr<GameObject> parent) : Component(p
 
 SpriteRenderer::~SpriteRenderer() {}
 
-void SpriteRenderer::draw(sf::RenderTarget& target, sf::RenderStates states)
+void SpriteRenderer::onDraw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(sprite, states);
 }

@@ -1,4 +1,17 @@
 #include "GameObjectFactory.h"
+#include "EventDispatcher.h"
+
+
+GameObjectFactory::GameObjectFactory()
+{
+	objDespawned = EventDispatcher::registerHandler(EventType::OBJECT_DESPAWNED,
+		std::bind(&GameObjectFactory::onGameObjectDespawned, this, std::placeholders::_1));
+}
+
+GameObjectFactory::~GameObjectFactory()
+{
+	EventDispatcher::unregisterHandler(EventType::OBJECT_DESPAWNED, objDespawned);
+}
 
 void GameObjectFactory::prepareObjects()
 {
@@ -18,28 +31,28 @@ void GameObjectFactory::clear()
 
 std::shared_ptr<Bullet> GameObjectFactory::acquireBullet(sf::Vector2f direction, int damage)
 {
-	std::shared_ptr<Bullet> newBullet = std::dynamic_pointer_cast<Bullet>(getPooledObject(O_Bullet));
+	std::shared_ptr<Bullet> newBullet = std::static_pointer_cast<Bullet>(getPooledObject(O_Bullet));
 	newBullet->reinitialize(direction, damage);
 	return newBullet;
 }
 
 std::shared_ptr<Asteroid> GameObjectFactory::acquireAsteroid(sf::Vector2f direction, float scale, float speed, float rotationSpeed)
 {
-	std::shared_ptr<Asteroid> newAsteroid = std::dynamic_pointer_cast<Asteroid>(getPooledObject(O_Asteroid));
+	std::shared_ptr<Asteroid> newAsteroid = std::static_pointer_cast<Asteroid>(getPooledObject(O_Asteroid));
 	newAsteroid->reinitialize(direction, scale, speed, rotationSpeed);
 	return newAsteroid;
 }
 
 std::shared_ptr<Explosion> GameObjectFactory::acquireExplosion(sf::Time duration, float scale, sf::Color tint)
 {
-	std::shared_ptr<Explosion> newExplosion = std::dynamic_pointer_cast<Explosion>(getPooledObject(O_Explosion));
+	std::shared_ptr<Explosion> newExplosion = std::static_pointer_cast<Explosion>(getPooledObject(O_Explosion));
 	newExplosion->reinitialize(duration, scale, tint);
 	return newExplosion;
 }
 
 std::shared_ptr<Experience> GameObjectFactory::acquireExperience(int amount)
 {
-	std::shared_ptr<Experience> newExperience = std::dynamic_pointer_cast<Experience>(getPooledObject(O_Experience));
+	std::shared_ptr<Experience> newExperience = std::static_pointer_cast<Experience>(getPooledObject(O_Experience));
 	newExperience->reinitialize(amount);
 	return newExperience;
 }
@@ -113,45 +126,39 @@ void GameObjectFactory::fillPool(ObjectType type, int initialAmount)
 
 		switch (type) {
 		case O_Asteroid:
-			asteroidPool.releaseObject(std::dynamic_pointer_cast<Asteroid>(newObject));
+			asteroidPool.releaseObject(std::static_pointer_cast<Asteroid>(newObject));
 			break;
 		case O_Bullet:
-			bulletPool.releaseObject(std::dynamic_pointer_cast<Bullet>(newObject));
+			bulletPool.releaseObject(std::static_pointer_cast<Bullet>(newObject));
 			break;
 		case O_Explosion:
-			explosionPool.releaseObject(std::dynamic_pointer_cast<Explosion>(newObject));
+			explosionPool.releaseObject(std::static_pointer_cast<Explosion>(newObject));
 			break;
 		case O_Experience:
-			experiencePool.releaseObject(std::dynamic_pointer_cast<Experience>(newObject));
+			experiencePool.releaseObject(std::static_pointer_cast<Experience>(newObject));
 			break;
 		}
 
 		initialAmount--;
 	}
-	
 }
 
-void GameObjectFactory::onEvent(const Event event)
+void GameObjectFactory::onGameObjectDespawned(const EventInfo& info)
 {
-	switch (event.type) {
-	case Event::GRID_OBJECT_DESPAWNED:
-	case Event::GRID_OBJECT_OUT_OF_BOUNDS:
-		GameObjectWrapper despawnedObject = std::get<GameObjectWrapper>(event.info);
-
-		switch (despawnedObject.ref->type) {
-		case O_Asteroid:
-			asteroidPool.releaseObject(std::dynamic_pointer_cast<Asteroid>(despawnedObject.ref));
-			break;
-		case O_Bullet:
-			bulletPool.releaseObject(std::dynamic_pointer_cast<Bullet>(despawnedObject.ref));
-			break;
-		case O_Explosion:
-			explosionPool.releaseObject(std::dynamic_pointer_cast<Explosion>(despawnedObject.ref));
-			break;
-		case O_Experience:
-			experiencePool.releaseObject(std::dynamic_pointer_cast<Experience>(despawnedObject.ref));
-			break;
-		}
+	GameObjectEventInfo despawnedObject = std::get<GameObjectEventInfo>(info);
+	
+	switch (despawnedObject.ref->type) {
+	case O_Asteroid:
+		asteroidPool.releaseObject(std::static_pointer_cast<Asteroid>(despawnedObject.ref));
+		break;
+	case O_Bullet:
+		bulletPool.releaseObject(std::static_pointer_cast<Bullet>(despawnedObject.ref));
+		break;
+	case O_Explosion:
+		explosionPool.releaseObject(std::static_pointer_cast<Explosion>(despawnedObject.ref));
+		break;
+	case O_Experience:
+		experiencePool.releaseObject(std::static_pointer_cast<Experience>(despawnedObject.ref));
 		break;
 	}
 }

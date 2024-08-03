@@ -1,5 +1,6 @@
 #pragma once
 
+#include <typeindex>
 #include <unordered_map>
 #include <memory>
 #include <SFML/Graphics.hpp>
@@ -18,11 +19,6 @@ enum ObjectType {
 	O_None
 };
 
-enum ObjectLayer {
-	L_Collision,
-	L_Effect
-};
-
 class GameObject : public std::enable_shared_from_this<GameObject>, public sf::Transformable, public sf::Drawable
 {
 public:
@@ -33,12 +29,13 @@ public:
 
 	virtual void initializeComponents() = 0;
 
-	virtual void update(sf::Time deltaTime, GameState& state) = 0;
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override = 0;
-	virtual void interact(const Event event);
+	virtual void update(const sf::Time& deltaTime);
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	virtual void interact(const Event& event);
 
-	void spaw(sf::Vector2f spawnPosition, ObjectLayer layer);
+	void spaw(sf::Vector2f spawnPosition);
 	void despawn();
+
 	bool isEnabled() const;
 
 	template<typename T>

@@ -2,9 +2,7 @@
 
 #include <SFML/System.hpp>
 
-#include "Observable.h"
-
-class GameState : public Observable
+class GameState
 {
 public:
 	bool isGameOver() const;
@@ -25,12 +23,12 @@ public:
 	float getExperienceMultiplier() const { return experienceMultiplier; }
 	int getLevel() const { return level; }
 	
-	float getPlayerAcceleration() { return playerAcceleration; }
+	float getPlayerAcceleration() const { return playerAcceleration; }
 	float getPlayerShotsPerSecond() const { return playerShotsPerSecond; }
 	float getPlayerInvinciblyInterval() const { return playerInvinciblyInterval; }
 	int getPlayerDamage() const { return playerDamage; }
 
-	void updateGameTime(sf::Time deltaTime);
+	void updateGameTime(const sf::Time& deltaTime);
 
 	void increaseScoreBy(int score);
 	void increaseScoreMultiplierBy(float multiplier);

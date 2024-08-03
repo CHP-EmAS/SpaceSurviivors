@@ -8,27 +8,49 @@ GameObject::GameObject(ObjectType type) : type(type)
 	setPosition(sf::Vector2f(0,0));
 }
 
-void GameObject::interact(const Event event)
+void GameObject::update(const sf::Time& deltaTime)
 {
-	std::cout << "Actor interacted with Action <" << event.type << "> to Base" << std::endl;
+	for (const auto& componentPair : components) {
+		componentPair.second->onUpdate(deltaTime);
+		componentPair.second->onSimulate(deltaTime);
+		componentPair.second->onPostUpdate();
+	}
 }
 
-void GameObject::spaw(sf::Vector2f spawnPosition, ObjectLayer layer)
+void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	states.transform *= getTransform();
+
+	for (const auto& componentPair : components) {
+		componentPair.second->onDraw(target, states);
+		componentPair.second->onDebugDraw(target, states);
+	}
+}
+
+void GameObject::interact(const Event& event)
+{
+	for (const auto& componentPair : components) {
+		componentPair.second->onEvent(event);
+	}
+}
+
+void GameObject::spaw(sf::Vector2f spawnPosition)
 {
 	setPosition(spawnPosition);
 
-	switch (layer) {
-	case L_Collision:
-		Locator::getGameWorld().getCollisionLayer().add(shared_from_this());
-		break;
-	case L_Effect:
-		Locator::getGameWorld().getEffectLayer().add(shared_from_this());
-		break;
+	for (const auto& componentPair : components) {
+		componentPair.second->onSpawn();
 	}
+
+	enabled = true;
 }
 
 void GameObject::despawn()
 {
+	for (const auto& componentPair : components) {
+		componentPair.second->onDespawn();
+	}
+
 	enabled = false;
 }
 

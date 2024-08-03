@@ -5,52 +5,51 @@
 
 class GameObject;
 
-struct GameObjectWrapper {
-	std::shared_ptr<GameObject> ref;
+enum class EventType {
+	PLAYER_COLLISION,
+	ASTEROID_COLLISION,
+	BULLET_COLLISION,
+
+	OBJECT_SPAWNED,
+	OBJECT_DESPAWNED,
+
+	SCORE_UPDATED,
+	EXPERIENCE_UPDATED,
+	MAX_EXPERIENCE_UPDATED,
+	LEVEL_UPDATED,
+	HEALTH_UPDATED,
+	MAX_HEALTH_UPDATED,
+
+	GAME_OVER
 };
 
-struct IntUpdate {
+struct GameObjectEventInfo {
+	std::shared_ptr<GameObject>& ref;
+};
+
+struct IntegerEventInfo {
 	const int value;
 };
 
-struct FloatUpdate {
+struct FloatEventInfo {
 	const float value;
 };
 
-class Event {
-public:
-	enum Type {
-		PlayerCollision,
-		AsteroidCollision,
-		BulletCollision,
+using EventInfo = std::variant<
+	IntegerEventInfo,
+	FloatEventInfo,
+	GameObjectEventInfo
+>;
 
-		GRID_OBJECT_SPAWNED,
-		GRID_OBJECT_DESPAWNED,
-		GRID_OBJECT_OUT_OF_BOUNDS,
+struct Event {
+	EventType type;
+	EventInfo info;
 
-		SCORE_UPDATED,
-		EXPERIENCE_UPDATED,
-		MAX_EXPERIENCE_UPDATED,
-		LEVEL_UPDATED,
-		HEALTH_UPDATED,
-		MAX_HEALTH_UPDATED,
-
-		GAME_OVER
-	};
-
-
-	Event(Type eventType) : type(eventType), info(IntUpdate(0)) {}
-	Event(Type eventType, int value) : type(eventType), info(IntUpdate(value)) {}
-	Event(Type eventType, float value) : type(eventType), info(FloatUpdate(value)) {}
-	Event(Type eventType, std::shared_ptr<GameObject> value) : type(eventType), info(GameObjectWrapper{ value }) {}
-
-	const Type type;
-
-	const std::variant<
-		IntUpdate,
-		FloatUpdate,
-		GameObjectWrapper
-	> info;
+	Event(EventType type, EventInfo info)					: type(type), info(info) {}
+	Event(EventType type)									: type(type), info(IntegerEventInfo(0)) {}
+	Event(EventType type, int value)						: type(type), info(IntegerEventInfo(value)) {}
+	Event(EventType type, float value)						: type(type), info(FloatEventInfo(value)) {}
+	Event(EventType type, std::shared_ptr<GameObject>& ref)	: type(type), info(GameObjectEventInfo(ref)) {}
 };
 
 

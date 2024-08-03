@@ -5,11 +5,11 @@
 Frame::Frame()
 {
 	for (int i = 0; i < 4; i++) {
-		corners[i].setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_Frame));
-		edges[i].setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_Frame));
+		corners[i].setTexture(Locator::get<GraphicService>()->getTexture(GraphicService::UI_Frame));
+		edges[i].setTexture(Locator::get<GraphicService>()->getTexture(GraphicService::UI_Frame));
 	}
 
-	base.setTexture(Locator::getGraphicService().getTexture(GraphicService::UI_Frame));
+	base.setTexture(Locator::get<GraphicService>()->getTexture(GraphicService::UI_Frame));
 	base.setTextureRect(sf::IntRect(6, 6, 1, 1));
 
 	corners[0].setTextureRect(sf::IntRect(0, 0, 6, 6));

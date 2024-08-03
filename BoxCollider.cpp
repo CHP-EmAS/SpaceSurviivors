@@ -1,3 +1,6 @@
+#include <algorithm>
+#include <array>
+
 #include "BoxCollider.h"
 #include "CircleCollider.h"
 
@@ -11,9 +14,9 @@ BoxCollider::BoxCollider() :
 BoxCollider::BoxCollider(std::shared_ptr<GameObject> parent, float width, float height) :
     BoxCollider(parent, sf::Vector2f(width, height)){}
 
-BoxCollider::BoxCollider(std::shared_ptr<GameObject> parent, sf::Vector2f size) : Component(parent)
+BoxCollider::BoxCollider(std::shared_ptr<GameObject> parent, sf::Vector2f size) : Collider(parent)
 {
-    drawBox.setFillColor(sf::Color(255, 255, 0, 130));
+    debugHitbox.setFillColor(sf::Color(255, 255, 0, 130));
     setSize(size);
 }
 
@@ -29,42 +32,24 @@ void BoxCollider::setSize(sf::Vector2f size)
     hitbox.width = size.x;
     hitbox.height = size.y;
 
-    drawBox.setPosition(hitbox.getPosition());
-    drawBox.setSize(hitbox.getSize());
+    debugHitbox.setPosition(hitbox.getPosition());
+    debugHitbox.setSize(hitbox.getSize());
 }
 
-void BoxCollider::debugDraw(sf::RenderTarget& target, sf::RenderStates states) const
+std::array<sf::Vector2f, 4> BoxCollider::getTransformedVertices() const
 {
-    if (Locator::getSceneManager().debugShowHitboxes()) {
-        states.transform *= getTransform();
-        target.draw(drawBox, states);
-    }
-}
-
-void BoxCollider::getTransformedVertices(sf::Vector2f vertices[4]) const
-{
-    sf::Transform transform;
-
-    if (auto parent = parent_.lock()) {
-        transform *= parent->getTransform();
+    if (dirty) {
+        calculateParameters();
     }
 
-    transform *= getTransform();
-
-    float halfWidth = hitbox.width / 2.f;
-    float halfHeight = hitbox.height / 2.f;
-
-    vertices[0] = transform.transformPoint(sf::Vector2f(-halfWidth, -halfHeight));
-    vertices[1] = transform.transformPoint(sf::Vector2f(halfWidth, -halfHeight));
-    vertices[2] = transform.transformPoint(sf::Vector2f(halfWidth, halfHeight));
-    vertices[3] = transform.transformPoint(sf::Vector2f(-halfWidth, halfHeight));
+    return vertices;
 }
 
 bool BoxCollider::isCollidingWith(const sf::Vector2f& point) const
 {
     sf::Transform inverse = getInverseTransform();
 
-    if (auto parent = parent_.lock()) {
+    if (auto parent = _parent.lock()) {
         inverse *= parent->getInverseTransform();
     }
 
@@ -82,11 +67,8 @@ bool BoxCollider::isCollidingWith(const BoxCollider& box) const
         return false;
     }
 
-    sf::Vector2f thisPoints[4];
-    sf::Vector2f otherPoints[4];
-
-    getTransformedVertices(thisPoints);
-    box.getTransformedVertices(otherPoints);
+    std::array<sf::Vector2f, 4> thisPoints = getTransformedVertices();
+    std::array<sf::Vector2f, 4> otherPoints = box.getTransformedVertices();
 
     sf::Vector2f axes[4] = {
         normalize(thisPoints[1] - thisPoints[0]),
@@ -126,7 +108,7 @@ bool BoxCollider::isCollidingWith(const CircleCollider& circle) const
 {
     sf::Transform inverse = getInverseTransform();
 
-    if (auto parent = parent_.lock()) {
+    if (auto parent = _parent.lock()) {
         inverse *= parent->getInverseTransform();
     }
 
@@ -153,4 +135,54 @@ bool BoxCollider::isCollidingWith(const CircleCollider& circle) const
 
     const sf::Vector2f delta(dist - hitbox.getSize() / 2.f);
     return vectorSquareLength(delta) <= circleRadius * circleRadius;
+}
+
+void BoxCollider::calculateParameters() const
+{
+    sf::Transform transform;
+
+    if (auto parent = _parent.lock()) {
+        transform *= parent->getTransform();
+    }
+
+    transform *= getTransform();
+
+    float halfWidth = hitbox.width / 2.f;
+    float halfHeight = hitbox.height / 2.f;
+
+    //Vertices
+    vertices[0] = transform.transformPoint(sf::Vector2f(-halfWidth, -halfHeight));
+    vertices[1] = transform.transformPoint(sf::Vector2f(halfWidth, -halfHeight));
+    vertices[2] = transform.transformPoint(sf::Vector2f(halfWidth, halfHeight));
+    vertices[3] = transform.transformPoint(sf::Vector2f(-halfWidth, halfHeight));
+
+    //AABB
+    auto [minX, maxX] = std::minmax_element(vertices.begin(), vertices.end(), [](const sf::Vector2f& a, const sf::Vector2f& b) {
+        return a.x < b.x;
+        });
+
+    auto [minY, maxY] = std::minmax_element(vertices.begin(), vertices.end(), [](const sf::Vector2f& a, const sf::Vector2f& b) {
+        return a.y < b.y;
+        });
+
+    sf::Vector2f min(minX->x, minY->y);
+    sf::Vector2f max(maxX->x, maxY->y);
+
+    aabb = sf::FloatRect(min, max - min);
+
+    //flag
+    dirty = false;
+}
+
+void BoxCollider::onDebugDraw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    if (Locator::get<SceneManager>()->debugShowHitboxes()) {
+        states.transform *= getTransform();
+        target.draw(debugHitbox, states);
+
+        debugBoundingBox.setPosition(aabb.getPosition());
+        debugBoundingBox.setSize(aabb.getSize());
+
+        target.draw(debugBoundingBox);
+    }
 }

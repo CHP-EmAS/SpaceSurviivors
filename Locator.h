@@ -1,40 +1,40 @@
 #pragma once
 
+#include <unordered_map>
+#include <memory>
+#include <typeindex>
+
 #include "SceneManager.h"
 #include "GraphicService.h"
 #include "SoundManager.h"
 #include "HighscoreService.h"
 
 #include "World.h"
+#include "GameObjectFactory.h"
+#include "CollisionGrid.h"
+#include "EventDispatcher.h"
 
 class Locator
 {
 public:
-	static void provide(SceneManager* scene);
-	static void provide(GraphicService* graphic);
-	static void provide(SoundManager* sound);
-	static void provide(HighscoreService* highscore);
+	template<typename T>
+	static void provideGlobal(std::shared_ptr<T>& obj) {
+		instances[std::type_index(typeid(T))] = obj;
+	}
+	
+	template<typename T>
+	static std::shared_ptr<T> get() {
+		auto it = instances.find(std::type_index(typeid(T)));
+		if (it != instances.end()) {
+			if (auto ptr = it->second.lock()) {
+				return std::static_pointer_cast<T>(ptr);
+			}
+		}
 
-	static void provide(World* gameWorld);
-	static void provide(GameState* gameState);
-
-	static SceneManager& getSceneManager();
-	static GraphicService& getGraphicService();
-	static SoundManager& getSoundManager();
-	static HighscoreService& getHighscoreService();
-
-	static World& getGameWorld();
-	static GameState& getGameState();
+		throw std::runtime_error("LOCATOR ERROR: Object of the requested type is not available.");
+	}
 
 private:
-	static SceneManager* sceneManager_;
-	static GraphicService* graphicService_;
-	static SoundManager* soundManager_;
-	static HighscoreService* highscoreService_;
 
-	static World* gameWorld_;
-	static GameState* gameState_;
+	static std::unordered_map<std::type_index, std::weak_ptr<void>> instances;
 };
-
-
-

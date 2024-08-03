@@ -3,7 +3,7 @@
 
 TextInput::TextInput()
 {
-	text = sf::Text("", Locator::getGraphicService().getFont(GraphicService::Pixel), 23);
+	text = sf::Text("", Locator::get<GraphicService>()->getFont(GraphicService::Pixel), 23);
 	setSize(sf::Vector2f(300,45));
 }
 

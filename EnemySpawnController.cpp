@@ -1,8 +1,10 @@
 #include "EnemySpawnController.h"
 #include "Defines.h"
 #include "Asteroid.h"
+#include "AsteroidController.h"
 #include "Locator.h"
 #include "Event.h"
+
 
 EnemySpawnController::EnemySpawnController()
 {
@@ -11,21 +13,32 @@ EnemySpawnController::EnemySpawnController()
 	spawnIntervall = 0.6;
 	spawnTimer = 0;
 	updateTimer = 0;
+
+	objSpawned = EventDispatcher::registerHandler(EventType::OBJECT_SPAWNED,
+		std::bind(&EnemySpawnController::onObjectSpawned, this, std::placeholders::_1));
+	
+	objDespawned = EventDispatcher::registerHandler(EventType::OBJECT_DESPAWNED,
+		std::bind(&EnemySpawnController::onObjectDespawned, this, std::placeholders::_1));
+	
+	gameOver = EventDispatcher::registerHandler(EventType::GAME_OVER,
+		std::bind(&EnemySpawnController::onGameOver, this, std::placeholders::_1));
+}
+
+EnemySpawnController::~EnemySpawnController()
+{
+	EventDispatcher::unregisterHandler(EventType::OBJECT_SPAWNED, objSpawned);
+	EventDispatcher::unregisterHandler(EventType::OBJECT_DESPAWNED, objDespawned);
+	EventDispatcher::unregisterHandler(EventType::GAME_OVER, gameOver);
 }
 
 void EnemySpawnController::explodeAllEnemys()
 {
-	std::list<std::shared_ptr<GameObject>> objects = Locator::getGameWorld().getCollisionLayer().getAllObjects();
+	std::vector<std::shared_ptr<GameObject>> objects = Locator::get<World>()->getAllObjects();
 	
-	while (objects.size() > 0) {
-		auto& object = objects.back();
-
+	for (auto& object : objects) {
 		if (object->type == O_Asteroid) {
-			Asteroid* asteroid = dynamic_cast<Asteroid*>(object.get());
-			asteroid->explode();
+			object->getComponent<AsteroidController>()->explode();
 		}
-
-		objects.pop_back();
 	}
 }
 
@@ -38,11 +51,9 @@ void EnemySpawnController::reset()
 
 	spawnTimer = 0;
 	updateTimer = 0;
-
-	Locator::getGameWorld().getCollisionLayer().clear();
 }
 
-void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& state, Player& player)
+void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, Player& player)
 {
 	spawnTimer += deltaTime.asSeconds();
 	updateTimer += deltaTime.asSeconds();
@@ -54,20 +65,20 @@ void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& s
 
 		switch (dir) {
 		case 0: //LEFT
-			spawnX = -PartitionedLayer::CELL_SIZE + 1;
+			spawnX = -CollisionGrid::CELL_SIZE + 1;
 			spawnY = rand() % WORLD_SIZE;
 			break;
 		case 1: //RIGHT
-			spawnX = WORLD_SIZE + PartitionedLayer::CELL_SIZE - 1;
+			spawnX = WORLD_SIZE + CollisionGrid::CELL_SIZE - 1;
 			spawnY = rand() % WORLD_SIZE;
 			break;
 		case 2: //TOP
 			spawnX = rand() % WORLD_SIZE;
-			spawnY = -PartitionedLayer::CELL_SIZE + 1;
+			spawnY = -CollisionGrid::CELL_SIZE + 1;
 			break;
 		case 3: //BOTTOM
 			spawnX = rand() % WORLD_SIZE;
-			spawnY = WORLD_SIZE + PartitionedLayer::CELL_SIZE - 1;
+			spawnY = WORLD_SIZE + CollisionGrid::CELL_SIZE - 1;
 			break;
 		}
 
@@ -77,16 +88,16 @@ void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& s
 		float asteroidSpeed = rand() % 300 + 100;
 		float asteroidRotationSpeed = rand() % 360;
 
-		std::shared_ptr<Asteroid> newAsteroid = Locator::getGameWorld().getGameObjectFactory()
-			.acquireAsteroid(asteroidDirection, asteroidScale, asteroidSpeed, asteroidRotationSpeed);
+		std::shared_ptr<Asteroid> newAsteroid = Locator::get<GameObjectFactory>()
+			->acquireAsteroid(asteroidDirection, asteroidScale, asteroidSpeed, asteroidRotationSpeed);
 
-		newAsteroid->spaw(asteroidSpawnPoint, L_Collision);
+		Locator::get<World>()->spawnObject(newAsteroid, asteroidSpawnPoint);
 
 		spawnTimer = 0;
 	}
 
 	if (updateTimer > 5.f) {
-		float gameSeconds = state.getGameTime().asSeconds();
+		float gameSeconds = Locator::get<GameState>()->getGameTime().asSeconds();
 		float difficutlyRatio = std::min(gameSeconds / 600.f, 1.f);
 
 		enemyAmountTargetValue = std::max(1, int(100.f * difficutlyRatio));
@@ -96,30 +107,25 @@ void EnemySpawnController::checkSpawnConditions(sf::Time deltaTime, GameState& s
 	}
 }
 
-void EnemySpawnController::onEvent(const Event event)
+void EnemySpawnController::onObjectSpawned(const EventInfo& event)
 {
-	switch (event.type) {
-	case Event::GRID_OBJECT_SPAWNED:
-	{
-		GameObjectWrapper objectWrapper = std::get<GameObjectWrapper>(event.info);
+	GameObjectEventInfo objectInfo = std::get<GameObjectEventInfo>(event);
 
-		if (objectWrapper.ref->type == O_Asteroid) {
-			currentEnemySpawned++;
-		}
-		break;
+	if (objectInfo.ref->type == O_Asteroid) {
+		currentEnemySpawned++;
 	}
-	case Event::GRID_OBJECT_DESPAWNED:
-	case Event::GRID_OBJECT_OUT_OF_BOUNDS:
-	{
-		GameObjectWrapper objectWrapper = std::get<GameObjectWrapper>(event.info);
+}
 
-		if (objectWrapper.ref->type == O_Asteroid) {
-			currentEnemySpawned--;
-		}
-		break;
+void EnemySpawnController::onObjectDespawned(const EventInfo& event)
+{
+	GameObjectEventInfo objectInfo = std::get<GameObjectEventInfo>(event);
+
+	if (objectInfo.ref->type == O_Asteroid) {
+		currentEnemySpawned--;
 	}
-	case Event::GAME_OVER:
-		explodeAllEnemys();
-		break;
-	}
+}
+
+void EnemySpawnController::onGameOver(const EventInfo& event)
+{
+	explodeAllEnemys();
 }

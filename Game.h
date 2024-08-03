@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 
+#include "EventDispatcher.h"
 #include "GameState.h"
 #include "World.h"
 #include "HUD.h"
@@ -14,7 +15,7 @@ class GameScene : public Scene
 public:
 	GameScene(void);
 
-	void updateScene(sf::Time deltaTime);
+	void updateScene(const sf::Time& deltaTime);
 	void drawScene(sf::RenderWindow& mainWindow);
 
 	void checkEvents(sf::Event newEvent);
@@ -23,21 +24,18 @@ public:
 	void restartScene();
 	void closeScene();
 
-	GameState& getState();
-
 	~GameScene(void);
+
 private:
-
-	//State
-	GameState state;
-
 	//World
-	World world;
+	std::shared_ptr<World> gameWorld;
+	std::shared_ptr<GameState>	gameState;
+	std::shared_ptr<CollisionGrid> collisionGrid;
+	std::shared_ptr<GameObjectFactory> gameObjectFactory;
 
 	//HUD
 	HUD hud;
 
-	sf::Shader fragtest;
-	sf::Texture normal;
+	float gameOverTimer;
 };
 

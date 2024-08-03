@@ -20,7 +20,7 @@ public:
 
 	Scene(SceneNames scene);
 
-	virtual void updateScene(sf::Time deltaTime) = 0;
+	virtual void updateScene(const sf::Time& deltaTime) = 0;
 	virtual void drawScene(sf::RenderWindow& mainWindow) = 0;
 
 	virtual void checkEvents(sf::Event newEvent) = 0;
@@ -33,9 +33,9 @@ public:
 	Scene* getLastScene();
 
 	void setLoaded(bool load);
-	bool isSceneLoaded();
+	bool isSceneLoaded() const;
 
-	Scene::SceneNames getSceneName();
+	Scene::SceneNames getSceneName() const;
 
 	virtual ~Scene(void);
 protected:

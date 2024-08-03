@@ -9,23 +9,42 @@
 
 GameScene::GameScene(void) : Scene(Scene::Game)
 {
-	Locator::provide(&world);
-	Locator::provide(&state);
+	gameOverTimer = 0;
+
+	gameWorld = std::make_shared<World>();
+	gameState = std::make_shared<GameState>();
+	collisionGrid = std::make_shared<CollisionGrid>();
+	gameObjectFactory = std::make_shared<GameObjectFactory>();
+
+	Locator::provideGlobal(gameWorld);
+	Locator::provideGlobal(gameState);
+	Locator::provideGlobal(collisionGrid);
+	Locator::provideGlobal(gameObjectFactory);
 }
 
-void GameScene::updateScene(sf::Time deltaTime)
+void GameScene::updateScene(const sf::Time& deltaTime)
 {
-	state.updateGameTime(deltaTime);
-	world.update(deltaTime, state);
+	gameState->updateGameTime(deltaTime);
+	gameWorld->update(deltaTime);
+
+	if (gameState->isGameOver()) {
+		gameOverTimer += deltaTime.asSeconds();
+
+		if (gameOverTimer >= 4.f) {
+			Scene* scene = Locator::get<SceneManager>()->getScene(Scene::GameOver);
+			dynamic_cast<GameOverScene*>(scene)->setScore(gameState->getScore());
+			Locator::get<SceneManager>()->changeScene(Scene::GameOver);
+		}
+	}
 }
 
 void GameScene::drawScene(sf::RenderWindow& mainWindow)
 {
-	mainWindow.draw(world);
+	mainWindow.draw(*gameWorld.get());
 	mainWindow.draw(hud);
 
 #ifdef _DEBUG
-	world.getCollisionLayer().debugDraw(mainWindow);
+	collisionGrid->debugDraw(mainWindow);
 #endif
 
 }
@@ -36,25 +55,27 @@ void GameScene::checkEvents(sf::Event newEvent)
 	{
 	case sf::Event::KeyPressed:
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-			Locator::getSceneManager().changeScene(Scene::Pause, false);
+			Locator::get<SceneManager>()->changeScene(Scene::Pause, false);
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
-			state.updateGameTime(sf::seconds(10));
+			gameState->updateGameTime(sf::seconds(10));
 		}
 		break;
 	case sf::Event::LostFocus:
-		Locator::getSceneManager().changeScene(Scene::Pause, false);
+		Locator::get<SceneManager>()->changeScene(Scene::Pause, false);
 		break;
 	}
 }
 
 void GameScene::loadScene()
 {
-	state.addObserver(hud);
+	gameOverTimer = 0;
+	gameState->setStartValues();
+	gameObjectFactory->prepareObjects();
 
-	world.initialize(state);
-
+	gameWorld->initialize();
+	
 	setLoaded(true);
 }
 
@@ -66,16 +87,11 @@ void GameScene::restartScene()
 
 void GameScene::closeScene()
 {
-	world.reset(state);
-
-	state.removeObserver(hud);
-
+	gameWorld->reset();
+	gameObjectFactory->clear();
+	collisionGrid->clear();
+	
 	setLoaded(false);
-}
-
-GameState& GameScene::getState()
-{
-	return state;
 }
 
 GameScene::~GameScene(void)

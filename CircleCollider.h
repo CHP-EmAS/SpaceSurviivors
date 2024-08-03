@@ -1,20 +1,16 @@
 #pragma once
 
 #include "Collider.h"
-#include "Component.h"
-
 #include "GameObject.h"
 
-class CircleCollider : public Collider, public Component, public sf::Transformable
+class CircleCollider : public Collider
 {
 public:
 	CircleCollider();
-	CircleCollider(std::shared_ptr<GameObject>, float radius);
+	CircleCollider(std::shared_ptr<GameObject> parent, float radius);
 
 	void setRadius(float radius);
 	
-	void debugDraw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
 	float getTransformedRadius() const;
 	sf::Vector2f getTransformedCenter() const;
 
@@ -23,9 +19,16 @@ public:
 	bool isCollidingWith(const BoxCollider& box) const override;
 	bool isCollidingWith(const CircleCollider& circle) const override;
 
+	void onDebugDraw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
 private:
 	float radius;
-	sf::CircleShape drawCircle;
 
+	mutable float transformedRadius;
+	mutable sf::Vector2f transformedCenter;
+
+	sf::CircleShape debugCircle;
+
+	void calculateParameters() const override;
 };
 

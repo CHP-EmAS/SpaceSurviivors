@@ -5,85 +5,44 @@
 #include "GameOver.h"
 #include "GameObjectFactory.h"
 
-void World::initialize(GameState& state)
+World::World()
 {
-	objectFactory.prepareObjects();
+	validArea = sf::FloatRect(-100, -100, 1200, 1200);
+}
 
-	enemySpawner.reset();
-
-	collisionLayer.addObserver(objectFactory);
-	collisionLayer.addObserver(enemySpawner);
-	effectLayer.addObserver(objectFactory);
-	effectLayer.addObserver(enemySpawner);
-
-	state.addObserver(enemySpawner);
-	
-	gameOverTimer = 0;
-	state.setStartValues();
-
+void World::initialize()
+{
 	player.reset(new Player());
 	player->initializeComponents();
-	player->setPosition(sf::Vector2f(WORLD_SIZE / 2, WORLD_SIZE / 2));
+	
+	spawnObject(player, sf::Vector2f(WORLD_SIZE / 2, WORLD_SIZE / 2));
 
 	spawnExperiencePuddle(sf::IntRect(10, 10, 980, 980), 10);
 }
 
-void World::reset(GameState& state)
+void World::reset()
 {
-	collisionLayer.clearObservers();
-	effectLayer.clearObservers();
-
-	collisionLayer.clear();
-	effectLayer.clear();
-
-	objectFactory.clear();
-
-	state.removeObserver(enemySpawner);
-
 	player.reset();
+	objects.clear();
 }
 
-void World::update(const sf::Time deltaTime, GameState& state)
+std::vector<std::shared_ptr<GameObject>> World::getAllObjects()
 {
-	player->update(deltaTime, state);
+	return objects;
+}
 
-	if (!state.isGameOver()) {
-		enemySpawner.checkSpawnConditions(deltaTime, state, *player);
-	}
-	else {
-		gameOverTimer += deltaTime.asSeconds();
+void World::spawnObject(std::shared_ptr<GameObject> object, sf::Vector2f spawnPoint)
+{
+	newlySpawnedObjects.push_back(object);
+	object->spaw(spawnPoint);
+	EventDispatcher::dispatch(Event(EventType::OBJECT_SPAWNED, object));
+}
 
-		if (gameOverTimer >= 4.f) {
-			Scene* scene = Locator::getSceneManager().getScene(Scene::GameOver);
-			dynamic_cast<GameOverScene*>(scene)->setScore(state.getScore());
-			Locator::getSceneManager().changeScene(Scene::GameOver);
-		}
-	}
-
-	collisionLayer.updateGridObjects(deltaTime, state);
-	effectLayer.updateObjects(deltaTime, state);
-
+void World::update(const sf::Time& deltaTime)
+{
+	updateObjects(deltaTime);
+	enemySpawner.checkSpawnConditions(deltaTime, *player);
 	background.update(player->getPosition());
-}
-
-PartitionedLayer& World::getCollisionLayer()
-{
-	return collisionLayer;
-}
-
-EffectLayer& World::getEffectLayer()
-{
-	return effectLayer;
-}
-
-GameObjectFactory& World::getGameObjectFactory()
-{
-	return objectFactory;
-}
-
-EnemySpawnController& World::getEnemySpawnController()
-{
-	return enemySpawner;
 }
 
 void World::spawnExperiencePuddle(sf::IntRect area, int totalAmount)
@@ -95,8 +54,8 @@ void World::spawnExperiencePuddle(sf::IntRect area, int totalAmount)
 		x += area.left;
 		y += area.top;
 
-		auto experiece = objectFactory.acquireExperience(1);
-		experiece->spaw(sf::Vector2f(x, y), L_Collision);
+		auto experiece = Locator::get<GameObjectFactory>()->acquireExperience(1);
+		spawnObject(experiece, sf::Vector2f(x, y));
 	}
 }
 
@@ -104,8 +63,41 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(background, states);
 
-	target.draw(*player, states);
+	for (auto& obj : objects) {
+		obj->draw(target, states);
+	}
+}
 
-	target.draw(collisionLayer, states);
-	target.draw(effectLayer, states);
+void World::updateObjects(const sf::Time& deltaTime)
+{
+	auto it = objects.begin();
+
+	while (it != objects.end())
+	{
+		auto& obj = *it;
+
+		//update
+		obj->update(deltaTime);
+		
+		//object requests despawn
+		if (!obj->isEnabled()) {
+			EventDispatcher::dispatch(Event(EventType::OBJECT_DESPAWNED, obj));
+			it = objects.erase(it);
+			continue;
+		}
+
+		//out of bounds despawn
+		if (!validArea.contains(obj->getPosition())) {
+			EventDispatcher::dispatch(Event(EventType::OBJECT_DESPAWNED, obj));
+			it = objects.erase(it);
+			continue;
+		}
+
+		++it;
+	}
+
+	if (newlySpawnedObjects.size() > 0) {
+		objects.insert(objects.end(), newlySpawnedObjects.begin(), newlySpawnedObjects.end());
+		newlySpawnedObjects.clear();
+	}
 }

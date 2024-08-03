@@ -9,11 +9,11 @@ ScoreBoard::ScoreBoard()
 	frame.setScale(1.5, 1.5);
 	frame.setColor(sf::Color(255, 200, 0));
 
-	scoresText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	scoresText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 	scoresText.setFontSize(24);
 	scoresText.setPosition(0, - 40);
 
-	headlineText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	headlineText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 	headlineText.setShadowOffset(3);
 	headlineText.setColor(sf::Color(255, 200, 0));
 	headlineText.setFontSize(32);
@@ -52,7 +52,7 @@ std::string ScoreBoard::convertToEntryText(std::string name, int score)
 
 void ScoreBoard::queryHighscoresText()
 {
-	std::vector<HighscoreService::Entry> list = Locator::getHighscoreService().getTopEntries(3);
+	std::vector<HighscoreService::Entry> list = Locator::get<HighscoreService>()->getTopEntries(3);
 
 	std::string strList = "";
 

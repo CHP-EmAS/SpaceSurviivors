@@ -14,7 +14,7 @@ LevelUpScene::LevelUpScene() : Scene(Level_UP)
 	}
 
 	// Initialize level up text
-	levelUpText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	levelUpText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 	levelUpText.setFontSize(55);
 	levelUpText.setString("Level Up!");
 	levelUpText.setColor(sf::Color(255, 223, 0));
@@ -23,7 +23,7 @@ LevelUpScene::LevelUpScene() : Scene(Level_UP)
 	levelUpText.setShadowOffset(5);
 
 	// Initialize info text
-	infoText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	infoText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 	infoText.setFontSize(24);
 	infoText.setString("Choose one of the upgrades");
 	infoText.setOrigin(infoText.getLocalBounds().width / 2, 0);
@@ -35,7 +35,7 @@ LevelUpScene::LevelUpScene() : Scene(Level_UP)
 	InitUpgradeParameters();
 }
 
-void LevelUpScene::updateScene(sf::Time deltaTime)
+void LevelUpScene::updateScene(const sf::Time& deltaTime)
 {
 	for (auto& upg : upgrade) {
 		upg.update();
@@ -45,7 +45,7 @@ void LevelUpScene::updateScene(sf::Time deltaTime)
 void LevelUpScene::drawScene(sf::RenderWindow& mainWindow)
 {
 	// Draw previous scene as background
-	Locator::getSceneManager().getLastScene()->drawScene(mainWindow);
+	Locator::get<SceneManager>()->getLastScene()->drawScene(mainWindow);
 
 	// Draw upgrades and texts
 	for (const auto& upg : upgrade) {
@@ -91,7 +91,7 @@ void LevelUpScene::checkEvents(sf::Event newEvent)
 		for (int i = 0; i < NUM_UPGRADES; ++i) {
 			if (upgrade[i].isSelected() && gameState) {
 				applyValueToState(upgrade[i].getInfo().parameter, upgrade[i].getRarityValue(), *gameState);
-				Locator::getSceneManager().changeScene(Scene::Game);
+				Locator::get<SceneManager>()->changeScene(Scene::Game);
 			}
 		}
 
@@ -364,10 +364,10 @@ void LevelUpScene::InitUpgradeParameters()
 	rarityInfoText[3].setString("Legendary");
 
 	for (int i = 0; i < 4; ++i) {
-		rarityInfoText[i].setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+		rarityInfoText[i].setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 		rarityInfoText[i].setFontSize(32);
 		rarityInfoText[i].setOrigin(rarityInfoText[i].getLocalBounds().getSize().x / 2.f, 0);
-		rarityPercentInfoText[i].setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+		rarityPercentInfoText[i].setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 		rarityPercentInfoText[i].setFontSize(20);
 		
 	}

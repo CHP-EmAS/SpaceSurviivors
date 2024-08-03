@@ -9,10 +9,10 @@ Upgrade::Upgrade() : rarity(COMMON)
 	button.setSize(sf::Vector2f(166.66, 200));
 	headerText.setPosition(166.66 / 2.f, 30);
 	headerText.setShadowOffset(3);
-	headerText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	headerText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 
 	infoText.setPosition(166.66 / 2.f, 180);
-	infoText.setFont(Locator::getGraphicService().getFont(GraphicService::Pixel));
+	infoText.setFont(Locator::get<GraphicService>()->getFont(GraphicService::Pixel));
 	infoText.setFontSize(12);
 	infoText.setShadowOffset(2);
 }
@@ -78,7 +78,7 @@ void Upgrade::setInfo(Info info, float current)
 
 	//Value to Add
 	std::string upgradeValueStr = convertFixedValue(getRarityValue());
-	button.setText(sf::Text("+ " + upgradeValueStr, Locator::getGraphicService().getFont(GraphicService::Pixel), 20));
+	button.setText(sf::Text("+ " + upgradeValueStr, Locator::get<GraphicService>()->getFont(GraphicService::Pixel), 20));
 
 	//Current
 	std::string currentValueStr = convertFixedValue(current);

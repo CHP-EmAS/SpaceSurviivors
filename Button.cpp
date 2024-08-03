@@ -15,8 +15,8 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(frame, states);
 	target.draw(text, states);
 
-	if (Locator::getSceneManager().debugShowHitboxes()) {
-		collider.debugDraw(target, states);
+	if (Locator::get<SceneManager>()->debugShowHitboxes()) {
+		collider.onDebugDraw(target, states);
 	}
 }
 
@@ -25,7 +25,7 @@ void Button::update(const sf::Transform& parentTransform)
 	if (!enabled)
 		return;
 
-	sf::Vector2f mousePosition = Locator::getSceneManager().getMousePosition();
+	sf::Vector2f mousePosition = Locator::get<SceneManager>()->getMousePosition();
 	mousePosition = parentTransform.getInverse().transformPoint(mousePosition);
 	mousePosition = getInverseTransform().transformPoint(mousePosition);
 

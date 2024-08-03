@@ -9,8 +9,8 @@ public:
 	RigidBody(std::shared_ptr<GameObject> parent);
 	~RigidBody();
 
-	void simulate(sf::Time deltaTime);
-	void debugDraw(sf::RenderTarget& target, sf::RenderStates states);
+	void onSimulate(const sf::Time& deltaTime) override;
+	void onDebugDraw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	void applyForce(sf::Vector2f force);
 
@@ -26,7 +26,8 @@ public:
 private:
 	sf::Vector2f velocity;
 	sf::Vector2f lastVelocity;
-	sf::Vertex velocityLine[2];
+
+	mutable sf::Vertex debugVelocityLine[2];
 
 	float maxSpeed;
 	float friction;
